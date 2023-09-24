@@ -3,7 +3,7 @@
     <div>
       <logo />
       <h1 class="title">lebas-mahalli.ir</h1>
-      <h2 class="subtitle">My great Nuxt.js project</h2>
+      <h2 class="text-xs">My great Nuxt.js project</h2>
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" class="button--green">
           Documentation

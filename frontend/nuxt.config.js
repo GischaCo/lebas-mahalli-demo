@@ -4,17 +4,17 @@ export default {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || "",
+    title: "فروشگاه لباس محلی دنیا",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       {
         hid: "description",
         name: "description",
-        content: process.env.npm_package_description || "",
+        content: "فروش پوشاک محلی اقوام و عروسک‌های سنتی و صنایع دستی",
       },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/logo.png" }],
   },
   /*
    ** Customize the progress-bar color
