@@ -25,6 +25,15 @@ const getters = {
   allCategories(state) {
     return state.categories;
   },
+  parentCategories(state) {
+    return state.categories.filter((category) => category.isParent);
+  },
+  childCategories(state) {
+    return state.categories.filter((category) => !category.isParent);
+  },
+  childCategoriesById: (state) => (parentId) => {
+    return state.categories.filter((category) => category.parent === parentId);
+  },
 };
 
 const category = {

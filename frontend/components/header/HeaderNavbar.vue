@@ -8,13 +8,11 @@
       <span class="w-0.5 h-1/2 bg-light rounded-2xl"></span>
 
       <!-- categories -->
-      <nuxt-link
-        v-for="category in categories"
+      <header-navbar-item
+        v-for="category in parentCategories"
         :key="category._id"
-        :to="`/products${category.path}`"
-      >
-        <span class="text-primary">{{ category.title }}</span>
-      </nuxt-link>
+        :category="category"
+      ></header-navbar-item>
 
       <span class="w-0.5 h-1/2 bg-light rounded-2xl"></span>
 
@@ -44,7 +42,7 @@ import { computed, useStore } from "@nuxtjs/composition-api";
 const store = useStore();
 
 // computed
-const categories = computed(() => {
-  return store.getters["categories/allCategories"];
+const parentCategories = computed(() => {
+  return store.getters["categories/parentCategories"];
 });
 </script>

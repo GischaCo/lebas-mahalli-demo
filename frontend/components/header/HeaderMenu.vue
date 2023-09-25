@@ -15,7 +15,7 @@
     <!-- menu -->
     <div
       v-if="isMenuOpened"
-      class="absolute left-0 w-48 bg-white shadow-lg rounded-2xl"
+      class="absolute left-0 w-48 bg-white shadow-lg rounded-2xl z-40"
     >
       <nav class="w-full p-4 flex flex-col items-center justify-start gap-1">
         <!-- panel -->
