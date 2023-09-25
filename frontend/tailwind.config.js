@@ -10,7 +10,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#B3005E", // Amaranth Purple
+        primary: "#E1057A", // Mexican Pink
         secondary: "#060047", // Federal Blue
         accent: "#FF89BC", // Persian Pink
         light: "#FFDEEB", // Mimi Pink
