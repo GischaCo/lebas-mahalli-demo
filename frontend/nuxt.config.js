@@ -63,7 +63,7 @@ export default {
    ** Axios configuration
    */
   axios: {
-    baseURL: "http://localhost:3001",
+    baseURL: "https://lebas-mahalli.iran.liara.run/",
   },
   /*
    ** Build configuration
