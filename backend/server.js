@@ -1,8 +1,5 @@
-const express = require("express");
+const app = require("./express");
 const mongoose = require("mongoose");
-
-// app
-const app = express();
 
 // connect database
 const dbURI =
