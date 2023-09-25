@@ -8,7 +8,14 @@ module.exports = {
     "./app.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#B3005E", // Amaranth Purple
+        secondary: "#060047", // Federal Blue
+        accent: "#FF89BC", // Persian Pink
+        light: "#FFDEEB", // Mimi Pink
+      },
+    },
   },
   plugins: [],
 };
