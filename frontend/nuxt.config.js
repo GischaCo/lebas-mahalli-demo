@@ -21,6 +21,15 @@ export default {
    */
   loading: { color: "#fff" },
   /*
+   ** auto import & register components
+   */
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
+  /*
    ** Global CSS
    */
   css: ["~/assets/css/main.css"],
