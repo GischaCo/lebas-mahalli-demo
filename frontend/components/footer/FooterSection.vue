@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[24rem]">
+  <div class="md:max-w-[10rem] lg:max-w-[16rem] xl:max-w-[24rem]">
     <h3 class="text-primary font-bold mb-2">{{ title }}</h3>
     <div class="flex flex-col items-start justify-start gap-1">
       <slot></slot>
