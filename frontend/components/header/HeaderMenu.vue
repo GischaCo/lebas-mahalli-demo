@@ -3,13 +3,13 @@
     <!-- button -->
     <button
       @click="toggleMenu"
-      class="px-4 py-2 rounded-lg bg-primary flex items-center justify-center gap-2 shadow-lg hover:scale-[1.02] transition-all"
+      class="rounded-lg border-primary flex items-center justify-center gap-2"
     >
       <template v-if="!isMenuOpened">
-        <span class="text-white">حساب کاربری</span>
-        <base-icon name="user-solid" class="w-3.5 fill-white"></base-icon>
+        <span class="text-primary">حساب کاربری</span>
+        <base-icon name="user-solid" class="w-3.5 fill-primary"></base-icon>
       </template>
-      <span v-else class="text-white">بستن</span>
+      <span v-else class="text-primary">بستن</span>
     </button>
 
     <!-- menu -->
