@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <app-header></app-header>
+  <div class="min-h-screen flex flex-col items-center justify-between gap-4">
+    <div class="w-full">
+      <app-header></app-header>
 
-    <main>
-      <nuxt />
-    </main>
+      <main>
+        <nuxt />
+      </main>
+    </div>
 
-    <!-- <app-footer></app-footer> -->
+    <app-footer class="self-end"></app-footer>
   </div>
 </template>
