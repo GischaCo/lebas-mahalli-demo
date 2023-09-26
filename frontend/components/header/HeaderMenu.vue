@@ -2,8 +2,8 @@
   <div class="relative">
     <!-- login button -->
     <nuxt-link
-      to="/panel/login"
-      v-if="!isUserLoggedIn"
+      to="/auth/login"
+      v-if="!isAuthenticated"
       class="rounded-lg border-primary flex items-center justify-center gap-2"
     >
       <span class="text-primary">ثبت‌نام / ورود</span>
@@ -112,8 +112,8 @@ const store = useStore();
 const isMenuOpened = ref(false);
 
 // computed
-const isUserLoggedIn = computed(() => {
-  return store.state.panel.isLoggedIn;
+const isAuthenticated = computed(() => {
+  return store.state.panel.authenticated;
 });
 
 // methods
