@@ -1,5 +1,8 @@
 <template>
-  <form class="w-full flex flex-col items-start justify-start gap-3">
+  <form class="w-full flex flex-col items-start justify-start gap-2">
+    <!-- name -->
+    <base-input type="text" name="fullname" required>اسم قشنگت</base-input>
+
     <!-- mobile -->
     <base-input
       type="number"
@@ -9,37 +12,34 @@
       >شماره موبایل</base-input
     >
 
-    <!-- password -->
-    <base-input type="password" name="password" required>رمز عبور</base-input>
+    <div class="w-full flex items-center justify-center gap-2">
+      <!-- password -->
+      <base-input type="password" name="password" required>رمز عبور</base-input>
 
-    <!-- forget password -->
-    <p class="text-sm text-neutral-600">
-      در صورت فراموشی رمز عبور،
-      <nuxt-link
-        to="/auth/forget-password"
-        class="text-primary hover:text-accent transition-all"
-        >کلیک کنید</nuxt-link
-      >.
-    </p>
+      <!-- password confirm -->
+      <base-input type="password" name="password-confirm" required
+        >تکرار رمز عبور</base-input
+      >
+    </div>
 
     <!-- sign-up alert -->
     <p class="text-xs text-neutral-600">
-      اگه تا حالا حساب کاربری نساختی، رو دکمه‌ی ثبت‌نام کلیک کن.
+      اگه قبلا حساب کاربری ساختی، رو دکمه‌ی ورود کلیک کن.
     </p>
 
     <div class="w-full flex items-center justify-between gap-2">
-      <!-- login button -->
+      <!-- sign-up button -->
       <button
         class="w-8/12 h-12 text-white bg-gradient-to-r from-primary to-accent disabled:brightness-75 disabled:cursor-not-allowed rounded-lg hover:shadow-lg transition-all"
       >
-        ورود
+        ثبت‌نام
       </button>
-      <!-- sign-up link -->
+      <!-- login link -->
       <nuxt-link
-        to="/auth/sign-up"
+        to="/auth/login"
         class="w-4/12 h-12 text-primary flex items-center justify-center border-2 border-primary rounded-lg hover:shadow-lg transition-all"
       >
-        <span class="text-primary">ثبت‌نام</span>
+        <span class="text-primary">ورود</span>
       </nuxt-link>
     </div>
   </form>
@@ -47,6 +47,6 @@
 
 <script>
 export default {
-  name: "LoginForm",
+  name: "SignUpForm",
 };
 </script>

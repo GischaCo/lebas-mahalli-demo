@@ -9,9 +9,9 @@
       <span class="text-sm text-neutral-600">صفحه اصلی</span>
     </nuxt-link>
 
-    <h1 class="text-xl font-bold text-primary">ورود به حساب کاربری</h1>
+    <h1 class="text-xl font-bold text-primary">ایجاد حساب کاربری</h1>
 
-    <login-form></login-form>
+    <sign-up-form></sign-up-form>
   </div>
 </template>
 

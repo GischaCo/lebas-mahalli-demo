@@ -9,7 +9,7 @@
       :type="type"
       :name="name"
       :placeholder="placeholder"
-      class="w-full h-12 p-2 border-[1px] border-neutral-500 group-focus-within:border-primary rounded-lg transition-all"
+      class="w-full h-11 p-2 border-[1px] border-neutral-500 group-focus-within:border-primary rounded-lg transition-all"
       :required="required"
     />
   </label>
