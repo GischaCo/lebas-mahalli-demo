@@ -1,7 +1,20 @@
 <template>
   <div class="relative">
-    <!-- button -->
+    <!-- login button -->
+    <nuxt-link
+      to="/panel/login"
+      v-if="!isUserLoggedIn"
+      class="rounded-lg border-primary flex items-center justify-center gap-2"
+    >
+      <span class="text-primary">ثبت‌نام / ورود</span>
+      <base-icon
+        name="right-to-bracket-solid"
+        class="w-4 fill-primary"
+      ></base-icon>
+    </nuxt-link>
+    <!-- panel button -->
     <button
+      v-else
       @click="toggleMenu"
       class="rounded-lg border-primary flex items-center justify-center gap-2"
     >
@@ -92,10 +105,16 @@ export default {
 </script>
 
 <script setup>
-import { ref } from "@nuxtjs/composition-api";
+import { ref, useStore, computed } from "@nuxtjs/composition-api";
 
 // variables
+const store = useStore();
 const isMenuOpened = ref(false);
+
+// computed
+const isUserLoggedIn = computed(() => {
+  return store.state.panel.isLoggedIn;
+});
 
 // methods
 const toggleMenu = () => {
