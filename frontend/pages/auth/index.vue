@@ -1,9 +1,17 @@
 <template>
   <div
-    class="bg-white w-[42rem] h-[26rem] rounded-3xl custom-shadow-1 flex justify-between overflow-hidden"
+    class="bg-white w-96 md:w-[42rem] md:h-[26rem] rounded-3xl custom-shadow-1 flex flex-col md:flex-row justify-between overflow-hidden"
   >
+    <!-- mobile -->
     <img
-      class="h-full brightness-75"
+      class="w-full block md:hidden brightness-75"
+      src="@/static/img/auth/banner-desktop.jpeg"
+      alt="ثبت نام در فروشگاه لباس محلی دنیا"
+    />
+
+    <!-- desktop -->
+    <img
+      class="h-full hidden md:block brightness-75"
       src="@/static/img/auth/banner.jpeg"
       alt="ثبت نام در فروشگاه لباس محلی دنیا"
     />
