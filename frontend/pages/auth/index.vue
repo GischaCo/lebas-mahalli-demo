@@ -1,6 +1,6 @@
 <template>
   <div
-    class="bg-white w-96 md:w-[42rem] md:h-[26rem] rounded-3xl custom-shadow-1 flex flex-col md:flex-row justify-between overflow-hidden"
+    class="bg-white w-[22rem] md:w-[42rem] md:h-[26rem] rounded-3xl custom-shadow-1 flex flex-col md:flex-row justify-between overflow-hidden"
   >
     <!-- mobile -->
     <img
