@@ -11,7 +11,7 @@
 
     <h1 class="text-xl font-bold text-primary">ایجاد حساب کاربری</h1>
 
-    <sign-up-form></sign-up-form>
+    <sign-up-form @submitted="userSignUp($event)"></sign-up-form>
   </div>
 </template>
 
@@ -19,5 +19,17 @@
 export default {
   name: "AuthSignUpPage",
   layout: "auth",
+};
+</script>
+
+<script setup>
+import { useStore } from "@nuxtjs/composition-api";
+
+// variables
+const store = useStore();
+
+// methods
+const userSignUp = (userInfo) => {
+  store.dispatch("panel/userSignUp", userInfo);
 };
 </script>

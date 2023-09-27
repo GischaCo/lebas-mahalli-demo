@@ -77,8 +77,6 @@ const emit = defineEmits(["submitted"]);
 const updateUserInfo = (key, value) => {
   userInfo.value[key] = value;
 };
-
-// submit form and send to parent component
 const submitForm = () => {
   emit("submitted", userInfo.value);
 };

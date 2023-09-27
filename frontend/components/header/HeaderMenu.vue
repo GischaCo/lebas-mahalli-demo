@@ -3,7 +3,7 @@
     <!-- login button -->
     <nuxt-link
       to="/auth/login"
-      v-if="!isAuthenticated"
+      v-if="!isAuthorized"
       class="rounded-lg border-primary flex items-center justify-center gap-2"
     >
       <span class="text-primary">ثبت‌نام / ورود</span>
@@ -28,7 +28,7 @@
     <!-- menu -->
     <div
       v-if="isMenuOpened"
-      class="absolute left-0 w-48 bg-white shadow-lg rounded-2xl z-40"
+      class="absolute left-0 w-56 bg-white shadow-lg rounded-2xl z-40"
     >
       <nav class="w-full p-4 flex flex-col items-center justify-start gap-1">
         <!-- panel -->
@@ -40,7 +40,9 @@
               name="user-regular"
               class="w-4 fill-neutral-500"
             ></base-icon>
-            <span class="text-sm text-neutral-500">حساب کاربری</span>
+            <span class="text-sm text-neutral-500"
+              >حساب کاربری ({{ store.state.panel.user.fullname }})</span
+            >
           </div>
         </nuxt-link>
 
@@ -112,8 +114,8 @@ const store = useStore();
 const isMenuOpened = ref(false);
 
 // computed
-const isAuthenticated = computed(() => {
-  return store.state.panel.authenticated;
+const isAuthorized = computed(() => {
+  return store.state.panel.authorized;
 });
 
 // methods

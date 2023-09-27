@@ -2,7 +2,6 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
-const { config } = require("dotenv");
 
 const userRegister = async (req, res) => {
   // Our register logic starts here
@@ -24,7 +23,7 @@ const userRegister = async (req, res) => {
 
     if (oldUser) {
       return res.status(409).send({
-        message: "این شماره در سایت وجود دار، وارد شوید",
+        message: "این شماره در سایت وجود دارد، وارد شوید",
         success: false,
       });
     }
@@ -52,6 +51,9 @@ const userRegister = async (req, res) => {
 
     // return new user
     res.status(201).send({
+      data: {
+        token: token,
+      },
       message: "ثبت‌نام با موفیقت انجام شد",
       success: true,
     });

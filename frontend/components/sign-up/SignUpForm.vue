@@ -1,20 +1,36 @@
 <template>
-  <form class="w-full flex flex-col items-start justify-start gap-2">
+  <form
+    @submit.prevent="submitForm"
+    class="w-full flex flex-col items-start justify-start gap-2"
+  >
     <!-- name -->
-    <base-input type="text" name="fullname" required>اسم قشنگت</base-input>
+    <base-input
+      type="text"
+      name="fullname"
+      @update:value="updateUserInfo('fullname', $event)"
+      required
+      >اسم قشنگت</base-input
+    >
 
     <!-- mobile -->
     <base-input
       type="number"
       name="mobile-number"
       placeholder="مثال: 09112345678"
+      @update:value="updateUserInfo('phone', $event)"
       required
       >شماره موبایل</base-input
     >
 
     <div class="w-full flex items-center justify-center gap-2">
       <!-- password -->
-      <base-input type="password" name="password" required>رمز عبور</base-input>
+      <base-input
+        type="password"
+        name="password"
+        @update:value="updateUserInfo('password', $event)"
+        required
+        >رمز عبور</base-input
+      >
 
       <!-- password confirm -->
       <base-input type="password" name="password-confirm" required
@@ -48,5 +64,27 @@
 <script>
 export default {
   name: "SignUpForm",
+};
+</script>
+
+<script setup>
+import { ref } from "@nuxtjs/composition-api";
+
+// variables
+const userInfo = ref({
+  fullname: "",
+  phone: "",
+  password: "",
+});
+
+// emits
+const emit = defineEmits(["submitted"]);
+
+// methods
+const updateUserInfo = (key, value) => {
+  userInfo.value[key] = value;
+};
+const submitForm = () => {
+  emit("submitted", userInfo.value);
 };
 </script>

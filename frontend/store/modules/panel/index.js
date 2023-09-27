@@ -17,6 +17,23 @@ const mutations = {
 };
 
 const actions = {
+  userSignUp({ commit, dispatch }, payload) {
+    const body = payload;
+
+    this.$axios
+      .$post("/auth/register", body)
+      .then((res) => {
+        commit("authenticated", true);
+
+        const TOKEN = res.data.token;
+        localStorage.setItem("userAuthTOKEN", TOKEN);
+        dispatch("userProfile", TOKEN);
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+        commit("authenticated", false);
+      });
+  },
   userLogin({ commit, dispatch }, payload) {
     const body = payload;
     this.$axios
