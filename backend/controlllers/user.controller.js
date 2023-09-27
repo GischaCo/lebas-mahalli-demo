@@ -13,7 +13,7 @@ const userRegister = async (req, res) => {
     // Validate user input
     if (!(fullname && phone && password)) {
       res.status(400).send({
-        message: "Missing a required input",
+        message: "مقادیر ارسال شده صحیح نیست",
         success: false,
       });
     }
@@ -24,7 +24,7 @@ const userRegister = async (req, res) => {
 
     if (oldUser) {
       return res.status(409).send({
-        message: "User Already Exist. Please Login",
+        message: "این شماره در سایت وجود دار، وارد شوید",
         success: false,
       });
     }
@@ -52,8 +52,7 @@ const userRegister = async (req, res) => {
 
     // return new user
     res.status(201).send({
-      data: user,
-      message: "User successfully registered",
+      message: "ثبت‌نام با موفیقت انجام شد",
       success: true,
     });
   } catch (err) {
@@ -71,7 +70,7 @@ const userLogin = async (req, res) => {
     if (!(phone && password)) {
       res.status(400).send({
         data: user,
-        message: "All input is required",
+        message: "مقادیر ارسال شده صحیح نیست",
         success: false,
       });
     }
@@ -94,12 +93,12 @@ const userLogin = async (req, res) => {
       // user
       res.status(200).send({
         data: { token },
-        message: "User successfully logged in",
+        message: "ورود به حساب کاربری با موفقیت انجام شد",
         success: true,
       });
     } else {
       res.status(400).send({
-        message: "Invalid Credential",
+        message: "شماره موبایل یا رمز عبور اشتباه است",
         success: false,
       });
     }
@@ -119,13 +118,13 @@ const userProfile = async (req, res) => {
       .then((result) => {
         res.status(200).send({
           data: result,
-          message: "Authorized successfully",
+          message: "اطلاعات حساب کاربری با موفقیت دریافت شد",
           success: true,
         });
       })
       .catch((err) => {
         res.status(400).send({
-          message: "Authorization failed",
+          message: "خطا در دریافت اطلاعات حساب کاربری",
           success: true,
         });
         console.log(err);
