@@ -4,3 +4,6 @@
 
 # nuxt.js build output
 /frontend/.nuxt
+
+# environment
+/backend/.env
