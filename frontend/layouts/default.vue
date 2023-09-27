@@ -1,5 +1,7 @@
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-between gap-4">
+  <div
+    class="relative min-h-screen flex flex-col items-center justify-between gap-4"
+  >
     <div class="w-full">
       <app-header></app-header>
 
@@ -9,5 +11,7 @@
     </div>
 
     <app-footer class="self-end"></app-footer>
+
+    <base-snackbar v-if="$store.state.app.snackbar"></base-snackbar>
   </div>
 </template>

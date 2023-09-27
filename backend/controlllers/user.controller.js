@@ -50,7 +50,7 @@ const userRegister = async (req, res) => {
     user.token = token;
 
     // return new user
-    res.status(201).send({
+    res.status(200).send({
       data: {
         token: token,
       },
