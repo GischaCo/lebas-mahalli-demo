@@ -60,4 +60,51 @@ const userRegister = async (req, res) => {
   }
 };
 
-module.exports = { userRegister };
+const userLogin = async (req, res) => {
+  // Our login logic starts here
+  try {
+    // Get user input
+    const { phone, password } = req.body;
+
+    // Validate user input
+    if (!(phone && password)) {
+      res.status(400).send({
+        data: user,
+        message: "All input is required",
+        success: false,
+      });
+    }
+    // Validate if user exist in our database
+    const user = await User.findOne({ phone });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      // Create token
+      const token = jwt.sign(
+        { user_id: user._id, phone },
+        process.env.TOKEN_KEY,
+        {
+          expiresIn: "2h",
+        }
+      );
+
+      // save user token
+      user.token = token;
+
+      // user
+      res.status(200).send({
+        data: user,
+        message: "User successfully logged in",
+        success: true,
+      });
+    } else {
+      res.status(400).send({
+        message: "Invalid Credential",
+        success: false,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { userRegister, userLogin };
