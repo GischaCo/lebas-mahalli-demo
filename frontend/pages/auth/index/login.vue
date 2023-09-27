@@ -11,7 +11,7 @@
 
     <h1 class="text-xl font-bold text-primary">ورود به حساب کاربری</h1>
 
-    <login-form></login-form>
+    <login-form @submitted="userLogin($event)"></login-form>
   </div>
 </template>
 
@@ -19,5 +19,17 @@
 export default {
   name: "AuthLoginPage",
   layout: "auth",
+};
+</script>
+
+<script setup>
+import { useStore } from "@nuxtjs/composition-api";
+
+// variables
+const store = useStore();
+
+// methods
+const userLogin = (userInfo) => {
+  store.dispatch("panel/userLogin", userInfo);
 };
 </script>

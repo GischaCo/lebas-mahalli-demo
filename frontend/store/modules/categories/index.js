@@ -13,7 +13,7 @@ const mutations = {
 
 const actions = {
   getCategories({ commit }) {
-    this.$axios.$get("/api/categories").then((res) => {
+    this.$axios.$get("/categories").then((res) => {
       if (res.success) {
         commit("setCategories", res.data);
       }

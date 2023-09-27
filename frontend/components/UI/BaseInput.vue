@@ -11,6 +11,8 @@
       :placeholder="placeholder"
       class="w-full h-11 p-2 border-[1px] border-neutral-500 group-focus-within:border-primary rounded-lg transition-all"
       :required="required"
+      :value="value"
+      @input="value = $event.target.value"
     />
   </label>
 </template>
@@ -22,8 +24,13 @@ export default {
 </script>
 
 <script setup>
+import { computed } from "@nuxtjs/composition-api";
+
+// emit
+const emit = defineEmits(["value"]);
+
 // props
-defineProps({
+const props = defineProps({
   type: {
     type: String,
     default: "text",
@@ -41,5 +48,14 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  value: {
+    default: null,
+  },
+});
+
+// computed
+const value = computed({
+  get: () => props.value,
+  set: (value) => emit("update:value", value),
 });
 </script>

@@ -1,16 +1,26 @@
 <template>
-  <form class="w-full flex flex-col items-start justify-start gap-3">
+  <form
+    @submit.prevent="submitForm"
+    class="w-full flex flex-col items-start justify-start gap-3"
+  >
     <!-- mobile -->
     <base-input
       type="number"
       name="mobile-number"
       placeholder="مثال: 09112345678"
+      @update:value="updateUserInfo('phone', $event)"
       required
       >شماره موبایل</base-input
     >
 
     <!-- password -->
-    <base-input type="password" name="password" required>رمز عبور</base-input>
+    <base-input
+      type="password"
+      name="password"
+      @update:value="updateUserInfo('password', $event)"
+      required
+      >رمز عبور</base-input
+    >
 
     <!-- forget password -->
     <p class="text-sm text-neutral-600">
@@ -48,5 +58,28 @@
 <script>
 export default {
   name: "LoginForm",
+};
+</script>
+
+<script setup>
+import { ref } from "@nuxtjs/composition-api";
+
+// variables
+const userInfo = ref({
+  phone: "",
+  password: "",
+});
+
+// emits
+const emit = defineEmits(["submitted"]);
+
+// methods
+const updateUserInfo = (key, value) => {
+  userInfo.value[key] = value;
+};
+
+// submit form and send to parent component
+const submitForm = () => {
+  emit("submitted", userInfo.value);
 };
 </script>

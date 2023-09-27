@@ -58,13 +58,15 @@ export default {
   /*
    ** Nuxt.js modules
    */
-  modules: ["@nuxtjs/axios"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/dotenv"],
   /*
    ** Axios configuration
    */
   axios: {
-    baseURL: "https://lebas-mahalli.iran.liara.run/",
-    // baseURL: "http://localhost:3001",
+    baseURL: process.env.API_URL,
+    common: {
+      "Content-Type": "application/json",
+    },
   },
   /*
    ** Build configuration
