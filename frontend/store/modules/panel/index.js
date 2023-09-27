@@ -23,11 +23,18 @@ const actions = {
     this.$axios
       .$post("/auth/register", body)
       .then((res) => {
+        // update user authorization status in state
         commit("authenticated", true);
 
+        // store token in localStorage
         const TOKEN = res.data.token;
         localStorage.setItem("userAuthTOKEN", TOKEN);
+
+        // get user profile details using token
         dispatch("userProfile", TOKEN);
+
+        // move to landing page
+        this.$router.push("/");
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
@@ -39,11 +46,18 @@ const actions = {
     this.$axios
       .$post("/auth/login", body)
       .then((res) => {
+        // update user authorization status in state
         commit("authenticated", true);
 
+        // store token in localStorage
         const TOKEN = res.data.token;
         localStorage.setItem("userAuthTOKEN", TOKEN);
+
+        // get user profile details using token
         dispatch("userProfile", TOKEN);
+
+        // move to landing page
+        this.$router.push("/");
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
