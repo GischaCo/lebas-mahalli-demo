@@ -2,6 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
+const { config } = require("dotenv");
 
 const userRegister = async (req, res) => {
   // Our register logic starts here
@@ -92,7 +93,7 @@ const userLogin = async (req, res) => {
 
       // user
       res.status(200).send({
-        data: user,
+        data: { token },
         message: "User successfully logged in",
         success: true,
       });
@@ -107,4 +108,31 @@ const userLogin = async (req, res) => {
   }
 };
 
-module.exports = { userRegister, userLogin };
+const userProfile = async (req, res) => {
+  try {
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    User.findById(decodedData.user_id)
+      .then((result) => {
+        res.status(200).send({
+          data: result,
+          message: "Authorized successfully",
+          success: true,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          message: "Authorization failed",
+          success: true,
+        });
+        console.log(err);
+      });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { userRegister, userLogin, userProfile };
