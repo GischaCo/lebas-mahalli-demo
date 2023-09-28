@@ -6,7 +6,12 @@
       <slot></slot>
     </span>
 
-    <validation-provider :rules="rules" v-slot="{ errors }" class="w-full">
+    <validation-provider
+      :vid="vid"
+      :rules="rules"
+      v-slot="{ errors }"
+      class="w-full"
+    >
       <input
         :type="type"
         :name="name"
@@ -54,6 +59,9 @@ const props = defineProps({
     type: String,
   },
   value: {
+    default: "",
+  },
+  vid: {
     default: "",
   },
 });

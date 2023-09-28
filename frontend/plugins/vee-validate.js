@@ -1,6 +1,6 @@
 import Vue from "vue";
 import { ValidationObserver, ValidationProvider, extend } from "vee-validate";
-import { required, min, max } from "vee-validate/dist/rules";
+import { required, min, max, confirmed } from "vee-validate/dist/rules";
 
 extend("required", {
   ...required,
@@ -20,6 +20,11 @@ extend("mobile_max", {
 extend("password", {
   ...min,
   message: "رمز عبور باید حداقل 8 کاراکتر باشد.",
+});
+
+extend("confirmed", {
+  ...confirmed,
+  message: "رمز عبور با تکرار آن برابر نیست.",
 });
 
 Vue.component("ValidationObserver", ValidationObserver);
