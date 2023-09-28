@@ -6,7 +6,7 @@ const mutations = {
   setSnackbar(state, data) {
     state.snackbar = {
       status: data.status,
-      text: data.message,
+      message: data.message,
     };
   },
   hideSnackbar(state) {
@@ -16,11 +16,11 @@ const mutations = {
 
 const actions = {
   showSnackbar({ commit }, data) {
-    // show snackbar
     commit("setSnackbar", data);
-  },
-  hideSnackbar({ commit }) {
-    commit("hideSnackbar");
+
+    setTimeout(() => {
+      commit("hideSnackbar");
+    }, 3000);
   },
 };
 

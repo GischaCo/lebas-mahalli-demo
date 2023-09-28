@@ -11,8 +11,8 @@
         <base-icon :name="iconName" class="fill-white"></base-icon>
       </div>
 
-      <!-- text -->
-      <p class="text-sm text-white">{{ store.state.app.snackbar.text }}</p>
+      <!-- message -->
+      <p class="text-sm text-white">{{ store.state.app.snackbar.message }}</p>
     </div>
 
     <!-- progress bar -->
@@ -51,15 +51,22 @@ const progressBarPercent = computed(() => {
   return 1 / (timeout.value / progressValue.value);
 });
 
+// methods
+const runProgress = () => {
+  setInterval(() => {
+    progressValue.value--;
+  }, 10);
+};
+
+const resetProgress = () => {
+  timeout.value = 3;
+  progressValue.value = 300;
+};
+
 // lifecycles
 onMounted(() => {
-  setInterval(() => {
-    if (progressValue.value > 0) {
-      progressValue.value--;
-    } else {
-      store.dispatch("app/hideSnackbar");
-    }
-  }, 10);
+  resetProgress();
+  runProgress();
 });
 </script>
 

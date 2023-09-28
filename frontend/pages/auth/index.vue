@@ -40,9 +40,9 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 
-// onMlifecycles
+// lifecycles
 onMounted(() => {
-  if (store.state.panel.authenticated) {
+  if (store.state.panel.authorized) {
     router.push("/panel");
   } else {
     if (route.value.name === "auth") {

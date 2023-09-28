@@ -15,3 +15,9 @@
     <base-snackbar v-if="$store.state.app.snackbar"></base-snackbar>
   </div>
 </template>
+
+<script>
+export default {
+  name: "DefaultLayout",
+};
+</script>

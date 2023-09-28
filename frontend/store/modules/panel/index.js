@@ -35,14 +35,23 @@ const actions = {
 
         // move to landing page
         this.$router.push("/");
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
+
+        // update state
         commit("authenticated", false);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
   userLogin({ commit, dispatch }, payload) {
     const body = payload;
+
     this.$axios
       .$post("/auth/login", body)
       .then((res) => {
@@ -58,13 +67,21 @@ const actions = {
 
         // move to landing page
         this.$router.push("/");
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
+
+        // update state
         commit("authenticated", false);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  userProfile({ commit }, token) {
+  userProfile({ commit, dispatch }, token) {
     const reqConfig = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,12 +91,18 @@ const actions = {
     this.$axios
       .$get("/auth/profile", reqConfig)
       .then((res) => {
+        // update state
         commit("authorized", true);
         commit("updateUser", res.data);
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
+
+        // update state
         commit("authenticated", false);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
 };

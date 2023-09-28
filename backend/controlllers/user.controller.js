@@ -13,6 +13,7 @@ const userRegister = async (req, res) => {
     if (!(fullname && phone && password)) {
       res.status(400).send({
         message: "مقادیر ارسال شده صحیح نیست",
+        status: 400,
         success: false,
       });
     }
@@ -24,6 +25,7 @@ const userRegister = async (req, res) => {
     if (oldUser) {
       return res.status(409).send({
         message: "این شماره در سایت وجود دارد، وارد شوید",
+        status: 409,
         success: false,
       });
     }
@@ -55,6 +57,7 @@ const userRegister = async (req, res) => {
         token: token,
       },
       message: "ثبت‌نام با موفیقت انجام شد",
+      status: 200,
       success: true,
     });
   } catch (err) {
@@ -73,6 +76,7 @@ const userLogin = async (req, res) => {
       res.status(400).send({
         data: user,
         message: "مقادیر ارسال شده صحیح نیست",
+        status: 400,
         success: false,
       });
     }
@@ -96,11 +100,13 @@ const userLogin = async (req, res) => {
       res.status(200).send({
         data: { token },
         message: "ورود به حساب کاربری با موفقیت انجام شد",
+        status: 200,
         success: true,
       });
     } else {
-      res.status(400).send({
+      res.status(409).send({
         message: "شماره موبایل یا رمز عبور اشتباه است",
+        status: 409,
         success: false,
       });
     }
@@ -120,13 +126,15 @@ const userProfile = async (req, res) => {
       .then((result) => {
         res.status(200).send({
           data: result,
-          message: "اطلاعات حساب کاربری با موفقیت دریافت شد",
+          message: "ورود به حساب کاربری با موفقیت انجام شد",
+          status: 200,
           success: true,
         });
       })
       .catch((err) => {
         res.status(400).send({
           message: "خطا در دریافت اطلاعات حساب کاربری",
+          status: 400,
           success: true,
         });
         console.log(err);
