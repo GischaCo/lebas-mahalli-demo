@@ -1,9 +1,9 @@
 <template>
-  <panel-profile></panel-profile>
+  <panel-cart></panel-cart>
 </template>
 
 <script>
 export default {
-  name: "PanelProfilePage",
+  name: "PanelCartPage",
 };
 </script>
