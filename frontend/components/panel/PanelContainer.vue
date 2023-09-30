@@ -9,7 +9,7 @@
 
     <!-- body display -->
     <section
-      class="w-9/12 h-[42rem] p-5 border-[1px] border-neutral-300 rounded-2xl shadow-xl"
+      class="w-9/12 p-5 border-[1px] border-neutral-300 rounded-2xl shadow-xl"
     >
       <slot></slot>
     </section>

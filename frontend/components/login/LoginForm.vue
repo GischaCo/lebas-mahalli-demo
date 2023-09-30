@@ -83,7 +83,7 @@ const emit = defineEmits(["submitted"]);
 const updateUserInfo = (key, value) => {
   userInfo.value[key] = value;
 };
-const submitForm = async () => {
+const submitForm = () => {
   emit("submitted", userInfo.value);
 };
 </script>

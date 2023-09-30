@@ -95,7 +95,7 @@ const actions = {
       .then((res) => {
         // update state
         commit("authorized", true);
-        dispatch("panel/updateUser", res.data, { root: true });
+        commit("panel/setUser", res.data, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);

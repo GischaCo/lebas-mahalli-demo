@@ -1,7 +1,7 @@
 <template>
   <header class="w-full">
     <div class="w-full flex items-center justify-between px-4 md:px-6 py-2">
-      <div class="flex items-center justify-start gap-4">
+      <nuxt-link to="/" class="flex items-center justify-start gap-4">
         <!-- logo -->
         <app-logo class="w-10"></app-logo>
 
@@ -10,7 +10,7 @@
 
         <!-- searchbox -->
         <!-- <header-searchbox></header-searchbox> -->
-      </div>
+      </nuxt-link>
 
       <header-menu></header-menu>
     </div>
