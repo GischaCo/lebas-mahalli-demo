@@ -61,6 +61,11 @@ const userRegister = async (req, res) => {
       success: true,
     });
   } catch (err) {
+    res.status(404).send({
+      message: "خطای سرور؛ در صورت نیاز با پشتیبانی تماس بگیرید",
+      status: 404,
+      success: false,
+    });
     console.log(err);
   }
 };
@@ -110,6 +115,11 @@ const userLogin = async (req, res) => {
       });
     }
   } catch (err) {
+    res.status(404).send({
+      message: "خطای سرور؛ در صورت نیاز با پشتیبانی تماس بگیرید",
+      status: 404,
+      success: false,
+    });
     console.log(err);
   }
 };
@@ -139,6 +149,11 @@ const userProfile = async (req, res) => {
         console.log(err);
       });
   } catch (err) {
+    res.status(404).send({
+      message: "خطای سرور؛ در صورت نیاز با پشتیبانی تماس بگیرید",
+      status: 404,
+      success: false,
+    });
     console.log(err);
   }
 };

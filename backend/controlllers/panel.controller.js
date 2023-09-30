@@ -37,7 +37,11 @@ const userUpdate = async (req, res) => {
         console.log(err);
       });
   } catch (err) {
-    console.log(err);
+    res.status(404).send({
+      message: "خطای سرور؛ در صورت نیاز با پشتیبانی تماس بگیرید",
+      status: 404,
+      success: false,
+    });
   }
 };
 

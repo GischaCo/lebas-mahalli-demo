@@ -6,7 +6,7 @@ const createCategory = async (req, res, next) => {
     const category = new Category(req.body);
     await category.save();
     res.status(200).send({
-      message: "Category successfully created",
+      message: "دسته‌بندی با موفقیت ثبت شد",
       success: true,
     });
   } catch (error) {
@@ -19,7 +19,7 @@ const categoriesList = async (req, res) => {
     const categories = await Category.find();
     return res.status(200).send({
       data: categories,
-      message: "Categories successfully fetched",
+      message: "عملیات با موفقیت انجام شد",
       success: true,
     });
   } catch (error) {
@@ -35,17 +35,17 @@ const categoryById = async (req, res, next, id) => {
     const category = await Category.findById(id);
     if (!category)
       return res.status(400).send({
-        message: "Category doesn't exist",
+        message: "دسته‌بندی وجود ندارد",
         success: false,
       });
     return res.status(200).send({
       data: category,
-      message: "Category successfully fetched",
+      message: "اطلاعات با موفقیت دریافت شد",
       success: true,
     });
   } catch (error) {
     return res.status(400).send({
-      message: "Failed to find category",
+      message: "دسته‌بندی یافت نشد",
       success: false,
     });
   }
