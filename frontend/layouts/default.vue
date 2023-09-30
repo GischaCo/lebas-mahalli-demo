@@ -21,3 +21,14 @@ export default {
   name: "DefaultLayout",
 };
 </script>
+
+<script setup>
+import { useStore } from "@nuxtjs/composition-api";
+
+// variables
+const store = useStore();
+
+// fetch app data on first load
+store.dispatch("auth/userProfile"); // => user details
+store.dispatch("categories/getCategories"); // => categories
+</script>

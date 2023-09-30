@@ -42,7 +42,7 @@ const router = useRouter();
 
 // lifecycles
 onMounted(() => {
-  if (store.state.panel.authorized) {
+  if (store.state.auth.authorized) {
     router.push("/panel");
   } else {
     if (route.value.name === "auth") {

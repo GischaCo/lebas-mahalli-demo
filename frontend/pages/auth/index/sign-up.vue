@@ -30,6 +30,6 @@ const store = useStore();
 
 // methods
 const userSignUp = (userInfo) => {
-  store.dispatch("panel/userSignUp", userInfo);
+  store.dispatch("auth/userSignUp", userInfo);
 };
 </script>

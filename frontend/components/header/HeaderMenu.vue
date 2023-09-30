@@ -32,58 +32,24 @@
     >
       <nav class="w-full p-4 flex flex-col items-center justify-start gap-1">
         <!-- panel -->
-        <nuxt-link to="/panel" class="w-full">
-          <div
-            class="w-full py-1.5 flex items-center justify-start gap-2 hover:-translate-x-0.5 transition-all"
-          >
-            <base-icon
-              name="user-regular"
-              class="w-4 fill-neutral-500"
-            ></base-icon>
-            <span class="text-sm text-neutral-500"
-              >حساب کاربری ({{ store.state.panel.user.fullname }})</span
-            >
-          </div>
-        </nuxt-link>
+        <header-menu-item to="/panel" icon="user-regular"
+          >حساب کاربری ({{ store.state.auth.user.fullname }})</header-menu-item
+        >
 
         <!-- cart -->
-        <nuxt-link to="/panel/cart" class="w-full">
-          <div
-            class="w-full py-1.5 flex items-center justify-start gap-2 hover:-translate-x-0.5 transition-all"
-          >
-            <base-icon
-              name="bag-shopping-solid"
-              class="w-4 fill-neutral-500"
-            ></base-icon>
-            <span class="text-sm text-neutral-500">سبد خرید</span>
-          </div>
-        </nuxt-link>
+        <header-menu-item to="/panel/cart" icon="bag-shopping-solid"
+          >سبد خرید</header-menu-item
+        >
 
         <!-- wallet -->
-        <nuxt-link to="/panel/wallet" class="w-full">
-          <div
-            class="w-full py-1.5 flex items-center justify-start gap-2 hover:-translate-x-0.5 transition-all"
-          >
-            <base-icon
-              name="wallet-solid"
-              class="w-4 fill-neutral-500"
-            ></base-icon>
-            <span class="text-sm text-neutral-500">کیف پول</span>
-          </div>
-        </nuxt-link>
+        <header-menu-item to="/panel/wallet" icon="wallet-solid"
+          >کیف پول</header-menu-item
+        >
 
         <!-- purchases -->
-        <nuxt-link to="/panel/purchases" class="w-full">
-          <div
-            class="w-full py-1.5 flex items-center justify-start gap-2 hover:-translate-x-0.5 transition-all"
-          >
-            <base-icon
-              name="rotate-left-solid"
-              class="w-4 fill-neutral-500"
-            ></base-icon>
-            <span class="text-sm text-neutral-500">سفارشات</span>
-          </div>
-        </nuxt-link>
+        <header-menu-item to="/panel/purchases" icon="rotate-left-solid"
+          >سفارشات</header-menu-item
+        >
 
         <!-- logout -->
         <div
@@ -115,7 +81,7 @@ const isMenuOpened = ref(false);
 
 // computed
 const isAuthorized = computed(() => {
-  return store.state.panel.authorized;
+  return store.state.auth.authorized;
 });
 
 // methods

@@ -31,7 +31,7 @@ const actions = {
         localStorage.setItem("userAuthTOKEN", TOKEN);
 
         // get user profile details using token
-        dispatch("userProfile", TOKEN);
+        dispatch("userProfile");
 
         // move to landing page
         this.$router.push("/");
@@ -63,7 +63,7 @@ const actions = {
         localStorage.setItem("userAuthTOKEN", TOKEN);
 
         // get user profile details using token
-        dispatch("userProfile", TOKEN);
+        dispatch("userProfile");
 
         // move to landing page
         this.$router.push("/");
@@ -81,10 +81,16 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  userProfile({ commit, dispatch }, token) {
+  userProfile({ commit, dispatch }) {
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
     const reqConfig = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     };
 
@@ -109,7 +115,7 @@ const actions = {
 
 const getters = {};
 
-const panel = {
+const auth = {
   namespaced: true,
   state: () => state,
   mutations,
@@ -117,4 +123,4 @@ const panel = {
   getters,
 };
 
-export default panel;
+export default auth;

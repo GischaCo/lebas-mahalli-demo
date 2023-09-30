@@ -2,12 +2,12 @@ import Vuex from "vuex";
 
 // modules
 import categoriesModule from "./modules/categories";
-import panelModule from "./modules/panel";
+import authModule from "./modules/auth";
 import appModule from "./modules/app";
 
 const modules = {
   categories: categoriesModule,
-  panel: panelModule,
+  auth: authModule,
   app: appModule,
 };
 
