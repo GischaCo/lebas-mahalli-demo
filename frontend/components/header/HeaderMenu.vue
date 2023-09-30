@@ -32,22 +32,34 @@
     >
       <nav class="w-full p-4 flex flex-col items-center justify-start gap-1">
         <!-- panel -->
-        <header-menu-item to="/panel" icon="user-regular"
+        <header-menu-item
+          to="/panel"
+          icon="user-regular"
+          @close-menu="toggleMenu"
           >حساب کاربری ({{ store.state.auth.user.fullname }})</header-menu-item
         >
 
         <!-- cart -->
-        <header-menu-item to="/panel/cart" icon="bag-shopping-solid"
+        <header-menu-item
+          to="/panel/cart"
+          icon="bag-shopping-solid"
+          @close-menu="toggleMenu"
           >سبد خرید</header-menu-item
         >
 
         <!-- wallet -->
-        <header-menu-item to="/panel/wallet" icon="wallet-solid"
+        <header-menu-item
+          to="/panel/wallet"
+          icon="wallet-solid"
+          @close-menu="toggleMenu"
           >کیف پول</header-menu-item
         >
 
         <!-- purchases -->
-        <header-menu-item to="/panel/purchases" icon="rotate-left-solid"
+        <header-menu-item
+          to="/panel/purchases"
+          icon="rotate-left-solid"
+          @close-menu="toggleMenu"
           >سفارشات</header-menu-item
         >
 

@@ -1,14 +1,15 @@
 <template>
-  <nuxt-link :to="to" class="w-full">
-    <div
+  <div class="w-full" @click="clickHandler">
+    <nuxt-link
+      :to="to"
       class="w-full py-1.5 flex items-center justify-start gap-2 hover:-translate-x-0.5 transition-all"
     >
       <base-icon :name="icon" class="w-4 fill-neutral-500"></base-icon>
       <span class="text-sm text-neutral-500">
         <slot></slot>
       </span>
-    </div>
-  </nuxt-link>
+    </nuxt-link>
+  </div>
 </template>
 
 <script>
@@ -30,4 +31,12 @@ const props = defineProps({
     required: true,
   },
 });
+
+// emit
+const emit = defineEmits(["close-menu"]);
+
+// methods
+const clickHandler = () => {
+  emit("close-menu");
+};
 </script>
