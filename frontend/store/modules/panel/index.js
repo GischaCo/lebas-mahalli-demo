@@ -32,7 +32,7 @@ const actions = {
         commit("setUser", data);
 
         // show snackbar
-        dispatch("app/showSnackbar", res.message, { root: true });
+        dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
