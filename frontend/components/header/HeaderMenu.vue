@@ -36,7 +36,7 @@
           to="/panel"
           icon="user-regular"
           @close-menu="toggleMenu"
-          >حساب کاربری ({{ store.state.auth.user.fullname }})</header-menu-item
+          >حساب کاربری ({{ store.state.panel.user.fullname }})</header-menu-item
         >
 
         <!-- cart -->

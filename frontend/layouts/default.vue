@@ -5,7 +5,7 @@
     <div class="w-full">
       <app-header></app-header>
 
-      <main>
+      <main class="w-10/12 mx-auto my-6">
         <nuxt />
       </main>
     </div>

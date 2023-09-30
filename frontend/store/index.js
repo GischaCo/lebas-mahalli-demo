@@ -1,14 +1,16 @@
 import Vuex from "vuex";
 
 // modules
+import appModule from "./modules/app";
 import categoriesModule from "./modules/categories";
 import authModule from "./modules/auth";
-import appModule from "./modules/app";
+import panelModule from "./modules/panel";
 
 const modules = {
+  app: appModule,
   categories: categoriesModule,
   auth: authModule,
-  app: appModule,
+  panel: panelModule,
 };
 
 export default () =>

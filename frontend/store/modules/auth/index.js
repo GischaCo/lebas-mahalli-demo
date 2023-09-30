@@ -1,5 +1,4 @@
 const state = {
-  user: null,
   authenticated: false,
   authorized: false,
 };
@@ -10,9 +9,6 @@ const mutations = {
   },
   authorized(state, value) {
     state.authorized = value;
-  },
-  updateUser(state, value) {
-    state.user = value;
   },
 };
 
@@ -99,7 +95,7 @@ const actions = {
       .then((res) => {
         // update state
         commit("authorized", true);
-        commit("updateUser", res.data);
+        dispatch("panel/updateUser", res.data, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
