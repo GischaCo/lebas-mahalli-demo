@@ -1,7 +1,11 @@
 <template>
-  <panel-container v-if="store.state.panel.user !== null">
-    <nuxt-child></nuxt-child>
-  </panel-container>
+  <div class="w-full" v-if="store.state.panel.user !== null">
+    <backward-link></backward-link>
+
+    <panel-container>
+      <nuxt-child></nuxt-child>
+    </panel-container>
+  </div>
 
   <p v-else class="w-full text-center text-primary font-bold text-xl">
     لطفا صبر کنید
@@ -29,10 +33,8 @@ const router = useRouter();
 
 // lifecycles
 onMounted(() => {
-  if (store.state.auth.authorized) {
-    router.push("/panel/profile");
-  } else {
-    if (route.value.name === "auth") {
+  if (!store.state.auth.authorized) {
+    if (route.name === "panel") {
       router.push("/auth/login");
       store.dispatch("panel/showSnackbar", {
         status: 400,

@@ -4,7 +4,7 @@
       <validation-observer class="w-full" v-slot="{ invalid }">
         <form
           @submit.prevent="submitForm"
-          class="w-full flex flex-col items-start gap-5"
+          class="w-full flex flex-col items-start gap-3"
         >
           <!-- fullname -->
           <base-input

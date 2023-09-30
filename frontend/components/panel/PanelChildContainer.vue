@@ -1,19 +1,16 @@
 <template>
   <div class="w-full flex flex-col items-start justify-start gap-5">
-    <!-- header -->
-    <div class="w-full">
-      <nuxt-link to="/" class="flex items-center justify-start gap-2">
-        <base-icon
-          class="w-3.5 fill-neutral-500"
-          name="arrow-right-solid"
-        ></base-icon>
-        <base-icon
-          class="w-3.5 fill-neutral-500"
-          name="house-solid"
-        ></base-icon>
-        <span class="text-neutral-500">بازگشت به صفحه اصلی</span>
-      </nuxt-link>
-    </div>
+    <!-- backward button -->
+    <nuxt-link
+      to="/panel"
+      class="md:hidden pl-3 py-2 flex items-center justify-center gap-1.5"
+    >
+      <base-icon
+        class="w-3 fill-neutral-400"
+        name="arrow-right-solid"
+      ></base-icon>
+      <span class="text-sm text-neutral-400">بازگشت به منو</span>
+    </nuxt-link>
 
     <!-- title -->
     <div class="flex items-center justify-start gap-2">

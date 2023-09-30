@@ -1,15 +1,19 @@
 <template>
-  <article class="w-full flex items-start justify-start gap-4">
+  <article
+    class="w-full flex flex-col md:flex-row items-start justify-start gap-4"
+  >
     <!-- side menu -->
     <section
-      class="w-3/12 bg-gradient-to-tr from-primary to-pink-200 rounded-2xl shadow-xl"
+      :class="[route.name === 'panel' ? 'w-full' : 'hidden md:block']"
+      class="md:min-w-max lg:w-fit bg-gradient-to-tr from-primary to-pink-200 rounded-2xl shadow-xl"
     >
       <panel-menu></panel-menu>
     </section>
 
     <!-- body display -->
     <section
-      class="w-9/12 p-5 border-[1px] border-neutral-300 rounded-2xl shadow-xl"
+      v-if="route.name !== 'panel'"
+      class="w-full lg:w-[42rem] p-5 border-[1px] border-neutral-300 rounded-2xl shadow-xl"
     >
       <slot></slot>
     </section>
@@ -20,4 +24,12 @@
 export default {
   name: "PanelContainer",
 };
+</script>
+
+<script setup>
+import { useRoute } from "@nuxtjs/composition-api";
+
+const route = useRoute();
+
+// console.log(route.value.name);
 </script>
