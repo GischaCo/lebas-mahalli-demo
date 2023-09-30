@@ -1,12 +1,15 @@
 const express = require("express");
-const userController = require("../controlllers/user.controller");
+const authController = require("../controlllers/auth.controller");
+const panelController = require("../controlllers/panel.controller");
 
 const router = express.Router();
 
-router.route("/api/auth/register").post(userController.userRegister);
+// auth
+router.route("/api/auth/register").post(authController.userRegister);
+router.route("/api/auth/login").post(authController.userLogin);
+router.route("/api/auth/profile").get(authController.userProfile);
 
-router.route("/api/auth/login").post(userController.userLogin);
-
-router.route("/api/auth/profile").get(userController.userProfile);
+// panel
+router.route("/api/panel/update-profile").post(panelController.userUpdate);
 
 module.exports = router;

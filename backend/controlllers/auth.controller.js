@@ -74,7 +74,6 @@ const userLogin = async (req, res) => {
     // Validate user input
     if (!(phone && password)) {
       res.status(400).send({
-        data: user,
         message: "مقادیر ارسال شده صحیح نیست",
         status: 400,
         success: false,
