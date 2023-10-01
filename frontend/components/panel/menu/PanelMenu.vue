@@ -1,13 +1,20 @@
 <template>
   <div class="w-full px-2.5 py-4 flex flex-col items-start justify-start gap-1">
-    <panel-menu-item to="/panel/profile" icon="user-solid">
+    <div
+      class="w-full px-3 h-12 flex items-center justify-start gap-3 rounded-lg"
+    >
+      <base-icon name="user-solid" class="w-4 fill-white"></base-icon>
       <h2 class="text-xl text-white font-bold">
         {{ userInfo.fullname }}
       </h2>
       <span class="text-sm text-white">({{ userInfo.phone }})</span>
-    </panel-menu-item>
+    </div>
 
     <span class="w-10/12 mx-auto my-2 h-[1px] bg-light/60 rounded-full"></span>
+
+    <panel-menu-item to="/panel/profile" icon="pen-solid">
+      <p class="text-white">ویرایش مشخصات</p>
+    </panel-menu-item>
 
     <panel-menu-item to="/panel/cart" icon="bag-shopping-solid">
       <p class="text-white">سبد خرید</p>

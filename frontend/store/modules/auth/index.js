@@ -77,7 +77,7 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  userProfile({ commit, dispatch }) {
+  userProfile({ commit }) {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
@@ -102,9 +102,6 @@ const actions = {
 
         // update state
         commit("authenticated", false);
-
-        // show snackbar
-        dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
 };

@@ -33,7 +33,7 @@
       <nav class="w-full p-4 flex flex-col items-center justify-start gap-1">
         <!-- panel -->
         <header-menu-item
-          to="/panel"
+          to="/panel/profile"
           icon="user-regular"
           @close-menu="toggleMenu"
           >حساب کاربری ({{ store.state.panel.user.fullname }})</header-menu-item

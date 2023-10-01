@@ -1,6 +1,6 @@
 <template>
   <article
-    class="w-full flex flex-col md:flex-row items-start justify-start gap-4"
+    class="w-full flex flex-col md:flex-row items-start justify-center gap-4"
   >
     <!-- side menu -->
     <section
@@ -29,7 +29,6 @@ export default {
 <script setup>
 import { useRoute } from "@nuxtjs/composition-api";
 
+// variables
 const route = useRoute();
-
-// console.log(route.value.name);
 </script>
