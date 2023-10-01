@@ -100,6 +100,14 @@ const actions = {
         // update state
         commit("authorized", true);
         commit("panel/setUser", res.data, { root: true });
+
+        // if user is in admin panel, move to landing page
+        if (
+          this.$router.history.current.name.startsWith("admin") &&
+          res.data.role !== "admin"
+        ) {
+          this.$router.push("/");
+        }
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
@@ -110,6 +118,11 @@ const actions = {
         // if user is in panel but the token is expired, move to login page
         if (this.$router.history.current.name.startsWith("panel"))
           this.$router.push("/auth/login");
+
+        // if user is in admin panel, move to landing page
+        if (this.$router.history.current.name.startsWith("admin")) {
+          this.$router.push("/");
+        }
       });
   },
   userLogout({ commit, dispatch }) {

@@ -39,6 +39,15 @@
           >حساب کاربری ({{ store.state.panel.user.fullname }})</header-menu-item
         >
 
+        <!-- admin panel -->
+        <header-menu-item
+          to="/admin"
+          v-if="store.state.panel.user.role === 'admin'"
+          icon="lock-solid"
+          @close-menu="toggleMenu"
+          >پنل مدیریت</header-menu-item
+        >
+
         <!-- cart -->
         <header-menu-item
           to="/panel/cart"
