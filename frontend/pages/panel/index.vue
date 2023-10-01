@@ -33,14 +33,15 @@ const router = useRouter();
 
 // lifecycles
 onMounted(() => {
-  if (!store.state.auth.authorized) {
-    if (route.name === "panel") {
-      router.push("/auth/login");
-      store.dispatch("panel/showSnackbar", {
-        status: 400,
-        message: "لطفا ابتدا وارد حساب کاربری خود شوید",
-      });
-    }
+  if (
+    !store.state.auth.authorized &&
+    localStorage.getItem("userAuthTOKEN") === null
+  ) {
+    router.push("/auth/login");
+    store.dispatch("app/showSnackbar", {
+      status: 400,
+      message: "لطفا ابتدا وارد حساب کاربری خود شوید",
+    });
   }
 });
 </script>

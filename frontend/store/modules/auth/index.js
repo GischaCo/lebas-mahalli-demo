@@ -106,6 +106,10 @@ const actions = {
 
         // update state
         commit("authenticated", false);
+
+        // if user is in panel but the token is expired, move to login page
+        if (this.$router.history.current.name.startsWith("panel"))
+          this.$router.push("/auth/login");
       });
   },
   userLogout({ commit, dispatch }) {
