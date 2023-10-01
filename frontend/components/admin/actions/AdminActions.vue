@@ -26,19 +26,19 @@ const actions = ref([
     links: [
       {
         title: "لیست محصولات",
-        to: "/admin/all-products",
+        to: "/admin/products/all",
       },
       {
         title: "افزودن محصول",
-        to: "/admin/add-product",
+        to: "/admin/products/add",
       },
       {
         title: "ویرایش محصول",
-        to: "/admin/edit-product",
+        to: "/admin/products/edit",
       },
       {
         title: "حذف محصول",
-        to: "/admin/delete-product",
+        to: "/admin/products/delete",
       },
     ],
   },

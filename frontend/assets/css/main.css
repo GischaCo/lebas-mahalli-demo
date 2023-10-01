@@ -35,10 +35,12 @@
   }
 
   /* elements' outline */
-  button,
   input,
+  button,
+  textarea,
+  input:focus,
   button:focus,
-  input:focus {
+  textarea:focus {
     @apply outline-none;
   }
 
