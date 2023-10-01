@@ -65,7 +65,8 @@
 
         <!-- logout -->
         <div
-          class="w-full py-1.5 flex items-center justify-start gap-2 hover:-translate-x-0.5 transition-all"
+          @click="logout"
+          class="w-full py-1.5 flex items-center justify-start gap-2 hover:-translate-x-0.5 transition-all cursor-pointer"
         >
           <base-icon
             name="right-from-bracket-solid"
@@ -99,5 +100,9 @@ const isAuthorized = computed(() => {
 // methods
 const toggleMenu = () => {
   isMenuOpened.value = !isMenuOpened.value;
+};
+const logout = () => {
+  toggleMenu();
+  store.dispatch("auth/userLogout");
 };
 </script>

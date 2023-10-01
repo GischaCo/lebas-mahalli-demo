@@ -10,6 +10,10 @@ const mutations = {
   authorized(state, value) {
     state.authorized = value;
   },
+  resetAuth(state) {
+    state.authenticated = false;
+    state.authorized = false;
+  },
 };
 
 const actions = {
@@ -103,6 +107,26 @@ const actions = {
         // update state
         commit("authenticated", false);
       });
+  },
+  userLogout({ commit, dispatch }) {
+    // remove token from localStorage
+    localStorage.removeItem("userAuthTOKEN");
+
+    // reset state
+    commit("resetAuth");
+
+    // reset user profile data
+    dispatch("panel/resetUser", null, { root: true });
+
+    // show snackbar
+    dispatch(
+      "app/showSnackbar",
+      { status: 200, message: "خروج از حساب با موفقیت انجام شد" },
+      { root: true }
+    );
+
+    // move to landing page
+    this.$router.push("/");
   },
 };
 

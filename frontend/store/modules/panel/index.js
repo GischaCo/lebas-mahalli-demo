@@ -6,6 +6,9 @@ const mutations = {
   setUser(state, value) {
     state.user = value;
   },
+  resetUser(state) {
+    state.user = null;
+  },
 };
 
 const actions = {
@@ -40,6 +43,9 @@ const actions = {
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
+  },
+  resetUser({ commit }) {
+    commit("resetUser");
   },
 };
 
