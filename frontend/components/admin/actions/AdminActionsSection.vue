@@ -2,9 +2,9 @@
   <section class="w-full">
     <!-- title -->
     <div class="w-full flex items-center justify-center gap-2">
-      <span class="w-full h-[1px] bg-primary"></span>
-      <h2 class="text-lg text-primary font-bold">{{ title }}</h2>
-      <span class="w-full h-[1px] bg-primary"></span>
+      <span class="w-full h-[1px] bg-neutral-400"></span>
+      <h2 class="text-lg text-neutral-400">{{ title }}</h2>
+      <span class="w-full h-[1px] bg-neutral-400"></span>
     </div>
 
     <!-- links -->

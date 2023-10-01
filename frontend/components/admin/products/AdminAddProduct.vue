@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full mt-6">
-    <h2 class="text-lg text-primary font-bold">افزودن محصول</h2>
+  <div class="w-full max-w-lg mt-6 mx-auto">
+    <h2 class="text-lg text-primary font-bold text-center">افزودن محصول</h2>
 
     <div class="w-full p-4 border-2 border-primary rounded-xl mt-4">
       <validation-observer class="w-full" v-slot="{ invalid }">
