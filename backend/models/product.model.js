@@ -39,7 +39,7 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    availabe: {
+    available: {
       type: Boolean,
       required: true,
     },
