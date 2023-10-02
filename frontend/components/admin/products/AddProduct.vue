@@ -124,11 +124,22 @@
           <!-- inventory -->
           <div class="w-full flex items-center justify-start gap-8">
             <label class="flex items-center justify-start gap-1">
-              <input type="radio" name="inventory" :value="true" checked />
+              <input
+                type="radio"
+                name="inventory"
+                v-model="productInfo.available"
+                :value="true"
+                checked
+              />
               <span>موجود</span>
             </label>
             <label class="flex items-center justify-start gap-1">
-              <input type="radio" name="inventory" :value="false" />
+              <input
+                type="radio"
+                name="inventory"
+                v-model="productInfo.available"
+                :value="false"
+              />
               <span>ناموجود</span>
             </label>
           </div>
