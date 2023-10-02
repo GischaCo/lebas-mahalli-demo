@@ -26,13 +26,13 @@ const addProduct = async (req, res) => {
 
     // work on product's binary image
     const image = req.body.image;
-    const bufferedImage = new Buffer(image, "base64");
+    const bufferedImage = new Buffer.from(image, "base64");
 
     // work on product's binary images
     const images = req.body.images;
     let bufferedImages = [];
     for (let i in images) {
-      const bufferedItem = new Buffer(images[i], "base64");
+      const bufferedItem = new Buffer.from(images[i], "base64");
       bufferedImages.push(bufferedItem);
     }
 
