@@ -4,7 +4,56 @@
 
     <div class="w-full p-4 border-2 border-primary rounded-xl mt-4">
       <validation-observer class="w-full" v-slot="{ invalid }">
-        <form class="w-full flex flex-col items-center justify-start gap-3">
+        <form
+          @submit.prevent="submitForm"
+          class="w-full flex flex-col items-start justify-start gap-3"
+        >
+          <!-- main images -->
+          <div class="w-full flex flex-col items-start gap-1">
+            <span class="text-sm text-neutral-500 transition-all"
+              >تصویر اصلی</span
+            >
+
+            <div class="w-full flex items-center justify-start gap-4">
+              <!-- first -->
+              <add-product-image
+                name="main"
+                width="w-28 md:w-36"
+                @upload-image="updateProductInfo('image', $event.data)"
+              ></add-product-image>
+            </div>
+          </div>
+
+          <!-- other images -->
+          <div class="w-full flex flex-col items-start gap-1">
+            <span class="text-sm text-neutral-500 transition-all"
+              >دیگر تصاویر</span
+            >
+
+            <div class="w-full flex items-center justify-start gap-2.5">
+              <!-- first -->
+              <add-product-image
+                name="first"
+                @upload-image="updateImages($event.name, $event.data)"
+              ></add-product-image>
+              <!-- second -->
+              <add-product-image
+                name="second"
+                @upload-image="updateImages($event.name, $event.data)"
+              ></add-product-image>
+              <!-- third -->
+              <add-product-image
+                name="third"
+                @upload-image="updateImages($event.name, $event.data)"
+              ></add-product-image>
+              <!-- fourth -->
+              <add-product-image
+                name="fourth"
+                @upload-image="updateImages($event.name, $event.data)"
+              ></add-product-image>
+            </div>
+          </div>
+
           <!-- title -->
           <base-input
             type="text"
@@ -86,6 +135,7 @@
 
           <!-- button -->
           <button
+            type="submit"
             :disabled="invalid || !validCategory || !validDescription"
             class="w-full py-3 bg-gradient-to-tr from-primary to-accent text-white text-lg rounded-lg disabled:brightness-75 shadow-md hover:shadow-lg transition-all"
           >
@@ -114,7 +164,7 @@ const productInfo = ref({
   price: "",
   salePrice: "",
   image: "",
-  images: "",
+  images: {},
   category: "",
   available: "",
 });
@@ -122,6 +172,13 @@ const productInfo = ref({
 // methods
 const updateProductInfo = (key, value) => {
   productInfo.value[key] = value;
+};
+const updateImages = (key, value) => {
+  productInfo.value.images[key] = value;
+};
+const submitForm = () => {
+  const data = productInfo.value;
+  store.dispatch("admin/addProduct", data);
 };
 
 // computed

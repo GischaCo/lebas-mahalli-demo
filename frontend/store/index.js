@@ -5,12 +5,14 @@ import appModule from "./modules/app";
 import categoriesModule from "./modules/categories";
 import authModule from "./modules/auth";
 import panelModule from "./modules/panel";
+import adminModule from "./modules/admin";
 
 const modules = {
   app: appModule,
   categories: categoriesModule,
   auth: authModule,
   panel: panelModule,
+  admin: adminModule,
 };
 
 export default () =>

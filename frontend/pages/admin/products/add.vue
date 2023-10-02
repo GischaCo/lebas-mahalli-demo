@@ -1,6 +1,6 @@
 <template>
   <article class="w-full">
-    <admin-add-product></admin-add-product>
+    <add-product></add-product>
   </article>
 </template>
 
