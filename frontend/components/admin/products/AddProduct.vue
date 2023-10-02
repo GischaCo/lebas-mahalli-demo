@@ -166,7 +166,7 @@ const productInfo = ref({
   image: "",
   images: {},
   category: "",
-  available: "",
+  available: true,
 });
 
 // methods

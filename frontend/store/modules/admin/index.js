@@ -3,7 +3,7 @@ const state = {};
 const mutations = {};
 
 const actions = {
-  addProduct(_, data) {
+  addProduct({ dispatch }, data) {
     // send data to server
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
@@ -25,10 +25,17 @@ const actions = {
     this.$axios
       .$post("/admin/add-product", reqBody, reqConfig)
       .then((res) => {
-        console.log("response: ", res);
+        // move to landing page
+        this.$router.push("/");
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log("error: ", err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
 };

@@ -3,7 +3,7 @@ const cors = require("cors");
 const express = require("express");
 const categoryRouter = require("./routes/category.routes");
 const userRouter = require("./routes/user.routes");
-const productRouter = require("./routes/product.routes");
+const adminRouter = require("./routes/admin.routes");
 require("./config/database").connect();
 
 const app = express();
@@ -15,6 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 // mount routes
 app.use("/", categoryRouter);
 app.use("/", userRouter);
-app.use("/", productRouter);
+app.use("/", adminRouter);
 
 module.exports = app;

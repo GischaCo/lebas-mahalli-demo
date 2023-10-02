@@ -43,13 +43,12 @@ const updateImage = (e) => {
   const file = e.target.files[0];
   if (file) {
     const fileReader = new FileReader();
-    fileReader.onload = (event) => (src.value = event.target.result);
+    fileReader.onload = (event) => {
+      const result = event.target.result;
+      emit(`upload-image`, { name: props.name, data: result });
+      src.value = result;
+    };
     fileReader.readAsDataURL(file);
-
-    // send choosed file
-    let formData = new FormData();
-    formData.append("image", file);
-    emit(`upload-image`, { name: props.name, data: formData });
   }
 };
 </script>

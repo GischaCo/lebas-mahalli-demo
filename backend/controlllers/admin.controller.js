@@ -2,8 +2,6 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const Product = require("../models/product.model");
-const fs = require("fs");
-// const ObjectId = require("mongodb").ObjectId;
 
 const addProduct = async (req, res) => {
   try {
@@ -55,15 +53,25 @@ const addProduct = async (req, res) => {
       ...defaultData,
     };
 
-    // add product to database
-    Product.create(productData);
-
-    // set response
-    res.status(200).send({
-      message: "محصول با موفقیت ثبت شد",
-      status: 200,
-      success: true,
-    });
+    // save product
+    const product = new Product(productData);
+    await product
+      .save()
+      .then(() => {
+        res.status(200).send({
+          message: "محصول با موفقیت ثبت شد",
+          status: 200,
+          success: true,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          message: "خطا در ثبت محصول",
+          status: 400,
+          success: false,
+        });
+        console.log(err);
+      });
   } catch (err) {
     res.status(400).send({
       message: "خطا در ثبت محصول",
