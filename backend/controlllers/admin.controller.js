@@ -162,14 +162,68 @@ const allProducts = async (req, res) => {
     return res.status(200).send({
       data: products,
       message: "لیست محصولات با موفقیت دریافت شد",
+      status: 200,
       success: true,
     });
   } catch (error) {
     return res.status(400).send({
       message: "خطا در دریافت لیست محصولات",
+      status: 400,
       success: false,
     });
   }
 };
 
-module.exports = { addProduct, allProducts };
+const deleteProduct = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // get product's id
+    const id = req.params.id;
+
+    // delete product from database
+    await Product.findByIdAndDelete(id);
+
+    // delete product's images
+    fs.rmSync(
+      `./public/upload/products/${id}`,
+      { recursive: true, force: true },
+      function (fsError) {
+        if (fsError) console.log(fsError);
+      }
+    );
+
+    // send response
+    return res.status(200).send({
+      message: "محصول با موفقیت حذف شد",
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      message: "خطا در حذف محصول",
+      status: 400,
+      success: false,
+    });
+  }
+};
+
+module.exports = { addProduct, allProducts, deleteProduct };

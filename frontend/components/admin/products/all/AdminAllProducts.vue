@@ -1,6 +1,9 @@
 <template>
   <section class="w-full">
-    <table class="w-full bg-slate-50 rounded-xl overflow-hidden">
+    <table
+      v-if="products.length"
+      class="w-full bg-slate-50 rounded-xl overflow-hidden"
+    >
       <thead class="w-full">
         <tr class="w-full">
           <td><p class="text-sm md:text-base">ردیف</p></td>
@@ -12,7 +15,6 @@
       </thead>
       <tbody class="w-full">
         <tr
-          @click="$router.push(`/admin/products/edit?${product._id}`)"
           class="w-full even:bg-slate-50 odd:bg-slate-200 cursor-pointer"
           v-for="(product, i) in products"
           :key="product._id"
@@ -41,6 +43,7 @@
             <div class="flex items-center justify-start gap-4">
               <button
                 title="حذف"
+                @click="deleteProduct(product._id)"
                 class="p-2 rounded bg-slate-700 shadow-md hover:shadow-lg transition-all"
               >
                 <base-icon
@@ -53,6 +56,10 @@
         </tr>
       </tbody>
     </table>
+
+    <p v-else class="text-red-500 text-center mt-12">
+      در حال حاضر محصولی برای نمایش وجود ندارد
+    </p>
   </section>
 </template>
 
@@ -72,6 +79,11 @@ const store = useStore();
 const products = computed(() => {
   return store.getters["admin/allProducts"];
 });
+
+// methods
+const deleteProduct = (productId) => {
+  store.dispatch("admin/deleteProduct", productId);
+};
 
 // lifecycles
 onMounted(() => {
