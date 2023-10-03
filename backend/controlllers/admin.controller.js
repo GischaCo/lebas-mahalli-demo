@@ -13,7 +13,7 @@ const addProduct = async (req, res) => {
     // get & decode user token data
     const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
 
-    // fint user
+    // find user
     const user = await User.findOne({ phone: decodedData.phone });
 
     // check if request sender's role is admin
@@ -134,4 +134,42 @@ const addProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct };
+const allProducts = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // get products list
+    const products = await Product.find();
+
+    // send products list via response
+    return res.status(200).send({
+      data: products,
+      message: "لیست محصولات با موفقیت دریافت شد",
+      success: true,
+    });
+  } catch (error) {
+    return res.status(400).send({
+      message: "خطا در دریافت لیست محصولات",
+      success: false,
+    });
+  }
+};
+
+module.exports = { addProduct, allProducts };
