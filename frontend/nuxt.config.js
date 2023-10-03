@@ -68,6 +68,12 @@ export default {
       "Content-Type": "application/json",
     },
   },
+  /* Environment configuration
+   **
+   */
+  publicRuntimeConfig: {
+    imagePrefix: process.env.IMAGE_URL,
+  },
   /*
    ** Build configuration
    */

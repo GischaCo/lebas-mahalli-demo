@@ -7,7 +7,7 @@
     >
       <img
         class="w-full"
-        :src="`${imagePrefix}/${product._id}/main.png`"
+        :src="`${$config.imagePrefix}/${product._id}/main.png`"
         :alt="product.title"
       />
       <h3 class="font-bold text-lg">{{ product.title }}</h3>
@@ -27,17 +27,11 @@ import { useStore, computed, onMounted } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
-const imagePrefix = process.env.IMAGE_PREFIX;
-
-console.log(imagePrefix);
 
 // computed
 const products = computed(() => {
   return store.getters["products/allProducts"];
 });
-
-// NOTE
-// the image's src should be something like this: imagePrefix/{id}/main.png
 
 // lifecycles
 onMounted(() => {

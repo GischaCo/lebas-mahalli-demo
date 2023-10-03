@@ -117,6 +117,8 @@ const addProduct = async (req, res) => {
         });
         console.log(err);
       });
+
+    // send response
     res.status(200).send({
       message: "محصول با موفقیت ثبت شد",
       status: 200,
