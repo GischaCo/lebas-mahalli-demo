@@ -26,7 +26,7 @@ const actions = {
       .$post("/admin/add-product", reqBody, reqConfig)
       .then((res) => {
         // move to landing page
-        // this.$router.push("/");
+        this.$router.push("/");
 
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
