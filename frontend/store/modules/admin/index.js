@@ -1,6 +1,12 @@
-const state = {};
+const state = {
+  products: [],
+};
 
-const mutations = {};
+const mutations = {
+  setProducts(state, data) {
+    state.products = data;
+  },
+};
 
 const actions = {
   addProduct({ dispatch }, data) {
@@ -38,9 +44,42 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
+  getProducts({ commit, dispatch }) {
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    };
+
+    this.$axios
+      .$get("/admin/all-products", reqConfig)
+      .then((res) => {
+        // update state
+        commit("setProducts", res.data);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
 };
 
-const getters = {};
+const getters = {
+  allProducts(state) {
+    return state.products;
+  },
+};
 
 const admin = {
   namespaced: true,

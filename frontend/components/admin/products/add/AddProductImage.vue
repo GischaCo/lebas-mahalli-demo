@@ -20,7 +20,7 @@ export default {
 import { ref } from "@nuxtjs/composition-api";
 
 // variables
-const src = ref(require("../../../static/img/admin/blank.png"));
+const src = ref(require("../../../../static/img/admin/blank.png"));
 
 // props
 const props = defineProps({
