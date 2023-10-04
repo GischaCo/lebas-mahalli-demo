@@ -3,7 +3,47 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const Product = require("../models/product.model");
+const ObjectId = require("mongodb").ObjectId;
 
+const allProducts = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // get products list
+    const products = await Product.find();
+
+    // send products list via response
+    return res.status(200).send({
+      data: products,
+      message: "لیست محصولات با موفقیت دریافت شد",
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(400).send({
+      message: "خطا در دریافت لیست محصولات",
+      status: 400,
+      success: false,
+    });
+  }
+};
 const addProduct = async (req, res) => {
   try {
     // get token from request header
@@ -42,7 +82,7 @@ const addProduct = async (req, res) => {
     const productData = {
       ...reqBody,
       image: "null",
-      images: "null",
+      images: {},
       ...defaultData,
     };
 
@@ -51,6 +91,12 @@ const addProduct = async (req, res) => {
     await product
       .save()
       .then((result) => {
+        // image data
+        const imagesData = {
+          image: "",
+          images: {},
+        };
+
         // save main image
         const data = image.replace(/^data:image\/\w+;base64,/, "");
         const buf = Buffer.from(data, "base64");
@@ -72,9 +118,12 @@ const addProduct = async (req, res) => {
                 console.log(fsError);
               }
 
+              imagesData.image = `/${id}/main.png`;
               createProductImagesDirectory(id);
 
               saveOtherImages(id, images);
+
+              updateProductImages(id, imagesData);
             }
           );
         };
@@ -106,7 +155,16 @@ const addProduct = async (req, res) => {
                 }
               }
             );
+
+            imagesData.images[
+              imagesKeys[i]
+            ] = `/${id}/images/${imagesKeys[i]}.png`;
           }
+        };
+
+        // save porduct's images url
+        const updateProductImages = (id, data) => {
+          Product.updateOne({ _id: new ObjectId(id) }, { $set: data });
         };
       })
       .catch((err) => {
@@ -134,7 +192,7 @@ const addProduct = async (req, res) => {
   }
 };
 
-const allProducts = async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
     // get token from request header
     const userToken = req.header("Authorization");
@@ -155,19 +213,21 @@ const allProducts = async (req, res) => {
       });
     }
 
-    // get products list
-    const products = await Product.find();
+    // get product's id
+    const id = req.header("id");
 
-    // send products list via response
+    console.log(id);
+
+    // send response
     return res.status(200).send({
-      data: products,
-      message: "لیست محصولات با موفقیت دریافت شد",
+      message: "محصول با موفقیت حذف شد",
       status: 200,
       success: true,
     });
   } catch (error) {
+    console.log(error);
     return res.status(400).send({
-      message: "خطا در دریافت لیست محصولات",
+      message: "خطا در حذف محصول",
       status: 400,
       success: false,
     });
@@ -226,4 +286,4 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct, allProducts, deleteProduct };
+module.exports = { addProduct, allProducts, deleteProduct, updateProduct };

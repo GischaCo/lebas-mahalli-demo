@@ -15,7 +15,7 @@
       </thead>
       <tbody class="w-full">
         <tr
-          class="w-full even:bg-slate-50 odd:bg-slate-200 cursor-pointer"
+          class="w-full even:bg-slate-50 odd:bg-slate-200"
           v-for="(product, i) in products"
           :key="product._id"
         >
@@ -40,7 +40,19 @@
             </p>
           </td>
           <td>
-            <div class="flex items-center justify-start gap-4">
+            <div class="flex items-center justify-start gap-3">
+              <!-- edit -->
+              <button
+                title="ویرایش"
+                @click="editProduct(product._id)"
+                class="p-2 rounded bg-slate-700 shadow-md hover:shadow-lg transition-all"
+              >
+                <base-icon
+                  class="w-3.5 h-3.5 fill-white"
+                  name="pen-solid"
+                ></base-icon>
+              </button>
+              <!-- delete -->
               <button
                 title="حذف"
                 @click="deleteProduct(product._id)"
@@ -70,10 +82,16 @@ export default {
 </script>
 
 <script setup>
-import { useStore, computed, onMounted } from "@nuxtjs/composition-api";
+import {
+  useStore,
+  useRouter,
+  computed,
+  onMounted,
+} from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
+const router = useRouter();
 
 // computed
 const products = computed(() => {
@@ -81,6 +99,9 @@ const products = computed(() => {
 });
 
 // methods
+const editProduct = (productId) => {
+  router.push(`/admin/products/edit?id=${productId}`);
+};
 const deleteProduct = (productId) => {
   store.dispatch("admin/deleteProduct", productId);
 };

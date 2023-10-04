@@ -17,10 +17,19 @@ export default {
 </script>
 
 <script setup>
-import { ref } from "@nuxtjs/composition-api";
+import { onMounted, ref } from "@nuxtjs/composition-api";
 
 // variables
-const src = ref(require("../../../../static/img/admin/blank.png"));
+// const src = ref(require("../../../../static/img/admin/blank.png"));
+const src = ref();
+
+onMounted(() => {
+  if (props.value?.length > 0) {
+    src.value = props.value;
+  } else {
+    src.value = require("../../../../static/img/admin/blank.png");
+  }
+});
 
 // props
 const props = defineProps({
@@ -31,6 +40,10 @@ const props = defineProps({
   name: {
     type: String,
     required: true,
+    default: "",
+  },
+  value: {
+    type: String,
     default: "",
   },
 });

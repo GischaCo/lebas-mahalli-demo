@@ -31,8 +31,8 @@ const actions = {
     this.$axios
       .$post("/admin/add-product", reqBody, reqConfig)
       .then((res) => {
-        // move to landing page
-        this.$router.push("/");
+        // move to products page
+        // this.$router.push("/admin/products/all");
 
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
@@ -73,6 +73,42 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
+  updateProduct({ dispatch }, { id, data }) {
+    // send data to server
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    // set header
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        id,
+      },
+    };
+
+    // set body
+    const reqBody = data;
+
+    // sending request
+    this.$axios
+      .$post("/admin/update-product", reqBody, reqConfig)
+      .then((res) => {
+        // move to products page
+        // this.$router.push("/admin/products/all");
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log("error: ", err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
   deleteProduct({ dispatch }, id) {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
@@ -106,6 +142,9 @@ const actions = {
 const getters = {
   allProducts(state) {
     return state.products;
+  },
+  singleProduct: (state) => (productId) => {
+    return state.products.find((product) => product._id === productId);
   },
 };
 
