@@ -1,5 +1,5 @@
 const state = {
-  product: {},
+  product: null,
   products: [],
 };
 
@@ -8,7 +8,7 @@ const mutations = {
     state.product = data;
   },
   resetProduct(state) {
-    state.product = {};
+    state.product = null;
   },
   setProducts(state, data) {
     state.products = data;
@@ -39,7 +39,7 @@ const actions = {
       .$post("/admin/add-product", reqBody, reqConfig)
       .then((res) => {
         // move to products page
-        // this.$router.push("/admin/products/all");
+        this.$router.push("/admin/products/all");
 
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });

@@ -3,7 +3,7 @@
     <h2 class="text-lg text-primary font-bold text-center">افزودن محصول</h2>
 
     <div
-      v-if="product"
+      v-if="product !== null"
       class="w-full p-4 border-2 border-primary rounded-xl mt-4"
     >
       <validation-observer class="w-full" v-slot="{ invalid }">
@@ -18,11 +18,11 @@
             >
 
             <div class="w-full flex items-center justify-start gap-4">
-              <!-- first -->
+              <!-- main -->
               <add-product-image
                 name="main"
                 width="w-28 md:w-36"
-                :value="`${$config.imagePrefix}/${product.image}`"
+                :value="`${$config.imagePrefix}/${product?.image}` || ''"
                 @upload-image="updateProductInfo('image', $event.data)"
               ></add-product-image>
             </div>
@@ -35,38 +35,11 @@
             >
 
             <div class="w-full flex items-center justify-start gap-2.5">
-              <!-- first -->
               <add-product-image
-                name="first"
-                :value="
-                  `${$config.imagePrefix}/${product._id}/images/first.png` || ''
-                "
-                @upload-image="updateImages($event.name, $event.data)"
-              ></add-product-image>
-              <!-- second -->
-              <add-product-image
-                name="second"
-                :value="
-                  `${$config.imagePrefix}/${product._id}/images/second.png` ||
-                  ''
-                "
-                @upload-image="updateImages($event.name, $event.data)"
-              ></add-product-image>
-              <!-- third -->
-              <add-product-image
-                name="third"
-                :value="
-                  `${$config.imagePrefix}/${product._id}/images/third.png` || ''
-                "
-                @upload-image="updateImages($event.name, $event.data)"
-              ></add-product-image>
-              <!-- fourth -->
-              <add-product-image
-                name="fourth"
-                :value="
-                  `${$config.imagePrefix}/${product._id}/images/fourth.png` ||
-                  ''
-                "
+                v-for="key in Object.keys(product.images)"
+                :key="key"
+                :name="key"
+                :value="`${$config.imagePrefix}/${product.images[key]}` || ''"
                 @upload-image="updateImages($event.name, $event.data)"
               ></add-product-image>
             </div>
