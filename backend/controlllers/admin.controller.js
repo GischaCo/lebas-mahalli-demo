@@ -268,14 +268,26 @@ const updateProduct = async (req, res) => {
     // get product's id
     const id = req.header("id");
 
-    console.log(id);
+    // get product's new data
+    const data = req.body.data;
 
-    // send response
-    return res.status(200).send({
-      message: "محصول با موفقیت حذف شد",
-      status: 200,
-      success: true,
-    });
+    // update product
+    Product.updateOne({ _id: new ObjectId(id) }, { $set: data })
+      .then(() => {
+        res.status(200).send({
+          message: "محصول با موفقیت ویرایش شد",
+          status: 200,
+          success: true,
+        });
+      })
+      .catch((errr) => {
+        console.log("error updating product:", errr);
+        res.status(400).send({
+          message: "خطا در ویرایش محصول",
+          status: 400,
+          success: false,
+        });
+      });
   } catch (error) {
     console.log(error);
     return res.status(400).send({

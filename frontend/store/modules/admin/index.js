@@ -126,7 +126,7 @@ const actions = {
     };
 
     // set body
-    const reqBody = data;
+    const reqBody = { data };
 
     // sending request
     this.$axios
