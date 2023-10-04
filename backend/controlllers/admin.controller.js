@@ -44,6 +44,50 @@ const allProducts = async (req, res) => {
     });
   }
 };
+
+const singleProduct = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // product is sending via params
+    const productId = req.params.id;
+
+    // get product's data
+    const product = await Product.findById(productId);
+
+    // send products list via response
+    return res.status(200).send({
+      data: product,
+      message: "اطلاعات محصول با موفقیت دریافت شد",
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    return res.status(400).send({
+      message: "خطا در دریافت اطلاعات محصول",
+      status: 400,
+      success: false,
+    });
+  }
+};
+
 const addProduct = async (req, res) => {
   try {
     // get token from request header
@@ -91,6 +135,8 @@ const addProduct = async (req, res) => {
     await product
       .save()
       .then((result) => {
+        const productId = result._id.toString();
+
         // image data
         const imagesData = {
           image: "",
@@ -100,12 +146,12 @@ const addProduct = async (req, res) => {
         // save main image
         const data = image.replace(/^data:image\/\w+;base64,/, "");
         const buf = Buffer.from(data, "base64");
-        fs.mkdir(`./public/upload/products/${result._id}`, (fsError) => {
+        fs.mkdir(`./public/upload/products/${productId}`, (fsError) => {
           if (fsError) {
             console.log(fsError);
           }
 
-          createImageFile(result._id);
+          createImageFile(productId);
         });
 
         // create image file
@@ -164,7 +210,13 @@ const addProduct = async (req, res) => {
 
         // save porduct's images url
         const updateProductImages = (id, data) => {
-          Product.updateOne({ _id: new ObjectId(id) }, { $set: data });
+          Product.updateOne({ _id: new ObjectId(id) }, { $set: data })
+            .then(() => {
+              console.log("update product's image");
+            })
+            .catch((errr) => {
+              console.log("error updating product's image:", errr);
+            });
         };
       })
       .catch((err) => {
@@ -286,4 +338,10 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { addProduct, allProducts, deleteProduct, updateProduct };
+module.exports = {
+  addProduct,
+  allProducts,
+  deleteProduct,
+  updateProduct,
+  singleProduct,
+};

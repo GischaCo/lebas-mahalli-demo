@@ -22,7 +22,7 @@
               <add-product-image
                 name="main"
                 width="w-28 md:w-36"
-                :value="`${$config.imagePrefix}/${product._id}/main.png`"
+                :value="`${$config.imagePrefix}/${product.image}`"
                 @upload-image="updateProductInfo('image', $event.data)"
               ></add-product-image>
             </div>
@@ -214,7 +214,7 @@ const categories = computed(() => {
   return store.getters["categories/allCategories"];
 });
 const product = computed(() => {
-  return store.getters["admin/singleProduct"](productId.value);
+  return store.getters["admin/singleProduct"];
 });
 const validCategory = computed(() => {
   return !!productInfo.value.category.length;
@@ -241,9 +241,9 @@ const checkRouteQuery = () => {
     });
   }
 };
-const fetchProducts = () => {
-  // fetch the products
-  store.dispatch("admin/getProducts");
+const fetchProduct = () => {
+  // fetch products data
+  store.dispatch("admin/getProduct", productId.value);
 };
 const fetchCategories = () => {
   store.dispatch("categories/getCategories");
@@ -259,7 +259,7 @@ onMounted(() => {
   checkRouteQuery();
 
   // fetch requirements
-  fetchProducts();
+  fetchProduct();
   fetchCategories();
 
   // get product's data

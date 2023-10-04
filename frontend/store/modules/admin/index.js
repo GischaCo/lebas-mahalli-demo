@@ -1,8 +1,15 @@
 const state = {
+  product: {},
   products: [],
 };
 
 const mutations = {
+  setProduct(state, data) {
+    state.product = data;
+  },
+  resetProduct(state) {
+    state.product = {};
+  },
   setProducts(state, data) {
     state.products = data;
   },
@@ -73,7 +80,36 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  updateProduct({ dispatch }, { id, data }) {
+  getProduct({ commit, dispatch }, id) {
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    };
+
+    this.$axios
+      .$get(`/admin/single-product/${id}`, reqConfig)
+      .then((res) => {
+        // update state
+        commit("setProduct", res.data);
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
+  updateProduct({ commit, dispatch }, { id, data }) {
     // send data to server
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
@@ -96,8 +132,11 @@ const actions = {
     this.$axios
       .$post("/admin/update-product", reqBody, reqConfig)
       .then((res) => {
+        // reset product's data in state
+        commit("resetProduct");
+
         // move to products page
-        // this.$router.push("/admin/products/all");
+        this.$router.push("/admin/products/all");
 
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
@@ -143,8 +182,8 @@ const getters = {
   allProducts(state) {
     return state.products;
   },
-  singleProduct: (state) => (productId) => {
-    return state.products.find((product) => product._id === productId);
+  singleProduct(state) {
+    return state.product;
   },
 };
 
