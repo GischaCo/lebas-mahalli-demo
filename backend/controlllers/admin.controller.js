@@ -303,33 +303,43 @@ const updateProduct = async (req, res) => {
 
                   imagesData.image = `/${id}/main.png`;
 
-                  console.log("saved:", imagesData.image);
-
                   // ---- images ----
-                  const testFunc = (callback) => {
+                  const convertImages = (saveImages) => {
+                    // store image's list's keys e.g. first, seconds, third (will be useful later)
                     const imagesKeys = Object.keys(images);
+
+                    // number of images coming from response (not main)
                     let remainedFiles = imagesKeys.length;
+
+                    // it will execute for each image in images list
                     for (let i in imagesKeys) {
+                      // decrease the number of images each time the loop executes
                       remainedFiles--;
+
+                      // store the image data inside a brief variables
                       const img = images[imagesKeys[i]];
-                      // console.log("img::::::::::::::", img);
+
+                      // if the image starts with 'data', that mean it's a new image
+                      // if it's not starting with 'data', it'll just pass it without any change
                       if (img.startsWith("data")) {
-                        // remove image
+                        // at first, it'll remove the existing image file of the previous image that is going to be replaced
                         fs.rm(
                           `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
                           { recursive: true, force: true },
                           function (fsError) {
                             if (fsError) console.log(fsError);
 
+                            // remove the starting parts of the image binary data (to use for returning the data into an image file later)
                             const signleImageData = img.replace(
                               /^data:image\/\w+;base64,/,
                               ""
                             );
+
+                            // create an image of the buffer using the binary data
                             const imageBuf = Buffer.from(
                               signleImageData,
                               "base64"
                             );
-                            console.log("imagesKeys[i]::::", imagesKeys[i]);
                             fs.writeFile(
                               `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
                               imageBuf,
@@ -337,15 +347,16 @@ const updateProduct = async (req, res) => {
                                 if (fsError) {
                                   console.log(fsError);
                                 }
-                                console.log("saveeeeeeeeeeeeeeeeeeeed");
+
+                                // store the new image path into the object to use for updating product on database
                                 imagesData.images[
                                   imagesKeys[i]
                                 ] = `/${id}/images/${imagesKeys[i]}.png`;
 
                                 // database stuff
-                                console.log("remainedFiles::::", remainedFiles);
                                 if (remainedFiles === 0) {
-                                  callback();
+                                  // if the loop has checked all of the files, call the function that updates the product
+                                  saveImages();
                                 }
                               }
                             );
@@ -362,8 +373,6 @@ const updateProduct = async (req, res) => {
                       { $set: imagesData }
                     )
                       .then(() => {
-                        console.log("imagesData::::", imagesData);
-                        console.log("update product's image");
                         res.status(200).send({
                           message: "محصول با موفقیت ویرایش شد",
                           status: 200,
@@ -380,36 +389,47 @@ const updateProduct = async (req, res) => {
                       });
                   };
 
-                  // run
-                  testFunc(saveToDatabase);
+                  // finally, run every we've written above :)
+                  convertImages(saveToDatabase);
                 }
               );
             }
           );
         } else {
-          console.log("testtttttttttttttttttt");
           // ---- images ----
-          const testFunc = (callback) => {
+          const convertImages = (saveImages) => {
+            // store image's list's keys e.g. first, seconds, third (will be useful later)
             const imagesKeys = Object.keys(images);
+
+            // number of images coming from response (not main)
             let remainedFiles = imagesKeys.length;
+
+            // it will execute for each image in images list
             for (let i in imagesKeys) {
+              // decrease the number of images each time the loop executes
               remainedFiles--;
+
+              // store the image data inside a brief variables
               const img = images[imagesKeys[i]];
-              // console.log("img::::::::::::::", img);
+
+              // if the image starts with 'data', that mean it's a new image
+              // if it's not starting with 'data', it'll just pass it without any change
               if (img.startsWith("data")) {
-                // remove image
+                // at first, it'll remove the existing image file of the previous image that is going to be replaced
                 fs.rm(
                   `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
                   { recursive: true, force: true },
                   function (fsError) {
                     if (fsError) console.log(fsError);
 
+                    // remove the starting parts of the image binary data (to use for returning the data into an image file later)
                     const signleImageData = img.replace(
                       /^data:image\/\w+;base64,/,
                       ""
                     );
+
+                    // create an image of the buffer using the binary data
                     const imageBuf = Buffer.from(signleImageData, "base64");
-                    console.log("imagesKeys[i]::::", imagesKeys[i]);
                     fs.writeFile(
                       `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
                       imageBuf,
@@ -417,15 +437,16 @@ const updateProduct = async (req, res) => {
                         if (fsError) {
                           console.log(fsError);
                         }
-                        console.log("saveeeeeeeeeeeeeeeeeeeed");
+
+                        // store the new image path into the object to use for updating product on database
                         imagesData.images[
                           imagesKeys[i]
                         ] = `/${id}/images/${imagesKeys[i]}.png`;
 
                         // database stuff
-                        console.log("remainedFiles::::", remainedFiles);
                         if (remainedFiles === 0) {
-                          callback();
+                          // if the loop has checked all of the files, call the function that updates the product
+                          saveImages();
                         }
                       }
                     );
@@ -439,8 +460,6 @@ const updateProduct = async (req, res) => {
           const saveToDatabase = () => {
             Product.updateOne({ _id: new ObjectId(id) }, { $set: imagesData })
               .then(() => {
-                console.log("imagesData::::", imagesData);
-                console.log("update product's image");
                 res.status(200).send({
                   message: "محصول با موفقیت ویرایش شد",
                   status: 200,
@@ -457,8 +476,8 @@ const updateProduct = async (req, res) => {
               });
           };
 
-          // run
-          testFunc(saveToDatabase);
+          // finally, run every we've written above :)
+          convertImages(saveToDatabase);
         }
       })
       .catch((errr) => {
