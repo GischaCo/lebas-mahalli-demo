@@ -27,7 +27,7 @@ const allProducts = async (req, res) => {
     }
 
     // get products list
-    const products = await Product.find();
+    const products = await Product.find().sort({ createdAt: -1 });
 
     // send products list via response
     return res.status(200).send({

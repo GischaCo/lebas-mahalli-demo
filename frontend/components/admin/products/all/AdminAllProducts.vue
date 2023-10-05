@@ -23,11 +23,15 @@
             <span>{{ i + 1 }}</span>
           </td>
           <td>
-            <img
-              class="w-10 h-10 rounded-md"
-              :src="`${$config.imagePrefix}/${product._id}/main.png`"
-              :alt="product.title"
-            />
+            <div
+              class="w-12 h-12 rounded bg-zinc-100 flex items-center justify-center overflow-hidden"
+            >
+              <img
+                class="w-auto max-h-full"
+                :src="`${$config.imagePrefix}/${product.image}`"
+                :alt="product.title"
+              />
+            </div>
           </td>
           <td>
             <p class="product-title text-xs md:text-base font-bold">

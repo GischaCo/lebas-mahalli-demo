@@ -11,6 +11,44 @@
           @submit.prevent="submitForm"
           class="w-full flex flex-col items-start justify-start gap-3"
         >
+          <!-- main images -->
+          <div class="w-full flex flex-col items-start gap-1">
+            <span class="text-sm text-neutral-500 transition-all"
+              >تصویر اصلی</span
+            >
+
+            <div
+              class="w-24 h-24 bg-zinc-100 rounded-md flex items-center justify-center"
+            >
+              <img
+                class="w-auto max-h-full"
+                :src="`${$config.imagePrefix}/${productInfo.image}`"
+                :alt="productInfo.title"
+              />
+            </div>
+          </div>
+
+          <!-- other images -->
+          <div class="w-full flex flex-col items-start gap-1">
+            <span class="text-sm text-neutral-500 transition-all"
+              >دیگر تصاویر</span
+            >
+
+            <div class="w-full flex items-center justify-start gap-4">
+              <div
+                v-for="key in Object.keys(productInfo.images)"
+                :key="key"
+                class="w-24 h-24 bg-zinc-100 rounded-md flex items-center justify-center overflow-hidden"
+              >
+                <img
+                  class="w-auto max-h-full"
+                  :src="`${$config.imagePrefix}${productInfo.images[key]}`"
+                  :alt="productInfo.title"
+                />
+              </div>
+            </div>
+          </div>
+
           <!-- title -->
           <base-input
             type="text"
@@ -200,8 +238,6 @@ onMounted(() => {
   // fetch requirements
   fetchProduct();
   fetchCategories();
-
-  // get product's data
 });
 
 watch(
