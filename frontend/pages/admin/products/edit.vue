@@ -11,40 +11,6 @@
           @submit.prevent="submitForm"
           class="w-full flex flex-col items-start justify-start gap-3"
         >
-          <!-- main images -->
-          <div class="w-full flex flex-col items-start gap-1">
-            <span class="text-sm text-neutral-500 transition-all"
-              >تصویر اصلی</span
-            >
-
-            <div class="w-full flex items-center justify-start gap-4">
-              <!-- main -->
-              <add-product-image
-                name="main"
-                width="w-28 md:w-36"
-                :value="`${$config.imagePrefix}/${product?.image}` || ''"
-                @upload-image="updateProductInfo('image', $event.data)"
-              ></add-product-image>
-            </div>
-          </div>
-
-          <!-- other images -->
-          <div class="w-full flex flex-col items-start gap-1">
-            <span class="text-sm text-neutral-500 transition-all"
-              >دیگر تصاویر</span
-            >
-
-            <div class="w-full flex items-center justify-start gap-2.5">
-              <add-product-image
-                v-for="key in Object.keys(product.images)"
-                :key="key"
-                :name="key"
-                :value="`${$config.imagePrefix}/${product.images[key]}` || ''"
-                @upload-image="updateImages($event.name, $event.data)"
-              ></add-product-image>
-            </div>
-          </div>
-
           <!-- title -->
           <base-input
             type="text"
