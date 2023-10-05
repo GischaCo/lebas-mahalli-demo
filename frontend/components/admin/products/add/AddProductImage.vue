@@ -20,7 +20,6 @@ export default {
 import { onMounted, ref } from "@nuxtjs/composition-api";
 
 // variables
-// const src = ref(require("../../../../static/img/admin/blank.png"));
 const src = ref();
 
 onMounted(() => {

@@ -274,11 +274,192 @@ const updateProduct = async (req, res) => {
     // update product
     Product.updateOne({ _id: new ObjectId(id) }, { $set: data })
       .then(() => {
-        res.status(200).send({
-          message: "محصول با موفقیت ویرایش شد",
-          status: 200,
-          success: true,
-        });
+        // image
+        const image = data.image;
+        const images = data.images;
+        const imagesData = {
+          image: image,
+          images: { ...images },
+        };
+        // ---- main ----
+        if (image.startsWith("data")) {
+          // remove image
+          fs.rm(
+            `./public/upload/products/${id}/main.png`,
+            { recursive: true, force: true },
+            function (fsError) {
+              if (fsError) console.log(fsError);
+
+              // then
+              const imageData = image.replace(/^data:image\/\w+;base64,/, "");
+              const buf = Buffer.from(imageData, "base64");
+              fs.writeFile(
+                `./public/upload/products/${id}/main.png`,
+                buf,
+                function (fsError) {
+                  if (fsError) {
+                    console.log(fsError);
+                  }
+
+                  imagesData.image = `/${id}/main.png`;
+
+                  console.log("saved:", imagesData.image);
+
+                  // ---- images ----
+                  const testFunc = (callback) => {
+                    const imagesKeys = Object.keys(images);
+                    let remainedFiles = imagesKeys.length;
+                    for (let i in imagesKeys) {
+                      remainedFiles--;
+                      const img = images[imagesKeys[i]];
+                      // console.log("img::::::::::::::", img);
+                      if (img.startsWith("data")) {
+                        // remove image
+                        fs.rm(
+                          `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
+                          { recursive: true, force: true },
+                          function (fsError) {
+                            if (fsError) console.log(fsError);
+
+                            const signleImageData = img.replace(
+                              /^data:image\/\w+;base64,/,
+                              ""
+                            );
+                            const imageBuf = Buffer.from(
+                              signleImageData,
+                              "base64"
+                            );
+                            console.log("imagesKeys[i]::::", imagesKeys[i]);
+                            fs.writeFile(
+                              `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
+                              imageBuf,
+                              function (fsError) {
+                                if (fsError) {
+                                  console.log(fsError);
+                                }
+                                console.log("saveeeeeeeeeeeeeeeeeeeed");
+                                imagesData.images[
+                                  imagesKeys[i]
+                                ] = `/${id}/images/${imagesKeys[i]}.png`;
+
+                                // database stuff
+                                console.log("remainedFiles::::", remainedFiles);
+                                if (remainedFiles === 0) {
+                                  callback();
+                                }
+                              }
+                            );
+                          }
+                        );
+                      }
+                    }
+                  };
+
+                  // save to database
+                  const saveToDatabase = () => {
+                    Product.updateOne(
+                      { _id: new ObjectId(id) },
+                      { $set: imagesData }
+                    )
+                      .then(() => {
+                        console.log("imagesData::::", imagesData);
+                        console.log("update product's image");
+                        res.status(200).send({
+                          message: "محصول با موفقیت ویرایش شد",
+                          status: 200,
+                          success: true,
+                        });
+                      })
+                      .catch((err) => {
+                        res.status(400).send({
+                          message: "خطا در ویرایش محصول",
+                          status: 400,
+                          success: false,
+                        });
+                        console.log("error updating product's image:", err);
+                      });
+                  };
+
+                  // run
+                  testFunc(saveToDatabase);
+                }
+              );
+            }
+          );
+        } else {
+          console.log("testtttttttttttttttttt");
+          // ---- images ----
+          const testFunc = (callback) => {
+            const imagesKeys = Object.keys(images);
+            let remainedFiles = imagesKeys.length;
+            for (let i in imagesKeys) {
+              remainedFiles--;
+              const img = images[imagesKeys[i]];
+              // console.log("img::::::::::::::", img);
+              if (img.startsWith("data")) {
+                // remove image
+                fs.rm(
+                  `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
+                  { recursive: true, force: true },
+                  function (fsError) {
+                    if (fsError) console.log(fsError);
+
+                    const signleImageData = img.replace(
+                      /^data:image\/\w+;base64,/,
+                      ""
+                    );
+                    const imageBuf = Buffer.from(signleImageData, "base64");
+                    console.log("imagesKeys[i]::::", imagesKeys[i]);
+                    fs.writeFile(
+                      `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
+                      imageBuf,
+                      function (fsError) {
+                        if (fsError) {
+                          console.log(fsError);
+                        }
+                        console.log("saveeeeeeeeeeeeeeeeeeeed");
+                        imagesData.images[
+                          imagesKeys[i]
+                        ] = `/${id}/images/${imagesKeys[i]}.png`;
+
+                        // database stuff
+                        console.log("remainedFiles::::", remainedFiles);
+                        if (remainedFiles === 0) {
+                          callback();
+                        }
+                      }
+                    );
+                  }
+                );
+              }
+            }
+          };
+
+          // save to database
+          const saveToDatabase = () => {
+            Product.updateOne({ _id: new ObjectId(id) }, { $set: imagesData })
+              .then(() => {
+                console.log("imagesData::::", imagesData);
+                console.log("update product's image");
+                res.status(200).send({
+                  message: "محصول با موفقیت ویرایش شد",
+                  status: 200,
+                  success: true,
+                });
+              })
+              .catch((err) => {
+                res.status(400).send({
+                  message: "خطا در ویرایش محصول",
+                  status: 400,
+                  success: false,
+                });
+                console.log("error updating product's image:", err);
+              });
+          };
+
+          // run
+          testFunc(saveToDatabase);
+        }
       })
       .catch((errr) => {
         console.log("error updating product:", errr);
