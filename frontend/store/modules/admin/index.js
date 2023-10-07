@@ -138,6 +138,9 @@ const actions = {
         // move to products page
         this.$router.push("/admin/products/all");
 
+        // refresh product's list
+        dispatch("getProducts");
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
