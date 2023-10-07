@@ -1,7 +1,13 @@
 <template>
-  <article class="w-full">
+  <admin-container>
+    <admin-header-buttons
+      has-button
+      button-title="ثبت محصول جدید"
+      button-icon="plus-solid"
+      button-path="/admin/products/add"
+    ></admin-header-buttons>
     <admin-all-products></admin-all-products>
-  </article>
+  </admin-container>
 </template>
 
 <script>

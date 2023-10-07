@@ -113,7 +113,8 @@ const deleteProduct = (productId) => {
 // lifecycles
 onMounted(() => {
   // fetch all products on first mount
-  store.dispatch("admin/getProducts");
+  if (store.getters["admin/allProducts"].length === 0)
+    store.dispatch("admin/getProducts");
 });
 </script>
 
