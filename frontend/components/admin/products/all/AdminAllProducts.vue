@@ -23,15 +23,17 @@
             <span>{{ i + 1 }}</span>
           </td>
           <td>
-            <div
-              class="w-12 h-12 rounded bg-zinc-100 flex items-center justify-center overflow-hidden"
-            >
-              <img
-                class="w-auto max-h-full"
-                :src="`${$config.imagePrefix}/${product.image}`"
-                :alt="product.title"
-              />
-            </div>
+            <nuxt-link :to="`/products/${product._id}`">
+              <div
+                class="w-12 h-12 rounded bg-zinc-100 flex items-center justify-center overflow-hidden"
+              >
+                <img
+                  class="w-auto max-h-full"
+                  :src="`${$config.imagePrefix}/${product.image}`"
+                  :alt="product.title"
+                />
+              </div>
+            </nuxt-link>
           </td>
           <td>
             <p class="product-title text-xs md:text-base font-bold">

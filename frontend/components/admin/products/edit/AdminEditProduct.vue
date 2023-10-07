@@ -29,7 +29,10 @@
           </div>
 
           <!-- other images -->
-          <div class="w-full flex flex-col items-start gap-1">
+          <div
+            v-if="productInfo.images"
+            class="w-full flex flex-col items-start gap-1"
+          >
             <span class="text-sm text-neutral-500 transition-all"
               >دیگر تصاویر</span
             >
