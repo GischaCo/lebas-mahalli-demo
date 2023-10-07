@@ -1,8 +1,8 @@
 <template>
-  <article class="w-full">
+  <admin-container>
     <admin-header-buttons></admin-header-buttons>
     <add-product></add-product>
-  </article>
+  </admin-container>
 </template>
 
 <script>

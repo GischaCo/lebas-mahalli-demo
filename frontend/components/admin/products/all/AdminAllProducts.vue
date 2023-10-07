@@ -103,6 +103,9 @@ const products = computed(() => {
 });
 
 // methods
+const getProducts = () => {
+  store.dispatch("admin/getProducts");
+};
 const editProduct = (productId) => {
   router.push(`/admin/products/edit?id=${productId}`);
 };
@@ -113,8 +116,7 @@ const deleteProduct = (productId) => {
 // lifecycles
 onMounted(() => {
   // fetch all products on first mount
-  if (store.getters["admin/allProducts"].length === 0)
-    store.dispatch("admin/getProducts");
+  if (store.getters["admin/allProducts"].length === 0) getProducts();
 });
 </script>
 

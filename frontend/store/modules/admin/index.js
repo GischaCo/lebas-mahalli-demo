@@ -169,6 +169,7 @@ const actions = {
       .then((res) => {
         // reset products list
         dispatch("getProducts");
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
