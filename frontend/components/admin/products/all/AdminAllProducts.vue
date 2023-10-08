@@ -29,7 +29,7 @@
               >
                 <img
                   class="w-auto max-h-full"
-                  :src="`${$config.imagePrefix}/${product.image}`"
+                  :src="$config.imagePrefix + product.image"
                   :alt="product.title"
                 />
               </div>

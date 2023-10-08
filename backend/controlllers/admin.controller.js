@@ -31,17 +31,22 @@ const allProducts = async (req, res) => {
     await Product.find()
       .sort({ createdAt: -1 })
       .then((result) => {
-        // convert images before sending
-        // const image = result.image.toString("base64");
-        // let images = [];
-        // result.images.forEach((imageBuf) => {
-        //   images.push(imageBuf.toString("base64"));
-        // });
-        // console.log(result);
+        let productsList = result;
+        productsList.forEach((product) => {
+          // convert images into binary
+          // |-- main image
+          product.image = product.image.toString("base64");
+          // |-- other images
+          let images = [];
+          product.images.forEach((imageBuf) => {
+            images.push(imageBuf.toString("base64"));
+          });
+          product.images = images;
+        });
 
         // send products list via response
         return res.status(200).send({
-          // data: { ...result._doc, image, images },
+          data: productsList,
           data: result,
           message: "لیست محصولات با موفقیت دریافت شد",
           status: 200,
@@ -103,7 +108,6 @@ const singleProduct = async (req, res) => {
 
         // send products list via response
         res.status(200).send({
-          // data: { ...result, image, images },
           data: { ...result._doc, image, images },
           message: "اطلاعات محصول با موفقیت دریافت شد",
           status: 200,
