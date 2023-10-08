@@ -10,10 +10,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#E1057A", // Mexican Pink
-        secondary: "#060047", // Federal Blue
+        primary: "#1E3A8A", // Dark Blue
+        secondary: "#060047", // Very Dark Blue
         accent: "#FF89BC", // Persian Pink
-        light: "#FFDEEB", // Mimi Pink
+        light: "#c2cdec", // Light Blue
       },
     },
   },
