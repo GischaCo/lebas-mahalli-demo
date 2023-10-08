@@ -45,7 +45,7 @@
         <button
           type="submit"
           :disabled="invalid"
-          class="w-8/12 h-12 text-white bg-gradient-to-r from-primary to-accent disabled:brightness-75 disabled:cursor-not-allowed rounded-lg hover:shadow-lg transition-all"
+          class="w-8/12 h-12 text-white bg-gradient-to-r from-secondary to-primary disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed rounded-lg hover:shadow-lg transition-all"
         >
           ورود
         </button>

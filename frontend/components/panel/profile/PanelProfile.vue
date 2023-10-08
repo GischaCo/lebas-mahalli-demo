@@ -13,7 +13,7 @@
             :value="userInfo.fullname"
             @update:value="updateUserInfo('fullname', $event)"
             rules="required"
-            >اسم زیباتون</base-input
+            >نام</base-input
           >
 
           <!-- mobile -->

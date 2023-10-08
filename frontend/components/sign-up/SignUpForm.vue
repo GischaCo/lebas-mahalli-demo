@@ -11,7 +11,7 @@
         :value="userInfo.fullname"
         @update:value="updateUserInfo('fullname', $event)"
         rules="required"
-        >اسم قشنگت</base-input
+        >نام</base-input
       >
 
       <!-- mobile -->
@@ -25,7 +25,7 @@
         >شماره موبایل</base-input
       >
 
-      <div class="w-full flex items-center justify-center gap-2">
+      <div class="w-full flex items-start justify-center gap-2">
         <!-- password -->
         <base-input
           type="password"
@@ -60,7 +60,7 @@
         <button
           type="submit"
           :disabled="invalid"
-          class="w-8/12 h-12 text-white bg-gradient-to-r from-primary to-accent disabled:brightness-75 disabled:cursor-not-allowed rounded-lg hover:shadow-lg transition-all"
+          class="w-8/12 h-12 text-white bg-gradient-to-r from-secondary to-primary disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed rounded-lg hover:shadow-lg transition-all"
         >
           ثبت‌نام
         </button>

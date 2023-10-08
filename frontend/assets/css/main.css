@@ -45,9 +45,4 @@
   select:focus {
     @apply outline-none;
   }
-
-  /* shadows */
-  .custom-shadow-1 {
-    box-shadow: 0px 0px 88px 1px rosybrown;
-  }
 }

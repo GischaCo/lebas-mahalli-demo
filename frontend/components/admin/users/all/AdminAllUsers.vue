@@ -7,7 +7,7 @@
       <thead class="w-full">
         <tr class="w-full">
           <td><p class="text-sm md:text-base">ردیف</p></td>
-          <td><p class="text-sm md:text-base">اسم</p></td>
+          <td><p class="text-sm md:text-base">نام</p></td>
           <td><p class="text-sm md:text-base">موبایل</p></td>
           <td><p class="text-sm md:text-base">کیف‌پول</p></td>
           <td><p class="text-sm md:text-base">عملیات</p></td>
