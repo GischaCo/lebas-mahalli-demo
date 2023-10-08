@@ -121,8 +121,8 @@ const addProduct = async (req, res) => {
     // |- convert other images into Buffer
     const binaryImages = req.body.images;
     let images = [];
-    binaryImages.forEach((binImg) => {
-      const imageData = binImg.replace(/^data:image\/\w+;base64,/, "");
+    binaryImages.forEach((imgObj) => {
+      const imageData = imgObj.img.replace(/^data:image\/\w+;base64,/, "");
       const bufImage = Buffer.from(imageData, "base64");
       images.push(bufImage);
     });

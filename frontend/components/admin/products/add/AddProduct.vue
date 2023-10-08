@@ -178,7 +178,7 @@ const productInfo = ref({
   price: "",
   salePrice: "",
   image: "",
-  images: {},
+  images: [],
   category: "",
   available: true,
 });
@@ -187,8 +187,9 @@ const productInfo = ref({
 const updateProductInfo = (key, value) => {
   productInfo.value[key] = value;
 };
-const updateImages = (key, value) => {
-  productInfo.value.images[key] = value;
+const updateImages = (name, data) => {
+  const newImage = { name, img: data };
+  productInfo.value.images.push(newImage);
 };
 const submitForm = () => {
   const data = productInfo.value;
