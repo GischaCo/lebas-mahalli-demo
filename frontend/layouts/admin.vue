@@ -2,7 +2,7 @@
   <div
     class="relative min-h-screen flex flex-col items-center justify-between gap-4"
   >
-    <div class="w-full">
+    <div class="w-full md:w-9/12">
       <admin-header></admin-header>
 
       <main class="w-full px-4 mx-auto my-6">

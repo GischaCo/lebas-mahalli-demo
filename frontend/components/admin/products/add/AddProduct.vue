@@ -153,7 +153,7 @@
           <button
             type="submit"
             :disabled="invalid || !validCategory || !validDescription"
-            class="w-full py-3 bg-gradient-to-tr from-secondary to-blue-700 text-white text-lg rounded-lg disabled:brightness-75 shadow-md hover:shadow-lg transition-all"
+            class="w-full py-3 bg-slate-700 text-white text-lg rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
           >
             افزودن
           </button>

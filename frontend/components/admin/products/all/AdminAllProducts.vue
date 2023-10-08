@@ -2,7 +2,7 @@
   <section class="w-full">
     <table
       v-if="products.length"
-      class="w-full bg-slate-50 rounded-xl overflow-hidden"
+      class="w-full bg-slate-50 rounded-xl overflow-hidden shadow-md"
     >
       <thead class="w-full">
         <tr class="w-full">

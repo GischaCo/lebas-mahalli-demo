@@ -43,27 +43,6 @@ const actions = ref([
     ],
   },
   {
-    title: "کاربران",
-    links: [
-      {
-        title: "لیست کاربران",
-        to: "/admin/users/all",
-      },
-      {
-        title: "افزودن کاربر",
-        to: "/admin/add-user",
-      },
-      {
-        title: "ویرایش کاربر",
-        to: "/admin/edit-user",
-      },
-      {
-        title: "حذف کاربر",
-        to: "/admin/delete-user",
-      },
-    ],
-  },
-  {
     title: "مقالات",
     links: [
       {
@@ -87,6 +66,10 @@ const actions = ref([
   {
     title: "متفرقه",
     links: [
+      {
+        title: "لیست کاربران",
+        to: "/admin/users/all",
+      },
       {
         title: "لیست سفارشات",
         to: "/admin/all-orders",

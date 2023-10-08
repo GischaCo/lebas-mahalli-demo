@@ -13,13 +13,13 @@
       <div
         v-for="(link, i) in links"
         :key="i"
-        class="w-2/5 md:w-auto md:flex-1 h-16 border-2 border-primary rounded-lg"
+        class="w-2/5 md:w-auto h-16 md:flex-1 bg-slate-100 rounded-lg shadow"
       >
         <nuxt-link
           :to="link.to"
           class="w-full h-full flex items-center justify-center"
         >
-          <span class="text-primary">{{ link.title }}</span>
+          <span class="text-secondary">{{ link.title }}</span>
         </nuxt-link>
       </div>
     </div>

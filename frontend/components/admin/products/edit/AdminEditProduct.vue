@@ -2,7 +2,7 @@
   <div class="w-full max-w-lg mt-6 mx-auto">
     <div
       v-if="product !== null"
-      class="w-full p-4 bg-slate-200 rounded-xl mt-4"
+      class="w-full p-4 bg-slate-200 rounded-xl mt-4 shadow"
     >
       <validation-observer class="w-full" v-slot="{ invalid }">
         <form
@@ -152,7 +152,7 @@
           <button
             type="submit"
             :disabled="invalid || !validCategory || !validDescription"
-            class="w-full py-3 bg-gradient-to-tr from-secondary to-blue-700 text-white text-lg rounded-lg disabled:brightness-75 shadow-md hover:shadow-lg transition-all"
+            class="w-full py-3 bg-slate-700 text-white text-lg rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
           >
             ثبت تغییرات
           </button>
