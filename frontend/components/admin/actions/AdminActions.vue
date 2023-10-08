@@ -47,7 +47,7 @@ const actions = ref([
     links: [
       {
         title: "لیست کاربران",
-        to: "/admin/all-users",
+        to: "/admin/users/all",
       },
       {
         title: "افزودن کاربر",

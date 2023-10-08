@@ -5,6 +5,7 @@ const User = require("../models/user.model");
 const Product = require("../models/product.model");
 const ObjectId = require("mongodb").ObjectId;
 
+// prpoducts
 const allProducts = async (req, res) => {
   try {
     // get token from request header
@@ -350,10 +351,55 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+// users
+const allUsers = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // get admins & users list separated to show admins first
+    const users = await User.find().sort({ createdAt: -1 });
+
+    // send users list via response
+    return res.status(200).send({
+      data: users,
+      message: "لیست کاربران با موفقیت دریافت شد",
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      message: "خطا در دریافت لیست کاربران",
+      status: 400,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
-  addProduct,
+  // products
   allProducts,
-  deleteProduct,
-  updateProduct,
   singleProduct,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  // users
+  allUsers,
 };

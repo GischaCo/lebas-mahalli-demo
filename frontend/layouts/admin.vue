@@ -5,7 +5,7 @@
     <div class="w-full">
       <admin-header></admin-header>
 
-      <main class="w-10/12 mx-auto my-6">
+      <main class="w-full px-4 mx-auto my-6">
         <nuxt />
       </main>
     </div>

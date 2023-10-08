@@ -86,9 +86,11 @@ export default {
      ** postcss configuration
      */
     postcss: {
-      plugins: {
-        tailwindcss: {},
-        autoprefixer: {},
+      postcssOptions: {
+        plugins: {
+          tailwindcss: {},
+          autoprefixer: {},
+        },
       },
     },
   },

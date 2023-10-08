@@ -1,21 +1,30 @@
 const state = {
+  // products
   product: null,
   products: [],
+  // users
+  users: [],
 };
 
 const mutations = {
+  // products
   setProduct(state, data) {
     state.product = data;
-  },
-  resetProduct(state) {
-    state.product = null;
   },
   setProducts(state, data) {
     state.products = data;
   },
+  resetProduct(state) {
+    state.product = null;
+  },
+  // users
+  setUsers(state, data) {
+    state.users = data;
+  },
 };
 
 const actions = {
+  // products
   addProduct({ dispatch }, data) {
     // send data to server
     const TOKEN = localStorage.getItem("userAuthTOKEN");
@@ -180,14 +189,49 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
+  // users
+  getUsers({ commit, dispatch }) {
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    };
+
+    this.$axios
+      .$get("/admin/all-users", reqConfig)
+      .then((res) => {
+        // update state
+        commit("setUsers", res.data);
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
 };
 
 const getters = {
+  // products
   allProducts(state) {
     return state.products;
   },
   singleProduct(state) {
     return state.product;
+  },
+  // users
+  allUsers(state) {
+    return state.users;
   },
 };
 

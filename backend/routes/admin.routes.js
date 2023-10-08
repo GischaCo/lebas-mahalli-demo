@@ -14,4 +14,7 @@ router
   .route("/api/admin/delete-product/:id")
   .delete(adminController.deleteProduct);
 
+// users
+router.route("/api/admin/all-users").get(adminController.allUsers);
+
 module.exports = router;
