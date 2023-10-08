@@ -18,7 +18,6 @@
             >
 
             <div class="w-full flex items-center justify-start gap-4">
-              <!-- first -->
               <add-product-image
                 name="main"
                 width="w-28 md:w-36"

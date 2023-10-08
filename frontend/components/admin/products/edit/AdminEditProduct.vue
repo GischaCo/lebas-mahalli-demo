@@ -1,19 +1,22 @@
 <template>
   <div class="w-full max-w-lg mt-6 mx-auto">
-    <h2 class="text-lg text-primary font-bold text-center">ویرایش محصول</h2>
-
     <div
       v-if="product !== null"
-      class="w-full p-4 border-2 border-primary rounded-xl mt-4"
+      class="w-full p-4 bg-slate-200 rounded-xl mt-4"
     >
       <validation-observer class="w-full" v-slot="{ invalid }">
         <form
           @submit.prevent="submitForm"
           class="w-full flex flex-col items-start justify-start gap-3"
         >
-          <!-- main images -->
+          <!-- title -->
+          <h2 class="text-lg text-secondary font-bold text-center">
+            ویرایش محصول
+          </h2>
+
+          <!-- main image -->
           <div class="w-full flex flex-col items-start gap-1">
-            <span class="text-sm text-neutral-500 transition-all"
+            <span class="text-sm text-neutral-900 transition-all"
               >تصویر اصلی</span
             >
 
@@ -33,7 +36,7 @@
             v-if="productInfo.images.length"
             class="w-full flex flex-col items-start gap-1"
           >
-            <span class="text-sm text-neutral-500 transition-all"
+            <span class="text-sm text-neutral-900 transition-all"
               >دیگر تصاویر</span
             >
 
@@ -53,23 +56,23 @@
           </div>
 
           <!-- title -->
-          <base-input
+          <admin-input
             type="text"
             name="title"
             :value="productInfo.title"
             @update:value="updateProductInfo('title', $event)"
             rules="required"
-            >نام محصول</base-input
+            >نام محصول</admin-input
           >
 
           <!-- description -->
           <label class="w-full flex flex-col items-start gap-1 group">
             <span
-              class="text-sm text-neutral-500 group-focus-within:text-primary transition-all"
+              class="text-sm text-neutral-900 group-focus-within:text-slate-600 transition-all"
               >توضیح کوتاه</span
             >
             <textarea
-              class="w-full min-h-[8rem] max-h-[8rem] p-2 border-[1px] border-neutral-500 group-focus-within:border-primary rounded-lg transition-all"
+              class="w-full min-h-[8rem] max-h-[8rem] p-2 group-focus-within:ring-2 group-focus-within:ring-slate-300 rounded-lg transition-all"
               name="description"
               cols="30"
               rows="10"
@@ -78,35 +81,35 @@
           </label>
 
           <!-- price -->
-          <base-input
+          <admin-input
             type="number"
             name="price"
             :value="productInfo.price"
             @update:value="updateProductInfo('price', $event)"
             rules="required"
-            >قیمت محصول</base-input
+            >قیمت محصول</admin-input
           >
 
           <!-- sale price -->
-          <base-input
+          <admin-input
             type="number"
             name="sale-price"
             :value="productInfo.salePrice"
             @update:value="updateProductInfo('salePrice', $event)"
             rules="required"
-            >قیمت با تخفیف</base-input
+            >قیمت با تخفیف</admin-input
           >
 
           <!-- category -->
           <label class="w-full flex flex-col items-start gap-1 group">
             <span
-              class="text-sm text-neutral-500 group-focus-within:text-primary transition-all"
+              class="text-sm text-neutral-900 group-focus-within:text-slate-600 transition-all"
               >دسته‌بندی محصول</span
             >
 
             <select
               name="gender"
-              class="w-full h-11 p-2 border-[1px] border-neutral-500 group-focus-within:border-primary rounded-lg transition-all"
+              class="w-full h-11 p-2 group-focus-within:ring-2 group-focus-within:ring-slate-300 rounded-lg transition-all"
               v-model="productInfo.category"
             >
               <option
@@ -146,7 +149,7 @@
           <button
             type="submit"
             :disabled="invalid || !validCategory || !validDescription"
-            class="w-full py-3 bg-gradient-to-tr from-primary to-accent text-white text-lg rounded-lg disabled:brightness-75 shadow-md hover:shadow-lg transition-all"
+            class="w-full py-3 bg-gradient-to-tr from-secondary to-blue-700 text-white text-lg rounded-lg disabled:brightness-75 shadow-md hover:shadow-lg transition-all"
           >
             ثبت تغییرات
           </button>
