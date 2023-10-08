@@ -4,7 +4,7 @@
     <nuxt-link
       v-if="hasButton"
       :to="buttonPath"
-      class="px-4 py-2 bg-secondary rounded-md flex items-center justify-center gap-2 hover:brightness-110 transition-all"
+      class="px-3 md:px-4 py-2 text-xs md:text-sm bg-secondary rounded-md flex items-center justify-center gap-2 hover:brightness-110 transition-all"
     >
       <base-icon :name="buttonIcon" class="w-4 h-4 fill-white"></base-icon>
       <span class="text-white">{{ buttonTitle }}</span>
@@ -13,12 +13,12 @@
     <!-- admin actions -->
     <nuxt-link
       to="/admin"
-      class="px-4 py-2 rounded-md flex items-center justify-center gap-2 hover:brightness-110 transition-all"
+      class="py-2 text-xs md:text-sm rounded-md flex items-center justify-center gap-2 hover:brightness-110 transition-all"
     >
-      <span class="text-secondary">بازگشت به پنل ادمین</span>
+      <span class="text-secondary font-bold">بازگشت به پنل ادمین</span>
       <base-icon
         name="arrow-left-solid"
-        class="w-4 h-4 fill-secondary"
+        class="w-3 h-3 md:w-4 md:h-4 fill-secondary"
       ></base-icon>
     </nuxt-link>
   </div>
