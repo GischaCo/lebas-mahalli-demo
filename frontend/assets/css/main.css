@@ -38,9 +38,11 @@
   input,
   button,
   textarea,
+  select,
   input:focus,
   button:focus,
-  textarea:focus {
+  textarea:focus,
+  select:focus {
     @apply outline-none;
   }
 

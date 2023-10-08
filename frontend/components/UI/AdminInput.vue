@@ -1,7 +1,7 @@
 <template>
   <label class="w-full flex flex-col items-start gap-1 group">
     <span
-      class="text-sm text-neutral-500 group-focus-within:text-primary transition-all"
+      class="text-sm text-neutral-900 group-focus-within:text-slate-600 transition-all"
     >
       <slot></slot>
     </span>
@@ -16,17 +16,19 @@
         :type="type"
         :name="name"
         :placeholder="placeholder"
-        class="w-full h-11 p-2 border-[1px] border-neutral-500 group-focus-within:border-primary rounded-lg transition-all"
+        class="w-full h-11 p-2 group-focus-within:ring-2 group-focus-within:ring-slate-300 rounded-lg transition-all"
         v-model="value"
       />
-      <span class="text-xs text-rose-600 transition-all">{{ errors[0] }}</span>
+      <span v-if="errors.length" class="text-xs text-blue-800 transition-all">
+        - {{ errors[0] }}
+      </span>
     </validation-provider>
   </label>
 </template>
 
 <script>
 export default {
-  name: "BaseInput",
+  name: "AdminInput",
 };
 </script>
 

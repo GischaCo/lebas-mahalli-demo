@@ -1,21 +1,26 @@
 <template>
   <section class="w-full h-96 flex items-center justify-center">
-    <div class="w-80 flex flex-col items-start justify-center gap-2">
-      <p class="text-primary text-lg">
-        لطفا آیدی محصول جهت حذف آن را وارد کنید
-      </p>
-      <input
-        v-model="productId"
-        class="w-full h-12 p-2 rounded-md border-2 border-accent focus:ring-4 focus:ring-light transition-all"
-      />
-      <button
-        @click="deleteProduct"
-        :disabled="inputIsEmpty"
-        class="w-full h-12 rounded-md text-white bg-primary disabled:brightness-75"
+    <validation-observer v-slot="{ invalid }">
+      <div
+        class="w-80 p-6 bg-slate-200 flex flex-col items-start justify-center gap-2 rounded-lg"
       >
-        حذف
-      </button>
-    </div>
+        <admin-input
+          type="text"
+          name="product-id"
+          :value="productId"
+          @update:value="updateId($event)"
+          rules="required"
+          >لطفا آیدی محصول جهت حذف آن را وارد کنید</admin-input
+        >
+        <button
+          @click="deleteProduct"
+          :disabled="invalid"
+          class="w-full py-3 bg-gradient-to-tr from-secondary to-blue-700 text-white text-lg rounded-lg disabled:brightness-75 shadow-md hover:shadow-lg transition-all"
+        >
+          حذف
+        </button>
+      </div>
+    </validation-observer>
   </section>
 </template>
 
@@ -38,6 +43,9 @@ const inputIsEmpty = computed(() => {
 });
 
 // methods
+const updateId = (value) => {
+  productId.value = value;
+};
 const deleteProduct = () => {
   store.dispatch("admin/deleteProduct", productId.value);
 };
