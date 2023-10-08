@@ -30,7 +30,7 @@
 
           <!-- other images -->
           <div
-            v-if="productInfo.images"
+            v-if="productInfo.images.length"
             class="w-full flex flex-col items-start gap-1"
           >
             <span class="text-sm text-neutral-500 transition-all"
