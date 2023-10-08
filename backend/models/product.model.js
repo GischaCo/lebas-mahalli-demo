@@ -24,7 +24,7 @@ const productSchema = new Schema(
       required: true,
     },
     image: {
-      type: Buffer,
+      type: Object,
       required: true,
     },
     images: {

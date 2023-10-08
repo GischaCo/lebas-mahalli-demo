@@ -28,15 +28,34 @@ const allProducts = async (req, res) => {
     }
 
     // get products list
-    const products = await Product.find().sort({ createdAt: -1 });
+    await Product.find()
+      .sort({ createdAt: -1 })
+      .then((result) => {
+        // convert images before sending
+        // const image = result.image.toString("base64");
+        // let images = [];
+        // result.images.forEach((imageBuf) => {
+        //   images.push(imageBuf.toString("base64"));
+        // });
+        // console.log(result);
 
-    // send products list via response
-    return res.status(200).send({
-      data: products,
-      message: "لیست محصولات با موفقیت دریافت شد",
-      status: 200,
-      success: true,
-    });
+        // send products list via response
+        return res.status(200).send({
+          // data: { ...result._doc, image, images },
+          data: result,
+          message: "لیست محصولات با موفقیت دریافت شد",
+          status: 200,
+          success: true,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).send({
+          message: "خطا در دریافت لیست محصولات",
+          status: 400,
+          success: false,
+        });
+      });
   } catch (error) {
     return res.status(400).send({
       message: "خطا در دریافت لیست محصولات",
@@ -71,15 +90,34 @@ const singleProduct = async (req, res) => {
     const productId = req.params.id;
 
     // get product's data
-    const product = await Product.findById(productId);
+    await Product.findById(productId)
+      .then((result) => {
+        // convert images into binary
+        // |-- main image
+        const image = result.image.toString("base64");
+        // |-- other images
+        let images = [];
+        result.images.forEach((imageBuf) => {
+          images.push(imageBuf.toString("base64"));
+        });
 
-    // send products list via response
-    return res.status(200).send({
-      data: product,
-      message: "اطلاعات محصول با موفقیت دریافت شد",
-      status: 200,
-      success: true,
-    });
+        // send products list via response
+        res.status(200).send({
+          // data: { ...result, image, images },
+          data: { ...result._doc, image, images },
+          message: "اطلاعات محصول با موفقیت دریافت شد",
+          status: 200,
+          success: true,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(400).send({
+          message: "خطا در دریافت اطلاعات محصول",
+          status: 400,
+          success: false,
+        });
+      });
   } catch (error) {
     return res.status(400).send({
       message: "خطا در دریافت اطلاعات محصول",

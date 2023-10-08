@@ -25,7 +25,7 @@
             >
               <img
                 class="w-auto max-h-full"
-                :src="`${$config.imagePrefix}/${productInfo.image}`"
+                :src="$config.imagePrefix + productInfo.image"
                 :alt="productInfo.title"
               />
             </div>
@@ -42,13 +42,13 @@
 
             <div class="w-full flex items-center justify-start gap-4">
               <div
-                v-for="key in Object.keys(productInfo.images)"
-                :key="key"
-                class="w-24 h-24 bg-zinc-100 rounded-md flex items-center justify-center overflow-hidden"
+                v-for="(image, i) in productInfo.images"
+                :key="i"
+                class="w-16 h-16 bg-zinc-100 rounded-md flex items-center justify-center overflow-hidden"
               >
                 <img
                   class="w-auto max-h-full"
-                  :src="`${$config.imagePrefix}${productInfo.images[key]}`"
+                  :src="$config.imagePrefix + image"
                   :alt="productInfo.title"
                 />
               </div>
