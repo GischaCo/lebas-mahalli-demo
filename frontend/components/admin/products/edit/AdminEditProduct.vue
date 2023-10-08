@@ -25,7 +25,7 @@
             >
               <img
                 class="w-auto max-h-full"
-                :src="$config.imagePrefix + productInfo.image"
+                :src="$config.imagePrefix + product.image"
                 :alt="productInfo.title"
               />
             </div>
@@ -33,7 +33,7 @@
 
           <!-- other images -->
           <div
-            v-if="productInfo.images.length"
+            v-if="product.images.length"
             class="w-full flex flex-col items-start gap-1"
           >
             <span class="text-sm text-neutral-900 transition-all"
@@ -42,7 +42,7 @@
 
             <div class="w-full flex items-center justify-start gap-4">
               <div
-                v-for="(image, i) in productInfo.images"
+                v-for="(image, i) in product.images"
                 :key="i"
                 class="w-16 h-16 bg-zinc-100 rounded-md flex items-center justify-center overflow-hidden"
               >
@@ -186,8 +186,6 @@ const productInfo = ref({
   description: "",
   price: "",
   salePrice: "",
-  image: "",
-  images: {},
   category: "",
   available: true,
 });
@@ -209,9 +207,6 @@ const validDescription = computed(() => {
 // methods
 const updateProductInfo = (key, value) => {
   productInfo.value[key] = value;
-};
-const updateImages = (key, value) => {
-  productInfo.value.images[key] = value;
 };
 const checkRouteQuery = () => {
   if (productId.value === undefined) {
@@ -245,7 +240,11 @@ onMounted(() => {
 watch(
   () => product.value,
   (value) => {
-    productInfo.value = value;
+    if (product.value !== null) {
+      // remove image/images properties (won't be used while posting data)
+      const { image, images, ...rest } = product.value;
+      productInfo.value = rest;
+    }
   }
 );
 </script>
