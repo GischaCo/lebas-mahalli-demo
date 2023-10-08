@@ -110,12 +110,22 @@ const addProduct = async (req, res) => {
       });
     }
 
-    // store images
-    const image = req.body.image;
-    const images = req.body.images;
-
     // get product's data coming from request's body
     const reqBody = req.body;
+
+    // store images
+    // |- convert main image into Buffer
+    const binaryImage = req.body.image;
+    const imgData = binaryImage.replace(/^data:image\/\w+;base64,/, "");
+    const image = Buffer.from(imgData, "base64");
+    // |- convert other images into Buffer
+    const binaryImages = req.body.images;
+    let images = [];
+    binaryImages.forEach((binImg) => {
+      const imageData = binImg.replace(/^data:image\/\w+;base64,/, "");
+      const bufImage = Buffer.from(imageData, "base64");
+      images.push(bufImage);
+    });
 
     // set default data
     const defaultData = {
@@ -126,115 +136,31 @@ const addProduct = async (req, res) => {
     // set product's final data
     const productData = {
       ...reqBody,
-      image: "null",
-      images: {},
+      image: image,
+      images: images,
       ...defaultData,
     };
 
     // save product
     const product = new Product(productData);
+
     await product
       .save()
-      .then((result) => {
-        const productId = result._id.toString();
-
-        // image data
-        const imagesData = {
-          image: "",
-          images: {},
-        };
-
-        // save main image
-        const data = image.replace(/^data:image\/\w+;base64,/, "");
-        const buf = Buffer.from(data, "base64");
-        fs.mkdir(`./public/upload/products/${productId}`, (fsError) => {
-          if (fsError) {
-            console.log(fsError);
-          }
-
-          createImageFile(productId);
+      .then(() => {
+        res.status(200).send({
+          message: "محصول با موفقیت افزوده شد",
+          status: 200,
+          success: true,
         });
-
-        // create image file
-        const createImageFile = (id) => {
-          fs.writeFile(
-            `./public/upload/products/${id}/main.png`,
-            buf,
-            function (fsError) {
-              if (fsError) {
-                console.log(fsError);
-              }
-
-              imagesData.image = `/${id}/main.png`;
-              createProductImagesDirectory(id);
-
-              saveOtherImages(id, images);
-
-              updateProductImages(id, imagesData);
-            }
-          );
-        };
-
-        // create a directory for product's other image
-        const createProductImagesDirectory = (id) => {
-          fs.mkdir(`./public/upload/products/${id}/images`, (fsError) => {
-            if (fsError) {
-              console.log(fsError);
-            }
-          });
-        };
-
-        // save other images
-        const saveOtherImages = (id, images) => {
-          const imagesKeys = Object.keys(images);
-          for (let i in imagesKeys) {
-            const imageData = images[imagesKeys[i]].replace(
-              /^data:image\/\w+;base64,/,
-              ""
-            );
-            const imageBuf = Buffer.from(imageData, "base64");
-            fs.writeFile(
-              `./public/upload/products/${id}/images/${imagesKeys[i]}.png`,
-              imageBuf,
-              function (fsError) {
-                if (fsError) {
-                  console.log(fsError);
-                }
-              }
-            );
-
-            imagesData.images[
-              imagesKeys[i]
-            ] = `/${id}/images/${imagesKeys[i]}.png`;
-          }
-        };
-
-        // save porduct's images url
-        const updateProductImages = (id, data) => {
-          Product.updateOne({ _id: new ObjectId(id) }, { $set: data })
-            .then(() => {
-              console.log("update product's image");
-            })
-            .catch((errr) => {
-              console.log("error updating product's image:", errr);
-            });
-        };
       })
-      .catch((err) => {
+      .catch((error) => {
+        console.log(error);
         res.status(400).send({
           message: "خطا در ثبت محصول",
           status: 400,
           success: false,
         });
-        console.log(err);
       });
-
-    // send response
-    res.status(200).send({
-      message: "محصول با موفقیت ثبت شد",
-      status: 200,
-      success: true,
-    });
   } catch (err) {
     res.status(400).send({
       message: "خطا در ثبت محصول",

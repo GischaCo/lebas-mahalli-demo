@@ -24,12 +24,13 @@ const productSchema = new Schema(
       required: true,
     },
     image: {
-      type: String,
+      type: Buffer,
       required: true,
     },
     images: {
-      type: Object,
+      type: Array,
       required: true,
+      // example: images: [{ name: first, img: lorem }]
     },
     comments: {
       type: Array,
