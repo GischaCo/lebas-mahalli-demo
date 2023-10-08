@@ -4,7 +4,7 @@ import { required, min, max, confirmed } from "vee-validate/dist/rules";
 
 extend("required", {
   ...required,
-  message: "تکمیل این فیلد الزمی است.",
+  message: "تکمیل این فیلد الزامی است.",
 });
 
 extend("mobile_min", {
