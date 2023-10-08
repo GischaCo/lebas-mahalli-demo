@@ -10,9 +10,12 @@
           class="w-full flex flex-col items-start justify-start gap-3"
         >
           <!-- title -->
-          <h2 class="text-lg text-secondary font-bold text-center">
+          <h2 class="w-full text-lg text-secondary font-bold text-center">
             ویرایش محصول
           </h2>
+
+          <!-- divider -->
+          <span class="w-full h-[1px] rounded-full bg-secondary"></span>
 
           <!-- main image -->
           <div class="w-full flex flex-col items-start gap-1">

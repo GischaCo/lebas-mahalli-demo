@@ -11,6 +11,9 @@
             افزودن محصول
           </h2>
 
+          <!-- divider -->
+          <span class="w-full h-[1px] rounded-full bg-secondary"></span>
+
           <!-- main images -->
           <div class="w-full flex flex-col items-start gap-1">
             <span class="text-sm text-neutral-900 transition-all"
