@@ -16,5 +16,6 @@ router
 
 // users
 router.route("/api/admin/all-users").get(adminController.allUsers);
+router.route("/api/admin/delete-user/:id").delete(adminController.deleteUser);
 
 module.exports = router;

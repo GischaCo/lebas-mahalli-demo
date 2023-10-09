@@ -219,6 +219,35 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
+  deleteUser({ dispatch }, id) {
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    };
+
+    this.$axios
+      .$delete(`/admin/delete-user/${id}`, reqConfig)
+      .then((res) => {
+        // reset products list
+        dispatch("getUsers");
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
 };
 
 const getters = {
