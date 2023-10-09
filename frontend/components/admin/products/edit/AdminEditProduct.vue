@@ -177,6 +177,7 @@ import {
   useRouter,
   onMounted,
   computed,
+  onBeforeUnmount,
 } from "@nuxtjs/composition-api";
 
 // variables
@@ -238,6 +239,10 @@ const submitForm = () => {
 onMounted(() => {
   // check if the url has query including a product's id
   checkRouteQuery();
+});
+onBeforeUnmount(() => {
+  // reset product's data in store before going out of this page
+  store.commit("admin/resetProduct");
 });
 
 watch(
