@@ -39,27 +39,13 @@
           </td>
           <td>
             <div class="flex items-center justify-start gap-3">
-              <!-- edit -->
-              <button
-                title="ویرایش"
-                @click="editUser(user._id)"
-                class="p-2 rounded bg-slate-700 shadow-md hover:shadow-lg transition-all"
-              >
-                <base-icon
-                  class="w-3.5 h-3.5 fill-white"
-                  name="pen-solid"
-                ></base-icon>
-              </button>
               <!-- delete -->
               <button
                 title="حذف"
                 @click="deleteUser(user._id)"
-                class="p-2 rounded bg-slate-700 shadow-md hover:shadow-lg transition-all"
+                class="px-5 py-2 rounded bg-slate-700 shadow-md hover:shadow-lg transition-all"
               >
-                <base-icon
-                  class="w-3.5 h-3.5 fill-white"
-                  name="trash-can-regular"
-                ></base-icon>
+                <p class="text-white text-sm">حذف</p>
               </button>
             </div>
           </td>

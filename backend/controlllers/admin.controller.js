@@ -385,13 +385,34 @@ const deleteUser = async (req, res) => {
     const id = req.params.id;
 
     // delete user from database
-    await User.findByIdAndDelete(id)
-      .then(() => {
-        return res.status(200).send({
-          message: "کاربر با موفقیت حذف شد",
-          status: 200,
-          success: true,
-        });
+    await User.findById(id)
+      .then(async (result) => {
+        const adminID = user._id.toString();
+        const targetUserID = result._id.toString();
+        if (adminID === targetUserID) {
+          return res.status(400).send({
+            message: "شما نمی‌توانید حساب خودتان را حذف کنید",
+            status: 400,
+            success: false,
+          });
+        } else {
+          await User.findByIdAndDelete(id)
+            .then(() => {
+              return res.status(200).send({
+                message: "کاربر با موفقیت حذف شد",
+                status: 200,
+                success: true,
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+              return res.status(400).send({
+                message: "خطا در حذف کاربر",
+                status: 400,
+                success: false,
+              });
+            });
+        }
       })
       .catch((error) => {
         console.log(error);
