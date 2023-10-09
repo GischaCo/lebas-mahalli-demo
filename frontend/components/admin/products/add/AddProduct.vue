@@ -191,7 +191,15 @@ const updateProductInfo = (key, value) => {
 };
 const updateImages = (name, data) => {
   const newImage = { name, img: data };
-  productInfo.value.images.push(newImage);
+  // check if an object is being duplicated
+  const foundedIndex = productInfo.value.images.findIndex(
+    (obj) => obj.name === name
+  );
+  if (foundedIndex < 0) {
+    productInfo.value.images.push(newImage);
+  } else {
+    productInfo.value.images[foundedIndex] = newImage;
+  }
 };
 const submitForm = () => {
   const data = productInfo.value;

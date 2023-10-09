@@ -1,6 +1,15 @@
 <template>
-  <label class="flex flex-col items-start gap-1">
-    <img :class="[width]" class="rounded-lg" :src="src" alt="blank image" />
+  <label>
+    <div
+      class="w-20 h-20 bg-white flex items-center justify-center rounded-lg overflow-hidden"
+    >
+      <img
+        :class="[width]"
+        class="w-auto max-h-full"
+        :src="src"
+        alt="blank image"
+      />
+    </div>
     <input
       type="file"
       @input="updateImage($event)"
