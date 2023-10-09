@@ -66,16 +66,10 @@ export default {
 </script>
 
 <script setup>
-import {
-  useStore,
-  useRouter,
-  computed,
-  onMounted,
-} from "@nuxtjs/composition-api";
+import { useStore, computed, onMounted } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
-const router = useRouter();
 
 // computed
 const users = computed(() => {
@@ -85,9 +79,6 @@ const users = computed(() => {
 // methods
 const getUsers = () => {
   store.dispatch("admin/getUsers");
-};
-const editUser = (userId) => {
-  router.push(`/admin/users/edit?id=${userId}`);
 };
 const deleteUser = (userId) => {
   store.dispatch("admin/deleteUser", userId);
