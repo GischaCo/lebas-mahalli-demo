@@ -17,7 +17,7 @@
     <!-- child categories -->
     <div
       v-if="hasChild(category._id) && isDropdownOpened"
-      class="absolute min-w-max pl-8 pr-2 py-4 bg-white rounded-xl flex flex-col items-start justify-start gap-2 shadow-lg"
+      class="absolute min-w-max pl-8 pr-2 py-4 bg-white rounded-xl flex flex-col items-start justify-start gap-2 shadow-lg z-40"
     >
       <nuxt-link
         :to="`/products${category.path}`"
