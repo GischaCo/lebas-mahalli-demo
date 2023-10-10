@@ -1,19 +1,17 @@
 <template>
-  <section class="w-full flex items-start justify-start gap-6">
-    <nuxt-link
-      :to="`/products/${product._id}`"
-      v-for="product in products"
-      :key="product._id"
-      class="relative w-52 p-3 bg-slate-100 flex flex-col items-start justify-start gap-2 rounded-lg shadow-md hover:shadow transition-all group"
+  <nuxt-link
+    :to="`/products/${product._id}`"
+    class="relative w-full h-full p-3 bg-slate-100 flex flex-col items-start justify-between gap-2 rounded-lg shadow-md hover:shadow transition-all group"
+  >
+    <!-- sale alart -->
+    <div
+      v-if="product.salePrice !== 0"
+      class="absolute -left-4 -top-4 w-12 h-12 flex items-center justify-center rounded-full bg-primary shadow-lg -rotate-12 group-hover:scale-110 transition-all z-30"
     >
-      <!-- sale alart -->
-      <div
-        v-if="product.salePrice !== 0"
-        class="absolute -left-4 -top-4 w-12 h-12 flex items-center justify-center rounded-full bg-primary shadow-lg -rotate-12 group-hover:scale-110 transition-all z-30"
-      >
-        <span class="text-white">ویژه!</span>
-      </div>
+      <span class="text-white">ویژه!</span>
+    </div>
 
+    <div class="flex flex-col items-start justify-start gap-2">
       <!-- image -->
       <div
         class="w-full bg-white flex items-center justify-center rounded-lg overflow-hidden"
@@ -29,7 +27,9 @@
       <h3 class="text-primary">
         <strong>{{ product.title }}</strong>
       </h3>
+    </div>
 
+    <div class="flex flex-col items-start justify-start gap-2">
       <!-- price -->
       <p v-if="product.salePrice === 0" class="flex items-center gap-1">
         <span>{{ product.price }}</span>
@@ -37,7 +37,7 @@
       </p>
 
       <!-- sale price -->
-      <div v-else class="flex items-center justify-start gap-2">
+      <div v-else class="flex flex-wrap items-center justify-start gap-2">
         <p
           class="text-xs text-neutral-400 flex items-center gap-1 line-through"
         >
@@ -51,7 +51,7 @@
       </div>
 
       <!-- comments & sales -->
-      <div class="w-full flex items-center justify-start gap-6">
+      <div class="flex items-center justify-start gap-6">
         <!-- comments -->
         <div class="flex items-center justify-start gap-2">
           <base-icon
@@ -74,30 +74,25 @@
           </span>
         </div>
       </div>
-    </nuxt-link>
-  </section>
+    </div>
+  </nuxt-link>
 </template>
 
 <script>
 export default {
-  name: "AllProducts",
+  name: "ProductCard",
 };
 </script>
 
 <script setup>
-import { useStore, computed, onMounted } from "@nuxtjs/composition-api";
-
-// variables
-const store = useStore();
-
-// computed
-const products = computed(() => {
-  return store.getters["products/allProducts"];
-});
-
-// lifecycles
-onMounted(() => {
-  // fetch all products on first mount
-  store.dispatch("products/getAllProducts");
+// props
+defineProps({
+  product: {
+    type: Object,
+    required: true,
+    default: function () {
+      return {};
+    },
+  },
 });
 </script>
