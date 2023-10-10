@@ -4,6 +4,7 @@
       v-if="error.statusCode === 404"
       class="flex flex-col items-center justify-center gap-2"
     >
+      <p class="text-primary text-7xl font-bold">404</p>
       <h1 class="text-primary text-3xl font-bold">صفحه مورد نظر یافت نشد!</h1>
       <nuxt-link to="/" class="flex items-center justify-center gap-1">
         <base-icon name="house-solid" class="w-3.5 fill-secondary"></base-icon>
