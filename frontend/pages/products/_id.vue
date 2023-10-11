@@ -67,6 +67,17 @@
           </p>
         </div>
 
+        <!-- sales -->
+        <div class="flex items-center justify-start gap-2">
+          <base-icon
+            name="bag-shopping-solid"
+            class="w-3.5 h-3.5 fill-neutral-500"
+          ></base-icon>
+          <p class="text-sm text-neutral-500">
+            تعداد سفارشات تا کنون: {{ product.sales }}
+          </p>
+        </div>
+
         <!-- buttons -->
         <div class="flex items-center justify-start gap-3">
           <button
