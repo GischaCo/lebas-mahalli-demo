@@ -2,7 +2,7 @@
   <article class="w-full my-12">
     <section
       v-if="product !== null"
-      class="w-full flex items-center justify-center gap-16"
+      class="w-full flex flex-col md:flex-row items-center justify-center gap-16"
     >
       <!-- images -->
       <div class="w-72 flex flex-col items-center justify-center gap-4">
@@ -68,33 +68,42 @@
         </div>
 
         <!-- buttons -->
-        <div class="flex items-center justify-start gap-2">
+        <div class="flex items-center justify-start gap-3">
           <button
-            class="px-6 h-12 text-white bg-blue-800 hover:bg-blue-600 rounded-md shadow-xl shadow-blue-100 hover:shadow-blue-200 disabled:bg-light disabled:cursor-not-allowed transition-all"
+            :disabled="!product.available"
+            class="min-w-max px-6 h-12 text-white bg-blue-800 hover:bg-blue-600 rounded-md shadow-xl shadow-blue-100 hover:shadow-blue-200 disabled:hover:shadow-inherit disabled:bg-light disabled:cursor-not-allowed transition-all"
           >
             افزودن به سبد خرید
           </button>
 
           <div
+            v-if="product.available"
             class="h-12 flex items-center justify-start rounded-md bg-zinc-100 overflow-hidden"
           >
             <!-- inscrease -->
-            <div
-              class="w-12 h-full flex items-center justify-center hover:bg-light/60 cursor-pointer transition-all"
+            <button
+              class="w-12 h-full flex items-center justify-center hover:bg-light/60 cursor-pointer transition-all duration-300"
             >
               <span class="text-xl text-blue-800 font-bold">+</span>
-            </div>
+            </button>
             <!-- qty -->
             <div class="w-12 h-full flex items-center justify-center">
-              <span class="text-lg text-slate-800 font-bold">2</span>
+              <span class="text-lg text-slate-800 font-bold">1</span>
             </div>
             <!-- descrease -->
-            <div
-              class="w-12 h-full flex items-center justify-center hover:bg-light/60 cursor-pointer transition-all"
+            <button
+              disabled
+              class="w-12 h-full flex items-center justify-center hover:bg-light/60 disabled:hover:bg-inherit cursor-pointer disabled:cursor-default transition-all duration-300 group"
             >
-              <span class="text-xl text-blue-800 font-bold">-</span>
-            </div>
+              <span
+                class="text-xl text-blue-800 font-bold group-disabled:text-light"
+                >-</span
+              >
+            </button>
           </div>
+          <p v-else class="text-blue-500">
+            در حال حاضر این کالا در انبار موجود نیست!
+          </p>
         </div>
       </div>
     </section>
