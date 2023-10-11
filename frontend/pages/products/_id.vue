@@ -2,13 +2,13 @@
   <article class="w-full my-12">
     <section
       v-if="product !== null"
-      class="w-full flex items-center justify-center gap-8"
+      class="w-full flex items-center justify-center gap-16"
     >
       <!-- images -->
-      <div class="w-80 flex flex-col items-center justify-center gap-3.5">
+      <div class="w-72 flex flex-col items-center justify-center gap-4">
         <!-- main image -->
         <div
-          class="w-full h-80 bg-white flex items-center justify-center shadow-lg rounded-xl overflow-hidden"
+          class="w-72 h-72 bg-white flex items-center justify-center shadow-lg rounded-xl overflow-hidden"
         >
           <img
             class="w-auto max-h-full"
@@ -22,7 +22,7 @@
           <div
             v-for="image in product.images"
             @click="setPreviewImage($config.imagePrefix + image)"
-            class="w-[4.5rem] h-[4.5rem] bg-white flex items-center justify-center shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
+            class="w-16 h-16 bg-white flex items-center justify-center shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
           >
             <img
               class="w-auto max-h-full"
@@ -34,7 +34,69 @@
       </div>
 
       <!-- details -->
-      <span></span>
+      <div class="w-96 flex flex-col items-start justify-between gap-4">
+        <div>
+          <!-- category -->
+          <p class="text-sm text-primary">
+            در دسته‌بندی
+            <strong>{{ categoryTitle(product.category) }}</strong>
+          </p>
+
+          <!-- title -->
+          <h1 class="text-3xl text-secondary font-bold">{{ product.title }}</h1>
+        </div>
+
+        <!-- description -->
+        <p class="text-neutral-500">{{ product.description }}</p>
+
+        <!-- price -->
+        <p v-if="product.salePrice === 0" class="text-2xl text-primary">
+          <strong>{{ product.price }} تومان</strong>
+        </p>
+        <div v-else>
+          <div class="flex items-center justify-start gap-3">
+            <p class="text-2xl text-primary">
+              <strong>{{ product.salePrice }} تومان</strong>
+            </p>
+            <div class="px-3 py-0.5 bg-light/60 rounded">
+              <p class="text-sm text-primary">{{ salePercent }}%</p>
+            </div>
+          </div>
+          <p class="text-sm text-neutral-400 line-through">
+            {{ product.price }} تومان
+          </p>
+        </div>
+
+        <!-- buttons -->
+        <div class="flex items-center justify-start gap-2">
+          <button
+            class="px-6 h-12 text-white bg-blue-800 hover:bg-blue-600 rounded-md shadow-xl shadow-blue-100 hover:shadow-blue-200 disabled:bg-light disabled:cursor-not-allowed transition-all"
+          >
+            افزودن به سبد خرید
+          </button>
+
+          <div
+            class="h-12 flex items-center justify-start rounded-md bg-zinc-100 overflow-hidden"
+          >
+            <!-- inscrease -->
+            <div
+              class="w-12 h-full flex items-center justify-center hover:bg-light/60 cursor-pointer transition-all"
+            >
+              <span class="text-xl text-blue-800 font-bold">+</span>
+            </div>
+            <!-- qty -->
+            <div class="w-12 h-full flex items-center justify-center">
+              <span class="text-lg text-slate-800 font-bold">2</span>
+            </div>
+            <!-- descrease -->
+            <div
+              class="w-12 h-full flex items-center justify-center hover:bg-light/60 cursor-pointer transition-all"
+            >
+              <span class="text-xl text-blue-800 font-bold">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </article>
 </template>
@@ -69,6 +131,14 @@ const product = computed(() => {
 const setPreviewImage = (img) => {
   previewImage.value = img;
 };
+const salePercent = computed(() => {
+  const totalPrice = product.value.price;
+  const salePrice = product.value.salePrice;
+  const unit = totalPrice / 100;
+  const offPercent = salePrice / unit;
+  const salePercent = 100 - offPercent;
+  return Math.ceil(salePercent);
+});
 
 // methods
 const fetchCategories = () => {
@@ -84,7 +154,7 @@ const categoryTitle = (id) => {
   const identifiedCategory = categories.value.find(
     (category) => category._id === id
   );
-  return identifiedCategory;
+  return identifiedCategory.title;
 };
 
 // lifecycles
