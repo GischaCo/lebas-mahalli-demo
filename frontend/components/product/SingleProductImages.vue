@@ -1,8 +1,8 @@
 <template>
-  <div class="w-72 flex flex-col items-center justify-center gap-4">
+  <div class="w-64 md:w-72 flex flex-col items-center justify-center gap-4">
     <!-- main image -->
     <div
-      class="w-72 h-72 bg-white flex items-center justify-center shadow-lg rounded-xl overflow-hidden"
+      class="w-64 md:w-72 h-64 md:h-72 bg-white flex items-center justify-center shadow-lg rounded-xl overflow-hidden"
     >
       <img
         class="w-auto max-h-full"
@@ -16,7 +16,7 @@
       <div
         v-for="image in images"
         @click="setPreviewImage($config.imagePrefix + image)"
-        class="w-16 h-16 bg-white flex items-center justify-center shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
+        class="w-14 h-14 md:w-16 md:h-16 bg-white flex items-center justify-center shadow-lg rounded-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
       >
         <img
           class="w-auto max-h-full"

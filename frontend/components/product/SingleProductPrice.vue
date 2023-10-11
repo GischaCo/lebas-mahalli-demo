@@ -1,17 +1,17 @@
 <template>
-  <p v-if="salePrice === 0" class="text-2xl text-primary">
+  <p v-if="salePrice === 0" class="text-lg md:text-2xl text-primary">
     <strong>{{ price }} تومان</strong>
   </p>
   <div v-else>
+    <p class="text-sm text-neutral-400 line-through">{{ price }} تومان</p>
     <div class="flex items-center justify-start gap-3">
-      <p class="text-2xl text-primary">
+      <p class="text-lg md:text-2xl text-primary">
         <strong>{{ salePrice }} تومان</strong>
       </p>
       <div class="px-3 py-0.5 bg-light/60 rounded">
-        <p class="text-sm text-primary">{{ salePercent }}%</p>
+        <p class="text-xs md:text-sm text-primary">{{ salePercent }}%</p>
       </div>
     </div>
-    <p class="text-sm text-neutral-400 line-through">{{ price }} تومان</p>
   </div>
 </template>
 
