@@ -2,7 +2,7 @@
   <article class="w-full my-12">
     <section
       v-if="product !== null"
-      class="w-full flex flex-col md:flex-row items-center justify-center gap-16"
+      class="w-full flex flex-col md:flex-row items-center justify-center gap-12"
     >
       <!-- images -->
       <single-product-images
@@ -12,7 +12,9 @@
       ></single-product-images>
 
       <!-- details -->
-      <div class="w-96 flex flex-col items-start justify-between gap-4">
+      <div
+        class="w-96 md:min-h-[23rem] flex flex-col items-start justify-between gap-2"
+      >
         <div>
           <single-product-category
             :category="product.category"
@@ -22,29 +24,31 @@
           <single-product-title :title="product.title"></single-product-title>
         </div>
 
-        <!-- description -->
-        <single-product-description
-          :description="product.description"
-        ></single-product-description>
+        <div class="w-full flex flex-col items-start justify-between gap-3">
+          <!-- description -->
+          <single-product-description
+            :description="product.description"
+          ></single-product-description>
 
-        <!-- price -->
-        <single-product-price
-          :price="product.price"
-          :sale-price="product.salePrice"
-        ></single-product-price>
+          <!-- sales -->
+          <single-product-sales :sales="product.sales"></single-product-sales>
 
-        <!-- sales -->
-        <single-product-sales :sales="product.sales"></single-product-sales>
+          <!-- price -->
+          <single-product-price
+            :price="product.price"
+            :sale-price="product.salePrice"
+          ></single-product-price>
 
-        <!-- buttons -->
-        <div class="flex items-center justify-start gap-3">
-          <single-product-btn
-            :is-available="product.available"
-          ></single-product-btn>
+          <!-- buttons -->
+          <div class="flex items-center justify-start gap-3">
+            <single-product-btn
+              :is-available="product.available"
+            ></single-product-btn>
 
-          <single-product-qty
-            :is-available="product.available"
-          ></single-product-qty>
+            <single-product-qty
+              :is-available="product.available"
+            ></single-product-qty>
+          </div>
         </div>
       </div>
     </section>
