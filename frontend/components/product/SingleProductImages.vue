@@ -55,7 +55,9 @@ defineProps({
   images: {
     type: Array,
     required: true,
-    default: [],
+    default: function () {
+      return [];
+    },
   },
 });
 

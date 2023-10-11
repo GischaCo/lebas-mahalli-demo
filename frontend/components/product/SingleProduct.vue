@@ -1,7 +1,10 @@
 <template>
-  <article class="w-full my-12">
+  <article
+    v-if="product !== null"
+    class="w-full my-12 flex flex-col items-center justify-start gap-16"
+  >
+    <!-- images & details -->
     <section
-      v-if="product !== null"
       class="w-full flex flex-col md:flex-row items-center justify-center gap-12"
     >
       <!-- images -->
@@ -13,7 +16,7 @@
 
       <!-- details -->
       <div
-        class="w-96 md:min-h-[23rem] flex flex-col items-start justify-between gap-2"
+        class="max-w-[28rem] md:min-h-[23rem] flex flex-col items-start justify-between gap-2"
       >
         <div>
           <single-product-category
@@ -52,7 +55,17 @@
         </div>
       </div>
     </section>
+
+    <!-- comments -->
+    <single-product-comments
+      :comments="product.comments"
+    ></single-product-comments>
   </article>
+  <div v-else class="w-full my-12 flex items-center justify-center">
+    <p class="text-2xl text-secondary font-bold">
+      در حال بارگیری اطلاعات محصول ...
+    </p>
+  </div>
 </template>
 
 <script>
