@@ -67,6 +67,7 @@ import {
   useRoute,
   onMounted,
   computed,
+  onUnmounted,
 } from "@nuxtjs/composition-api";
 
 // variables
@@ -88,10 +89,17 @@ const fetchProduct = () => {
   const productId = route.value.params.id;
   store.dispatch("products/getProduct", productId);
 };
+const resetProduct = () => {
+  // reset product's details stored is store
+  store.commit("products/resetProduct");
+};
 
 // lifecycles
 onMounted(() => {
   fetchCategories();
   fetchProduct();
+});
+onUnmounted(() => {
+  resetProduct();
 });
 </script>
