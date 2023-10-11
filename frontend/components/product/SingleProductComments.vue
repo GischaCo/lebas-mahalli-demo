@@ -99,6 +99,9 @@
           ثبت دیدگاه
         </button>
       </form>
+
+      <!-- comments -->
+      <p v-if="comments.length < 1">هنوز دیدگاهی برای این محصول ثبت نشده.</p>
     </div>
   </section>
 </template>
