@@ -1,5 +1,7 @@
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const Product = require("../models/product.model");
+const ObjectId = require("mongodb").ObjectId;
 
 const productsList = async (req, res) => {
   try {
@@ -52,4 +54,50 @@ const singleProduct = async (req, res) => {
   }
 };
 
-module.exports = { productsList, singleProduct };
+const addComment = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // verify user token
+    jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // get product's id
+    const id = req.params.id;
+
+    // get product's new data
+    const data = req.body.data;
+
+    // update product
+    Product.findById(id).then((result) => {
+      let comments = result.comments;
+      comments.push(data);
+      Product.updateOne({ _id: new ObjectId(id) }, { $set: { comments } })
+        .then(() => {
+          res.status(200).send({
+            message: "دیدگاه با موفقیت ثبت شد",
+            status: 200,
+            success: true,
+          });
+        })
+        .catch((errr) => {
+          console.log("error adding comment:", errr);
+          res.status(400).send({
+            message: "خطا در ثبت دیدگاه",
+            status: 400,
+            success: false,
+          });
+        });
+    });
+  } catch (error) {
+    console.log("error adding comment:", error);
+    return res.status(400).send({
+      message: "خطا در ثبت دیدگاه",
+      status: 400,
+      success: false,
+    });
+  }
+};
+
+module.exports = { productsList, singleProduct, addComment };

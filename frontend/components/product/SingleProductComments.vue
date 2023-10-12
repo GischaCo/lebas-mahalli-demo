@@ -121,11 +121,16 @@ const formOpened = ref(false);
 const commentInfo = ref({
   fullname: "",
   phone: "",
-  text: "",
+  text: "متن تستی کامنت",
 });
 
 // props
-defineProps({
+const props = defineProps({
+  id: {
+    type: String,
+    required: true,
+    default: "",
+  },
   comments: {
     type: Array,
     required: true,
@@ -138,6 +143,18 @@ defineProps({
 // methods
 const toggleForm = () => {
   formOpened.value = !formOpened.value;
+};
+const submitForm = () => {
+  // comment data & action call
+  const payload = {
+    id: props.id,
+    data: commentInfo.value,
+  };
+  store.dispatch("products/addComment", payload);
+  // toggle (close) submit form after submitting
+  toggleForm();
+  // clear form text after submitting
+  commentInfo.value.text = "";
 };
 
 // lifecycles

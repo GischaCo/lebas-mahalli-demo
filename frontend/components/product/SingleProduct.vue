@@ -58,6 +58,7 @@
 
     <!-- comments -->
     <single-product-comments
+      :id="route.params.id"
       :comments="product.comments"
     ></single-product-comments>
   </article>

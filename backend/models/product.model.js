@@ -35,6 +35,7 @@ const productSchema = new Schema(
     comments: {
       type: Array,
       default: [],
+      // example: comments: [{ fullname: "John Doe", phone: "09112345678", text: "lorem ipsum", date: DATE }]
     },
     category: {
       type: String,
