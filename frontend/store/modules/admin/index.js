@@ -284,6 +284,45 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
+  replyComment({ dispatch }, data) {
+    // send data to server
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    // destructure data
+    const { id, fullname, text, product } = data;
+
+    // set header
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        id: product,
+      },
+    };
+
+    // set body
+    const reqBody = { id, fullname, text };
+
+    // sending request
+    this.$axios
+      .$post("/admin/reply-comment", reqBody, reqConfig)
+      .then((res) => {
+        // refresh product's list
+        dispatch("products/getProduct", product, { root: true });
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log("error: ", err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
 };
 
 const getters = {

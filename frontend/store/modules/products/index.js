@@ -42,7 +42,7 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  addComment({ commit, dispatch }, payload) {
+  addComment({ dispatch }, payload) {
     const { id, data } = payload;
 
     // send data to server

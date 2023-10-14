@@ -100,6 +100,34 @@
         </button>
       </form>
 
+      <!-- reply form -->
+      <form
+        v-if="replyOpened"
+        @submit.prevent="replyForm"
+        class="w-full p-4 bg-light/60 flex flex-col items-start justify-start gap-2 rounded-lg"
+      >
+        <!-- title -->
+        <h4 class="text-primary text-xl font-bold">
+          پاسخ به دیدگاه: {{ replyFullname }}
+        </h4>
+
+        <!-- reply text -->
+        <textarea
+          type="text"
+          v-model="replyInfo.text"
+          class="w-full min-h-[10rem] max-h-[15rem] px-3 py-2 text-secondary bg-white/50 rounded-lg"
+        ></textarea>
+
+        <!-- button -->
+        <button
+          type="submit"
+          :disabled="replyInfo.text.length < 1"
+          class="px-6 h-10 text-white bg-gradient-to-tr from-secondary to-primary rounded-lg shadow-md hover:shadow-lg shadow-primary/20 hover:shadow-primary/30 disabled:brightness-75 disabled:cursor-not-allowed disabled:hover:shadow-md disabled:hover:shadow-primary/20 transition-all"
+        >
+          ثبت پاسخ
+        </button>
+      </form>
+
       <!-- empty state -->
       <p v-if="comments.length < 1">هنوز دیدگاهی برای این محصول ثبت نشده.</p>
 
@@ -109,32 +137,53 @@
         class="w-full flex flex-col-reverse items-center justify-start gap-4"
       >
         <div
-          class="w-full p-3 bg-light/30 flex flex-col items-start justify-start gap-2 rounded-lg border-r-4 border-primary/40"
           v-for="(comment, i) in comments"
           :key="i"
+          class="w-full flex flex-col items-end justify-start gap-3"
         >
-          <div class="flex items-center justify-start gap-3">
-            <!-- title -->
-            <h5 class="text-lg text-primary font-bold">
-              {{ comment.fullname }}
-            </h5>
+          <!-- main comment -->
+          <div
+            class="w-full p-3 bg-light/20 flex flex-col items-start justify-start gap-2 rounded-lg border-r-4 border-primary/30"
+          >
+            <div class="flex items-center justify-start gap-3">
+              <!-- title -->
+              <h5 class="text-lg text-primary font-bold">
+                {{ comment.user.fullname }}
+              </h5>
 
-            <!-- reply -->
-            <div
-              @click="replyComment"
-              class="flex items-center justify-start gap-1 cursor-pointer"
-            >
-              <base-icon
-                name="reply-solid"
-                class="w-2 h-2 fill-neutral-400"
-              ></base-icon>
-              <p class="text-xs text-neutral-400">پاسخ</p>
+              <!-- reply -->
+              <div
+                v-if="store.state.panel.user?.role === 'admin' || false"
+                @click="openReplyForm(comment._id, comment.user.fullname)"
+                class="flex items-center justify-start gap-1 cursor-pointer"
+              >
+                <base-icon
+                  name="reply-solid"
+                  class="w-2 h-2 fill-neutral-400"
+                ></base-icon>
+                <p class="text-xs text-neutral-400">پاسخ</p>
+              </div>
             </div>
+            <p class="text-neutral-600">{{ comment.text }}</p>
+            <p class="text-sm text-neutral-400">
+              {{ $moment(comment.date).format("jDD jMMMM jYYYY") }}
+            </p>
           </div>
-          <p class="text-neutral-600">{{ comment.text }}</p>
-          <p class="text-sm text-neutral-400">
-            {{ $moment(comment.date).format("jDD jMMMM jYYYY") }}
-          </p>
+
+          <!-- comment replies -->
+          <div
+            v-for="(reply, i) in comment.replies"
+            :key="i"
+            class="w-11/12 p-3 bg-light/20 flex flex-col items-start justify-start gap-2 rounded-lg border-r-4 border-primary/30"
+          >
+            <h5 class="text-lg text-primary font-bold">
+              {{ reply.fullname }}
+            </h5>
+            <p class="text-neutral-600">{{ reply.text }}</p>
+            <p class="text-sm text-neutral-400">
+              {{ $moment(comment.date).format("jDD jMMMM jYYYY") }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -153,10 +202,18 @@ import { ref, onMounted, useStore } from "@nuxtjs/composition-api";
 // variables
 const store = useStore();
 const formOpened = ref(false);
+const replyFullname = ref("");
+const replyOpened = ref(false);
 const commentInfo = ref({
   fullname: "",
   phone: "",
   text: "",
+});
+const replyInfo = ref({
+  id: "",
+  fullname: store.state.panel.user.fullname,
+  text: "",
+  product: props.id,
 });
 
 // props
@@ -191,11 +248,27 @@ const submitForm = () => {
   // clear form text after submitting
   commentInfo.value.text = "";
 };
-const replyComment = () => {
-  store.dispatch("app/showSnackbar", {
-    status: 400,
-    message: "این قابلیت به زودی اضافه می‌شود",
-  });
+const openReplyForm = (commentId, commentFullname) => {
+  replyOpened.value = true;
+  replyInfo.value.id = commentId;
+  replyFullname.value = commentFullname;
+};
+const closeReplyForm = () => {
+  replyOpened.value = false;
+};
+const resetReplyData = () => {
+  replyInfo.value = {
+    id: "",
+    fullname: store.state.panel.user.fullname,
+    text: "",
+    product: props.id,
+  };
+  replyFullname.value = "";
+};
+const replyForm = () => {
+  store.dispatch("admin/replyComment", replyInfo.value);
+  closeReplyForm();
+  resetReplyData();
 };
 
 // lifecycles
