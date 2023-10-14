@@ -76,9 +76,6 @@ const addComment = async (req, res) => {
 
     // update product
     Product.findById(id).then((result) => {
-      let comments = result.comments;
-      comments.push(data);
-
       // send new comment to admin panel
       const newComment = new Comment({
         user: {
@@ -91,14 +88,18 @@ const addComment = async (req, res) => {
           title: result.title,
         },
         text: data.text,
+        replies: [],
       });
 
       newComment
         .save()
-        .then(() => {
+        .then((commentResult) => {
           console.log("comment saved to admin database successfully");
 
           // now, update product's comments
+          let comments = result.comments;
+          comments.push(commentResult);
+
           Product.updateOne(
             { _id: new ObjectId(id) },
             { $set: { comments } }

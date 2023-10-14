@@ -473,6 +473,76 @@ const allComments = async (req, res) => {
     });
   }
 };
+const replyComment = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // product's id
+    const productID = req.header("id");
+
+    // product's comment's id to reply
+    const commentID = req.body.id;
+
+    // reply data
+    const { fullname, text } = req.body;
+
+    Product.findById(productID).then((result) => {
+      let comments = result.comments;
+      const commentIndex = comments.findIndex(
+        (comment) => comment._id.toString() === commentID
+      );
+      comments[commentIndex].replies.push({
+        fullname,
+        text,
+      });
+
+      // update product
+      Product.updateOne(
+        { _id: new ObjectId(productID) },
+        { $set: { comments } }
+      )
+        .then(() => {
+          res.status(200).send({
+            message: "پاسخ با موفقیت ثبت شد",
+            status: 200,
+            success: true,
+          });
+        })
+        .catch((errr) => {
+          console.log("error updating product:", errr);
+          res.status(400).send({
+            message: "خطا در ثبت پاسخ",
+            status: 400,
+            success: false,
+          });
+        });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      message: "خطا در حذف محصول",
+      status: 400,
+      success: false,
+    });
+  }
+};
 
 module.exports = {
   // products
@@ -486,4 +556,5 @@ module.exports = {
   deleteUser,
   // comments
   allComments,
+  replyComment,
 };

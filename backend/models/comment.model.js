@@ -8,14 +8,19 @@ const commentSchema = new Schema(
       required: true,
       // example: {id: ID, fullname: FULLNAME, phone: PHONE},
     },
-    text: {
-      type: String,
-      required: true,
-    },
     product: {
       type: Object,
       required: true,
       // example: {id: ID, title: TITLE}
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    replies: {
+      type: Array,
+      required: true,
+      // example: {fullname: FULLNAME, text: REPLYTEXT}
     },
   },
   { timestamps: true }
