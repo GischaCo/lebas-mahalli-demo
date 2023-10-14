@@ -76,7 +76,7 @@ const actions = ref([
       },
       {
         title: "لیست نظرات",
-        to: "/admin/all-comments",
+        to: "/admin/comments",
       },
     ],
   },

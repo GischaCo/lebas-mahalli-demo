@@ -4,6 +4,8 @@ const state = {
   products: [],
   // users
   users: [],
+  // comments
+  comments: [],
 };
 
 const mutations = {
@@ -20,6 +22,10 @@ const mutations = {
   // users
   setUsers(state, data) {
     state.users = data;
+  },
+  // comments
+  setComments(state, data) {
+    state.comments = data;
   },
 };
 
@@ -248,6 +254,36 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
+  // comments
+  getComments({ commit, dispatch }) {
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    };
+
+    this.$axios
+      .$get("/admin/all-comments", reqConfig)
+      .then((res) => {
+        // update state
+        commit("setComments", res.data);
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
 };
 
 const getters = {
@@ -261,6 +297,10 @@ const getters = {
   // users
   allUsers(state) {
     return state.users;
+  },
+  // comments
+  allComments(state) {
+    return state.comments;
   },
 };
 
