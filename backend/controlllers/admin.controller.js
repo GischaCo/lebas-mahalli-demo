@@ -511,6 +511,7 @@ const replyComment = async (req, res) => {
       comments[commentIndex].replies.push({
         fullname,
         text,
+        date: new Date(),
       });
 
       // update product

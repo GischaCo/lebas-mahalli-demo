@@ -1,5 +1,7 @@
 <template>
-  <section class="w-11/12 flex flex-col items-center justify-start gap-2">
+  <section
+    class="w-11/12 md:w-10/12 lg:w-9/12 flex flex-col items-center justify-start gap-2"
+  >
     <!-- header -->
     <div class="w-full flex items-center justify-center gap-2">
       <span class="w-2/12 h-[2px] rounded-lg bg-neutral-300"></span>
@@ -181,7 +183,7 @@
             </h5>
             <p class="text-neutral-600">{{ reply.text }}</p>
             <p class="text-sm text-neutral-400">
-              {{ $moment(comment.date).format("jDD jMMMM jYYYY") }}
+              {{ $moment(reply.date).format("jDD jMMMM jYYYY") }}
             </p>
           </div>
         </div>
