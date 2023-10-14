@@ -115,7 +115,7 @@ const resetProduct = () => {
   store.commit("products/resetProduct");
 };
 const addToCart = () => {
-  store.dispatch("panel/addToCart", product.value._id);
+  store.dispatch("panel/addToCart", { qty: qty.value, product: product.value });
 };
 const updateQty = (value) => {
   qty.value = value;

@@ -47,6 +47,45 @@ const actions = {
   resetUser({ commit }) {
     commit("resetUser");
   },
+  addToCart({ dispatch }, data) {
+    // send data to database
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      return "";
+    }
+
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    };
+
+    // destructured data
+    const { qty, product } = data;
+    let totalPrice = 0;
+    for (let i = 0; i < qty; i++) {
+      if (product.salePrice === 0) {
+        totalPrice += product.price;
+      } else {
+        totalPrice += product.salePrice;
+      }
+    }
+    const cartItem = { product, qty, totalPrice };
+
+    this.$axios
+      .$post("/panel/add-to-cart", cartItem, reqConfig)
+      .then((res) => {
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
 };
 
 const getters = {

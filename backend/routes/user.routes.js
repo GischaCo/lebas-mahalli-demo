@@ -11,5 +11,6 @@ router.route("/api/auth/profile").get(authController.userProfile);
 
 // panel
 router.route("/api/panel/update-profile").post(panelController.userUpdate);
+router.route("/api/panel/add-to-cart").post(panelController.addToCart);
 
 module.exports = router;
