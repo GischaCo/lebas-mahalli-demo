@@ -100,8 +100,41 @@
         </button>
       </form>
 
-      <!-- comments -->
+      <!-- empty state -->
       <p v-if="comments.length < 1">هنوز دیدگاهی برای این محصول ثبت نشده.</p>
+
+      <!-- comments -->
+      <div
+        v-else
+        class="w-full flex flex-col-reverse items-center justify-start gap-4"
+      >
+        <div
+          class="w-full p-3 bg-light/30 flex flex-col items-start justify-start gap-2 rounded-lg border-r-4 border-primary/40"
+          v-for="(comment, i) in comments"
+          :key="i"
+        >
+          <div class="flex items-center justify-start gap-3">
+            <!-- title -->
+            <h5 class="text-lg text-primary font-bold">
+              {{ comment.fullname }}
+            </h5>
+
+            <!-- reply -->
+            <div
+              @click="replyComment"
+              class="flex items-center justify-start gap-1 cursor-pointer"
+            >
+              <base-icon
+                name="reply-solid"
+                class="w-2 h-2 fill-neutral-400"
+              ></base-icon>
+              <p class="text-xs text-neutral-400">پاسخ</p>
+            </div>
+          </div>
+          <p class="text-neutral-600">{{ comment.text }}</p>
+          <p class="text-sm text-neutral-400">{{ comment.date }}</p>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -121,7 +154,7 @@ const formOpened = ref(false);
 const commentInfo = ref({
   fullname: "",
   phone: "",
-  text: "متن تستی کامنت",
+  text: "",
 });
 
 // props
@@ -155,6 +188,12 @@ const submitForm = () => {
   toggleForm();
   // clear form text after submitting
   commentInfo.value.text = "";
+};
+const replyComment = () => {
+  store.dispatch("app/showSnackbar", {
+    status: 400,
+    message: "این قابلیت به زودی اضافه می‌شود",
+  });
 };
 
 // lifecycles
