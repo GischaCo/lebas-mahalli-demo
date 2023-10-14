@@ -1,6 +1,6 @@
 <template>
   <section
-    class="w-11/12 md:w-10/12 lg:w-9/12 flex flex-col items-center justify-start gap-2"
+    class="w-full lg:w-9/12 flex flex-col items-center justify-start gap-2"
   >
     <!-- header -->
     <div class="w-full flex items-center justify-center gap-2">
@@ -32,7 +32,7 @@
         >
           <base-icon
             name="info-solid"
-            class="w-3.5 h-3.5 fill-light"
+            class="w-3.5 h-3.5 fill-white/90"
           ></base-icon>
         </div>
         <p class="text-primary/60 font-bold">

@@ -5,17 +5,21 @@
   >
     <!-- inscrease -->
     <button
+      @click="increase"
       class="w-10 md:w-12 h-full flex items-center justify-center hover:bg-light/60 cursor-pointer transition-all duration-300"
     >
       <span class="text-xl text-blue-800 font-bold">+</span>
     </button>
     <!-- qty -->
     <div class="w-10 md:w-12 h-full flex items-center justify-center">
-      <span class="text-base md:text-lg text-slate-800 font-bold">1</span>
+      <span class="text-base md:text-lg text-slate-800 font-bold">{{
+        qty
+      }}</span>
     </div>
     <!-- descrease -->
     <button
-      disabled
+      :disabled="qty < 2"
+      @click="decrease"
       class="w-10 md:w-12 h-full flex items-center justify-center hover:bg-light/60 disabled:hover:bg-inherit cursor-pointer disabled:cursor-default transition-all duration-300 group"
     >
       <span class="text-xl text-blue-800 font-bold group-disabled:text-light"
@@ -34,6 +38,14 @@ export default {
 </script>
 
 <script setup>
+import { ref } from "@nuxtjs/composition-api";
+
+// variables
+const qty = ref(1);
+
+// emit
+const emit = defineEmits(["update-qty"]);
+
 // props
 defineProps({
   isAvailable: {
@@ -42,4 +54,17 @@ defineProps({
     deafult: true,
   },
 });
+
+// method
+const increase = () => {
+  qty.value++;
+  updateQty();
+};
+const decrease = () => {
+  qty.value--;
+  updateQty();
+};
+const updateQty = () => {
+  emit("update-qty", qty.value);
+};
 </script>

@@ -45,16 +45,21 @@
           <!-- buttons -->
           <div class="flex items-center justify-start gap-3">
             <single-product-btn
+              @add-to-cart="addToCart"
               :is-available="product.available"
             ></single-product-btn>
 
             <single-product-qty
+              @update-qty="updateQty($event)"
               :is-available="product.available"
             ></single-product-qty>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- alert -->
+    <single-product-alert></single-product-alert>
 
     <!-- comments -->
     <single-product-comments
@@ -77,6 +82,7 @@ export default {
 
 <script setup>
 import {
+  ref,
   useStore,
   useRoute,
   onMounted,
@@ -87,6 +93,7 @@ import {
 // variables
 const route = useRoute();
 const store = useStore();
+const qty = ref(1);
 
 // computed
 const product = computed(() => {
@@ -106,6 +113,12 @@ const fetchProduct = () => {
 const resetProduct = () => {
   // reset product's details stored is store
   store.commit("products/resetProduct");
+};
+const addToCart = () => {
+  store.dispatch("panel/addToCart", product.value._id);
+};
+const updateQty = (value) => {
+  qty.value = value;
 };
 
 // lifecycles
