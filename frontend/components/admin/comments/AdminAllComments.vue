@@ -11,6 +11,7 @@
           <td><p class="text-sm md:text-base">موبایل</p></td>
           <td><p class="text-sm md:text-base">محصول</p></td>
           <td><p class="text-sm md:text-base">متن</p></td>
+          <td><p class="text-sm md:text-base">تاریخ</p></td>
           <td><p class="text-sm md:text-base">لینک</p></td>
         </tr>
       </thead>
@@ -41,6 +42,11 @@
           <td>
             <p class="text-overflow text-sm md:text-base">
               {{ comment.text }}
+            </p>
+          </td>
+          <td>
+            <p class="text-sm md:text-base">
+              {{ $moment(comment.createdAt).format("jYYYY/jM/jDD") }}
             </p>
           </td>
           <td>

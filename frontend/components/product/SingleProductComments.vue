@@ -132,7 +132,9 @@
             </div>
           </div>
           <p class="text-neutral-600">{{ comment.text }}</p>
-          <p class="text-sm text-neutral-400">{{ comment.date }}</p>
+          <p class="text-sm text-neutral-400">
+            {{ $moment(comment.date).format("jDD jMMMM jYYYY") }}
+          </p>
         </div>
       </div>
     </div>

@@ -54,7 +54,11 @@ export default {
   /*
    ** Nuxt.js dev-modules
    */
-  buildModules: ["@nuxtjs/svg", "@nuxtjs/composition-api/module"],
+  buildModules: [
+    "@nuxtjs/svg",
+    "@nuxtjs/composition-api/module",
+    "nuxt-moment-jalaali",
+  ],
   /*
    ** Nuxt.js modules
    */
@@ -67,6 +71,12 @@ export default {
     common: {
       "Content-Type": "application/json",
     },
+  },
+  /*
+   ** Jalali moment configuration
+   */
+  moment: {
+    locales: ["fa"],
   },
   /* Environment configuration
    **
