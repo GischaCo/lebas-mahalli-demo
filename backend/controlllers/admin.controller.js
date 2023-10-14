@@ -3,6 +3,7 @@ const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const Product = require("../models/product.model");
+const Comment = require("../models/comment.model");
 const ObjectId = require("mongodb").ObjectId;
 
 // prpoducts
@@ -431,6 +432,48 @@ const deleteUser = async (req, res) => {
   }
 };
 
+// comments
+const allComments = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // find all comments and sort by date
+    const comments = await Comment.find().sort({ createdAt: -1 });
+
+    // send comments list via response
+    return res.status(200).send({
+      data: comments,
+      message: "لیست دیدگاه‌ها با موفقیت دریافت شد",
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      message: "خطا در دریافت لیست دیدگاه‌ها",
+      status: 400,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   // products
   allProducts,
@@ -441,4 +484,6 @@ module.exports = {
   // users
   allUsers,
   deleteUser,
+  // comments
+  allComments,
 };
