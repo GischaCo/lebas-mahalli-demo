@@ -46,7 +46,6 @@ const allProducts = async (req, res) => {
 
         // send products list via response
         return res.status(200).send({
-          data: productsList,
           data: result,
           message: "لیست محصولات با موفقیت دریافت شد",
           status: 200,

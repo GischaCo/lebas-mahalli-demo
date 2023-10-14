@@ -1,5 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const User = require("../models/user.model");
+const Comment = require("../models/comment.model");
 const Product = require("../models/product.model");
 const ObjectId = require("mongodb").ObjectId;
 
@@ -61,7 +63,10 @@ const addComment = async (req, res) => {
     const tokenArray = userToken.split(" ");
 
     // verify user token
-    jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // get user data
+    const user = await User.findById(decodedData.user_id);
 
     // get product's id
     const id = req.params.id;
@@ -73,12 +78,36 @@ const addComment = async (req, res) => {
     Product.findById(id).then((result) => {
       let comments = result.comments;
       comments.push(data);
-      Product.updateOne({ _id: new ObjectId(id) }, { $set: { comments } })
+
+      // send new comment to admin panel
+      const newComment = new Comment({
+        user: {
+          id: user._id.toString(),
+          fullname: user.fullname,
+          phone: user.phone,
+        },
+        product: {
+          id: result._id.toString(),
+          title: result.title,
+        },
+        text: data.text,
+      });
+
+      newComment
+        .save()
         .then(() => {
-          res.status(200).send({
-            message: "دیدگاه با موفقیت ثبت شد",
-            status: 200,
-            success: true,
+          console.log("comment saved to admin database successfully");
+
+          // now, update product's comments
+          Product.updateOne(
+            { _id: new ObjectId(id) },
+            { $set: { comments } }
+          ).then(() => {
+            res.status(200).send({
+              message: "دیدگاه با موفقیت ثبت شد",
+              status: 200,
+              success: true,
+            });
           });
         })
         .catch((errr) => {
