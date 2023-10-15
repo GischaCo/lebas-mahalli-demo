@@ -199,7 +199,13 @@ export default {
 </script>
 
 <script setup>
-import { ref, onMounted, useStore } from "@nuxtjs/composition-api";
+import {
+  ref,
+  watch,
+  computed,
+  onMounted,
+  useStore,
+} from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
@@ -213,7 +219,7 @@ const commentInfo = ref({
 });
 const replyInfo = ref({
   id: "",
-  fullname: store.state.panel.user.fullname,
+  fullname: "",
   text: "",
   product: props.id,
 });
@@ -232,6 +238,11 @@ const props = defineProps({
       return [];
     },
   },
+});
+
+// computed
+const user = computed(() => {
+  return store.getters["panel/userInfo"];
 });
 
 // methods
@@ -275,10 +286,20 @@ const replyForm = () => {
 
 // lifecycles
 onMounted(() => {
-  const user = store.state.panel.user;
-  if (user !== null) {
+  if (user.value !== null) {
+    replyInfo.value.fullname = user.fullname;
     commentInfo.value.fullname = user.fullname;
     commentInfo.value.phone = user.phone;
   }
 });
+
+// watchers
+watch(
+  () => user.value,
+  (value) => {
+    replyInfo.value.fullname = value.fullname;
+    commentInfo.value.fullname = value.fullname;
+    commentInfo.value.phone = value.phone;
+  }
+);
 </script>

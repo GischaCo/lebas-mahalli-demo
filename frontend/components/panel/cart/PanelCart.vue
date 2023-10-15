@@ -6,17 +6,19 @@
         <!-- payment button -->
         <nuxt-link
           to="/"
-          class="px-4 py-2 flex items-center justify-center gap-2 border-2 border-primary rounded-md"
+          class="px-2 py-1.5 md:px-4 md:py-2 flex items-center justify-center gap-1 md:gap-2 border-2 border-primary rounded-md"
         >
           <base-icon
             name="plus-solid"
             class="w-3.5 h-3.5 fill-primary"
           ></base-icon>
-          <span class="text-primary font-bold text-sm">پرداخت و ثبت سفارش</span>
+          <span class="text-xs md:text-sm text-primary font-bold"
+            >پرداخت و ثبت سفارش</span
+          >
         </nuxt-link>
 
         <!-- total price -->
-        <p class="text-primary font-bold">
+        <p class="text-xs md:text-sm text-primary font-bold">
           قابل پرداخت: {{ totalPrice }} تومان
         </p>
       </div>
@@ -24,7 +26,7 @@
       <table class="w-full shadow-md rounded-lg overflow-hidden">
         <thead>
           <tr class="bg-slate-100">
-            <td class="px-0.5 py-3 text-xs">ردیف</td>
+            <td class="px-0.5 py-3 text-xs">مشاهده</td>
             <td class="px-0.5 py-3 text-xs">نام محصول</td>
             <td class="px-0.5 py-3 text-xs">قیمت واحد</td>
             <td class="px-0.5 py-3 text-xs">تعداد</td>
@@ -54,7 +56,7 @@
               </p>
             </td>
             <td class="px-0.5 py-3 text-xs text-neutral-600">
-              <p>{{ item.qty }}</p>
+              <p class="product-title">{{ item.qty }}</p>
             </td>
             <td class="px-0.5 py-3 text-xs text-neutral-600 font-bold">
               <p>{{ item.totalPrice }}</p>
@@ -93,3 +95,13 @@ const totalPrice = computed(() => {
   return total;
 });
 </script>
+
+<style scoped>
+.product-title {
+  overflow: hidden;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+</style>
