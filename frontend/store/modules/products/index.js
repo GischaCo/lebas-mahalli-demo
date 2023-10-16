@@ -16,7 +16,7 @@ const mutations = {
 };
 
 const actions = {
-  getAllProducts({ commit }) {
+  getAllProducts({ commit, dispatch }) {
     this.$axios
       .get("/all-products")
       .then((res) => {
@@ -29,7 +29,7 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  getProduct({ commit }, id) {
+  getProduct({ commit, dispatch }, id) {
     this.$axios
       .get(`/single-product/${id}`)
       .then((res) => {
@@ -37,6 +37,9 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
+
+        // move to products page
+        this.$router.push("/products/all");
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });

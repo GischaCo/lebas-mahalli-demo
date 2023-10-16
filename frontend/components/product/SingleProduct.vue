@@ -1,4 +1,5 @@
 <template>
+  <!-- correct display -->
   <article
     v-if="product !== null"
     class="w-full my-12 flex flex-col items-center justify-start gap-16"
@@ -67,10 +68,10 @@
       :comments="product.comments"
     ></single-product-comments>
   </article>
-  <div v-else class="w-full my-12 flex items-center justify-center">
-    <p class="text-2xl text-secondary font-bold">
-      در حال بارگیری اطلاعات محصول ...
-    </p>
+
+  <!-- loading -->
+  <div v-else class="w-full my-10 md:my-20 flex items-center justify-center">
+    <app-loading></app-loading>
   </div>
 </template>
 

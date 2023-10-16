@@ -1,19 +1,19 @@
 <template>
   <section
+    v-if="products.length"
     class="w-full grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5"
   >
-    <template v-if="products.length">
-      <product-card
-        v-for="product in products"
-        :key="product._id"
-        :product="product"
-      ></product-card>
-    </template>
-
-    <p v-else class="text-center font-bold text-secondary">
-      در حال دریافت لیست محصولات
-    </p>
+    <product-card
+      v-for="product in products"
+      :key="product._id"
+      :product="product"
+    ></product-card>
   </section>
+
+  <!-- loading -->
+  <div v-else class="w-full my-12 flex items-center justify-center">
+    <app-loading></app-loading>
+  </div>
 </template>
 
 <script>

@@ -44,7 +44,7 @@ const singleProduct = async (req, res) => {
       .catch((error) => {
         console.log(error);
         return res.status(400).send({
-          message: "خطا در انجام عملیات",
+          message: "محصولی با این مشخصات وجود ندارد",
           success: false,
         });
       });
