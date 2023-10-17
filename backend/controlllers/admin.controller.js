@@ -1,5 +1,4 @@
 require("dotenv").config();
-const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const Product = require("../models/product.model");
@@ -293,15 +292,6 @@ const deleteProduct = async (req, res) => {
 
     // delete product from database
     await Product.findByIdAndDelete(id);
-
-    // delete product's images
-    fs.rmSync(
-      `./public/upload/products/${id}`,
-      { recursive: true, force: true },
-      function (fsError) {
-        if (fsError) console.log(fsError);
-      }
-    );
 
     // send response
     return res.status(200).send({

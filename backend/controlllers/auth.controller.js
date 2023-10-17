@@ -129,7 +129,15 @@ const userProfile = async (req, res) => {
 
     User.findById(decodedData.user_id)
       .then((result) => {
-        res.status(200).send({
+        if (result === null) {
+          return res.status(400).send({
+            data: result,
+            message: "خطا در دریافت اطلاعات حساب کاربری",
+            status: 400,
+            success: false,
+          });
+        }
+        return res.status(200).send({
           data: result,
           message: "ورود به حساب کاربری با موفقیت انجام شد",
           status: 200,
@@ -140,7 +148,7 @@ const userProfile = async (req, res) => {
         res.status(400).send({
           message: "خطا در دریافت اطلاعات حساب کاربری",
           status: 400,
-          success: true,
+          success: false,
         });
         console.log(err);
       });
