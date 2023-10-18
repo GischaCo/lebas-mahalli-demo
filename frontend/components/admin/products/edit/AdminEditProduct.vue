@@ -1,5 +1,6 @@
 <template>
   <div class="w-full max-w-lg mt-6 mx-auto">
+    <!-- product data form -->
     <div
       v-if="product !== null"
       class="w-full p-4 bg-slate-200 rounded-xl mt-4 shadow"
@@ -152,12 +153,22 @@
           <button
             type="submit"
             :disabled="invalid || !validCategory || !validDescription"
-            class="w-full py-3 bg-slate-700 text-white text-lg rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
+            class="w-full py-3 bg-slate-700 flex items-center justify-center gap-3 rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
           >
-            ثبت تغییرات
+            <span class="text-white text-lg">ثبت تغییرات</span>
+            <base-icon
+              v-if="loading"
+              name="spinner-solid"
+              class="w-4 h-4 fill-white animate-spin"
+            ></base-icon>
           </button>
         </form>
       </validation-observer>
+    </div>
+
+    <!-- loading -->
+    <div v-else class="w-full my-12 flex items-center justify-center">
+      <app-loading></app-loading>
     </div>
   </div>
 </template>
@@ -184,6 +195,7 @@ import {
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
+const loading = ref(false);
 const productId = ref(route.value.query.id);
 const productInfo = ref({
   title: "",
@@ -231,6 +243,7 @@ const fetchProduct = () => {
   store.dispatch("admin/getProduct", productId.value);
 };
 const submitForm = () => {
+  loading.value = true;
   const data = productInfo.value;
   store.dispatch("admin/updateProduct", { id: productId.value, data });
 };
@@ -243,6 +256,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   // reset product's data in store before going out of this page
   store.commit("admin/resetProduct");
+  loading.value = false;
 });
 
 watch(

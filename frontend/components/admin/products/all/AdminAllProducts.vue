@@ -1,7 +1,8 @@
 <template>
   <section class="w-full">
+    <!-- data table -->
     <table
-      v-if="products.length"
+      v-if="products !== null && products.length"
       class="w-full bg-slate-50 rounded-xl overflow-hidden shadow-md"
     >
       <thead class="w-full">
@@ -75,9 +76,18 @@
       </tbody>
     </table>
 
-    <p v-else class="text-secondary text-center mt-12">
+    <!-- empty state -->
+    <p
+      v-else-if="products !== null && !products.length"
+      class="text-secondary text-center mt-12"
+    >
       در حال حاضر محصولی برای نمایش وجود ندارد
     </p>
+
+    <!-- loading -->
+    <div v-else class="w-full my-12 flex items-center justify-center">
+      <app-loading></app-loading>
+    </div>
   </section>
 </template>
 
@@ -118,7 +128,7 @@ const deleteProduct = (productId) => {
 // lifecycles
 onMounted(() => {
   // fetch all products on first mount
-  if (store.getters["admin/allProducts"].length === 0) getProducts();
+  if (store.getters["admin/allProducts"] === null) getProducts();
 });
 </script>
 

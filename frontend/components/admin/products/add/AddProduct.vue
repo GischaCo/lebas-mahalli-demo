@@ -153,9 +153,14 @@
           <button
             type="submit"
             :disabled="invalid || !validCategory || !validDescription"
-            class="w-full py-3 bg-slate-700 text-white text-lg rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
+            class="w-full py-3 bg-slate-700 flex items-center justify-center gap-3 rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
           >
-            افزودن
+            <span class="text-white text-lg">افزودن</span>
+            <base-icon
+              v-if="loading"
+              name="spinner-solid"
+              class="w-4 h-4 fill-white animate-spin"
+            ></base-icon>
           </button>
         </form>
       </validation-observer>
@@ -174,6 +179,7 @@ import { ref, computed, useStore, onMounted } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
+const loading = ref(false);
 const productInfo = ref({
   title: "",
   description: "",
@@ -202,6 +208,7 @@ const updateImages = (name, data) => {
   }
 };
 const submitForm = () => {
+  loading.value = true;
   const data = productInfo.value;
   store.dispatch("admin/addProduct", data);
 };

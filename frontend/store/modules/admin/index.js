@@ -1,11 +1,11 @@
 const state = {
   // products
   product: null,
-  products: [],
+  products: null,
   // users
-  users: [],
+  users: null,
   // comments
-  comments: [],
+  comments: null,
 };
 
 const mutations = {

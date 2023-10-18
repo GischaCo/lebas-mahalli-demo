@@ -445,15 +445,25 @@ const allComments = async (req, res) => {
     }
 
     // find all comments and sort by date
-    const comments = await Comment.find().sort({ createdAt: -1 });
-
-    // send comments list via response
-    return res.status(200).send({
-      data: comments,
-      message: "لیست دیدگاه‌ها با موفقیت دریافت شد",
-      status: 200,
-      success: true,
-    });
+    await Comment.find()
+      .sort({ createdAt: -1 })
+      .then((comments) => {
+        // send comments list via response
+        return res.status(200).send({
+          data: comments,
+          message: "لیست دیدگاه‌ها با موفقیت دریافت شد",
+          status: 200,
+          success: true,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).send({
+          message: "خطا در دریافت لیست دیدگاه‌ها",
+          status: 400,
+          success: false,
+        });
+      });
   } catch (error) {
     console.log(error);
     return res.status(400).send({
