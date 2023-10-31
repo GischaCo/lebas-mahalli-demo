@@ -2,7 +2,7 @@
   <button
     @click="addToCart"
     :disabled="!isAvailable"
-    class="min-w-max px-3 h-10 md:px-6 md:h-12 bg-blue-800 hover:bg-blue-600 flex items-center justify-center gap-3 rounded-md shadow-xl shadow-blue-100 hover:shadow-blue-200 disabled:hover:shadow-inherit disabled:bg-light disabled:cursor-not-allowed transition-all"
+    class="min-w-max px-3 h-10 md:px-6 md:h-12 bg-blue-800 hover:bg-blue-600 flex items-center justify-center gap-3 rounded-md shadow-xl shadow-blue-100 hover:shadow-blue-200 disabled:shadow-none disabled:hover:shadow-none disabled:bg-light disabled:cursor-not-allowed transition-all"
   >
     <span class="text-sm md:text-base text-white">افزودن به سبد خرید</span>
     <base-icon
