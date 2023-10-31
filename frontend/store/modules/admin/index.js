@@ -367,6 +367,44 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
+  deleteComment({ dispatch }, id) {
+    const TOKEN = localStorage.getItem("userAuthTOKEN");
+
+    if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
+      return "";
+    }
+
+    const reqConfig = {
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        id,
+      },
+    };
+
+    this.$axios
+      .$delete(`/admin/delete-comment`, reqConfig)
+      .then((res) => {
+        // reset products list
+        dispatch("getComments");
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
+        // show snackbar
+        dispatch("app/showSnackbar", res, { root: true });
+      })
+      .catch((err) => {
+        console.log(err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
+        // show snackbar
+        dispatch("app/showSnackbar", err.response.data, { root: true });
+      });
+  },
 };
 
 const getters = {

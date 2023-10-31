@@ -21,5 +21,6 @@ router.route("/api/admin/delete-user/:id").delete(adminController.deleteUser);
 // comments
 router.route("/api/admin/all-comments").get(adminController.allComments);
 router.route("/api/admin/reply-comment").post(adminController.replyComment);
+router.route("/api/admin/delete-comment").delete(adminController.deleteComment);
 
 module.exports = router;

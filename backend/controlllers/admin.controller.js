@@ -544,6 +544,56 @@ const replyComment = async (req, res) => {
     });
   }
 };
+const deleteComment = async (req, res) => {
+  try {
+    // get token from request header
+    const userToken = req.header("Authorization");
+    const tokenArray = userToken.split(" ");
+
+    // get & decode user token data
+    const decodedData = jwt.verify(tokenArray[1], process.env.TOKEN_KEY);
+
+    // find user
+    const user = await User.findOne({ phone: decodedData.phone });
+
+    // check if request sender's role is admin
+    if (user.role === "user") {
+      return res.status(400).send({
+        message: "شما به این بخش دسترسی ندارید",
+        status: 400,
+        success: false,
+      });
+    }
+
+    // get user's id
+    const id = req.header("id");
+
+    // delete comment from database
+    await Comment.findByIdAndDelete(id)
+      .then(() => {
+        return res.status(200).send({
+          message: "دیدگاه با موفقیت حذف شد",
+          status: 200,
+          success: true,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+        return res.status(400).send({
+          message: "خطا در حذف دیدگاه",
+          status: 400,
+          success: false,
+        });
+      });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({
+      message: "خطا در حذف کاربر",
+      status: 400,
+      success: false,
+    });
+  }
+};
 
 module.exports = {
   // products
@@ -558,4 +608,5 @@ module.exports = {
   // comments
   allComments,
   replyComment,
+  deleteComment,
 };

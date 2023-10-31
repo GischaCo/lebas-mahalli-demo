@@ -166,8 +166,8 @@ const comments = computed(() => {
 const getComments = () => {
   store.dispatch("admin/getComments");
 };
-const deleteComment = (x) => {
-  console.log("Deleted::::", x);
+const deleteComment = (id) => {
+  store.dispatch("admin/deleteComment", id);
 };
 
 // lifecycles
