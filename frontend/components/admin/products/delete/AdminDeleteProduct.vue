@@ -15,9 +15,14 @@
         <button
           @click="deleteProduct"
           :disabled="invalid"
-          class="w-full py-3 bg-slate-700 text-white text-lg rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
+          class="w-full py-3 bg-slate-700 flex items-center justify-center gap-3 rounded-lg disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed shadow-md hover:shadow-lg transition-all"
         >
-          حذف
+          <span class="text-white text-lg">حذف</span>
+          <base-icon
+            v-if="loading"
+            name="spinner-solid"
+            class="w-4 h-4 fill-white animate-spin"
+          ></base-icon>
         </button>
       </div>
     </validation-observer>
@@ -31,17 +36,23 @@ export default {
 </script>
 
 <script setup>
-import { ref, useStore } from "@nuxtjs/composition-api";
+import { computed, ref, useStore } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
 const productId = ref("");
+
+// computed
+const loading = computed(() => {
+  return store.getters["app/loading"];
+});
 
 // methods
 const updateId = (value) => {
   productId.value = value;
 };
 const deleteProduct = () => {
+  store.dispatch("app/setLoading", true);
   store.dispatch("admin/deleteProduct", productId.value);
 };
 </script>

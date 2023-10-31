@@ -34,11 +34,17 @@ const actions = {
         // update state
         commit("setUser", data);
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
@@ -76,11 +82,17 @@ const actions = {
     this.$axios
       .$post("/panel/add-to-cart", cartItem, reqConfig)
       .then((res) => {
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });

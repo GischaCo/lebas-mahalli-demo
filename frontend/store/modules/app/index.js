@@ -1,8 +1,14 @@
 const state = {
+  loading: false,
   snackbar: null,
 };
 
 const mutations = {
+  // loading
+  setLoading(state, value) {
+    state.loading = value;
+  },
+  // snackbar
   setSnackbar(state, data) {
     state.snackbar = {
       status: data.status,
@@ -15,6 +21,10 @@ const mutations = {
 };
 
 const actions = {
+  setLoading({ commit }, value) {
+    // value is equal to "true" or "false"
+    commit("setLoading", value);
+  },
   showSnackbar({ commit }, data) {
     commit("setSnackbar", data);
 
@@ -24,7 +34,12 @@ const actions = {
   },
 };
 
-const getters = {};
+const getters = {
+  // loading
+  loading(state) {
+    return state.loading;
+  },
+};
 
 const app = {
   namespaced: true,

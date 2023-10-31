@@ -33,6 +33,9 @@ const actions = {
         // get user profile details using token
         dispatch("userProfile");
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // move to landing page
         this.$router.push("/");
 
@@ -44,6 +47,9 @@ const actions = {
 
         // update state
         commit("authenticated", false);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
@@ -65,6 +71,9 @@ const actions = {
         // get user profile details using token
         dispatch("userProfile");
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // move to landing page
         this.$router.push("/");
 
@@ -77,11 +86,14 @@ const actions = {
         // update state
         commit("authenticated", false);
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  userProfile({ commit }) {
+  userProfile({ dispatch, commit }) {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
@@ -108,6 +120,9 @@ const actions = {
         ) {
           this.$router.push("/");
         }
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
@@ -123,6 +138,9 @@ const actions = {
         if (this.$router.history.current.name.startsWith("admin")) {
           this.$router.push("/");
         }
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
       });
   },
   userLogout({ commit, dispatch }) {

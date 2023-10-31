@@ -179,7 +179,6 @@ import { ref, computed, useStore, onMounted } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
-const loading = ref(false);
 const productInfo = ref({
   title: "",
   description: "",
@@ -208,12 +207,15 @@ const updateImages = (name, data) => {
   }
 };
 const submitForm = () => {
-  loading.value = true;
+  store.dispatch("app/setLoading", true);
   const data = productInfo.value;
   store.dispatch("admin/addProduct", data);
 };
 
 // computed
+const loading = computed(() => {
+  return store.getters["app/loading"];
+});
 const allCategories = computed(() => {
   return store.getters["categories/allCategories"];
 });

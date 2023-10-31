@@ -116,6 +116,7 @@ const resetProduct = () => {
   store.commit("products/resetProduct");
 };
 const addToCart = () => {
+  store.dispatch("app/setLoading", true);
   store.dispatch("panel/addToCart", { qty: qty.value, product: product.value });
 };
 const updateQty = (value) => {

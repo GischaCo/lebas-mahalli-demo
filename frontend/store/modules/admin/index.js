@@ -36,6 +36,8 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
       return "";
     }
 
@@ -56,11 +58,17 @@ const actions = {
         // move to products page
         this.$router.push("/admin/products/all");
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log("error: ", err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
@@ -129,6 +137,8 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
       return "";
     }
 
@@ -150,6 +160,9 @@ const actions = {
         // reset product's data in state
         commit("resetProduct");
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // move to products page
         this.$router.push("/admin/products/all");
 
@@ -162,6 +175,9 @@ const actions = {
       .catch((err) => {
         console.log("error: ", err.response?.data.message || err.message);
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
@@ -170,6 +186,8 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
       return "";
     }
 
@@ -185,11 +203,17 @@ const actions = {
         // reset products list
         dispatch("getProducts");
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
@@ -200,6 +224,8 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
       return "";
     }
 
@@ -229,6 +255,8 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
       return "";
     }
 
@@ -244,11 +272,17 @@ const actions = {
         // reset products list
         dispatch("getUsers");
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log(err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });
@@ -259,6 +293,8 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
       return "";
     }
 
@@ -289,6 +325,8 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
       return "";
     }
 
@@ -310,6 +348,9 @@ const actions = {
     this.$axios
       .$post("/admin/reply-comment", reqBody, reqConfig)
       .then((res) => {
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // refresh product's list
         dispatch("products/getProduct", product, { root: true });
 
@@ -318,6 +359,9 @@ const actions = {
       })
       .catch((err) => {
         console.log("error: ", err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });

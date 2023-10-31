@@ -19,12 +19,7 @@ export default {
 </script>
 
 <script setup>
-import {
-  useStore,
-  onMounted,
-  useRoute,
-  useRouter,
-} from "@nuxtjs/composition-api";
+import { useStore, onMounted, useRouter } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
@@ -37,7 +32,7 @@ onMounted(() => {
     localStorage.getItem("userAuthTOKEN") === null
   ) {
     router.push("/auth/login");
-    store.dispatch("app/showSnackbar", {
+    store.dispatch("app/setSnackbar", {
       status: 400,
       message: "لطفا ابتدا وارد حساب کاربری خود شوید",
     });

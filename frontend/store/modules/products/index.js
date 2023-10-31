@@ -52,6 +52,10 @@ const actions = {
     const TOKEN = localStorage.getItem("userAuthTOKEN");
 
     if (TOKEN === null) {
+      // set loading
+      dispatch("app/setLoading", false, { root: true });
+
+      // show authentication error
       dispatch(
         "app/showSnackbar",
         {
@@ -80,11 +84,17 @@ const actions = {
         // refresh product data
         dispatch("getProduct", id);
 
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
       .catch((err) => {
         console.log("error: ", err.response?.data.message || err.message);
+
+        // set loading
+        dispatch("app/setLoading", false, { root: true });
 
         // show snackbar
         dispatch("app/showSnackbar", err.response.data, { root: true });

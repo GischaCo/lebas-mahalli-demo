@@ -195,7 +195,6 @@ import {
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
-const loading = ref(false);
 const productId = ref(route.value.query.id);
 const productInfo = ref({
   title: "",
@@ -207,6 +206,9 @@ const productInfo = ref({
 });
 
 // computed
+const loading = computed(() => {
+  return store.getters["app/loading"];
+});
 const categories = computed(() => {
   return store.getters["categories/allCategories"];
 });
@@ -243,7 +245,7 @@ const fetchProduct = () => {
   store.dispatch("admin/getProduct", productId.value);
 };
 const submitForm = () => {
-  loading.value = true;
+  store.dispatch("app/setLoading", true);
   const data = productInfo.value;
   store.dispatch("admin/updateProduct", { id: productId.value, data });
 };
@@ -256,7 +258,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   // reset product's data in store before going out of this page
   store.commit("admin/resetProduct");
-  loading.value = false;
+  store.dispatch("app/setLoading", false);
 });
 
 watch(

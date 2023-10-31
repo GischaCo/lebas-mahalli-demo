@@ -59,9 +59,14 @@
           <button
             type="submit"
             :disabled="invalid"
-            class="text-white px-5 py-2 rounded-lg bg-primary shadow-lg hover:scale-[1.02] transition-all disabled:cursor-not-allowed disabled:brightness-75"
+            class="px-5 py-2 flex items-center justify-center gap-3 rounded-lg bg-primary shadow-lg hover:scale-[1.02] transition-all disabled:cursor-not-allowed disabled:brightness-75"
           >
-            ذخیره تغییرات
+            <span class="text-white">ذخیره تغییرات</span>
+            <base-icon
+              v-if="loading"
+              name="spinner-solid"
+              class="w-4 h-4 fill-white animate-spin"
+            ></base-icon>
           </button>
         </form>
       </validation-observer>
@@ -76,17 +81,23 @@ export default {
 </script>
 
 <script setup>
-import { ref, useStore } from "@nuxtjs/composition-api";
+import { ref, useStore, computed } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
 const userInfo = ref(store.state.panel.user);
+
+// computed
+const loading = computed(() => {
+  return store.getters["app/loading"];
+});
 
 // methods
 const updateUserInfo = (key, value) => {
   userInfo.value[key] = value;
 };
 const submitForm = () => {
+  store.dispatch("app/setLoading", true);
   store.dispatch("panel/updateUser", userInfo.value);
 };
 </script>

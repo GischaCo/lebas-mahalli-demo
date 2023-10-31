@@ -45,9 +45,14 @@
         <button
           type="submit"
           :disabled="invalid"
-          class="w-8/12 h-12 text-white bg-gradient-to-r from-secondary to-primary disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed rounded-lg hover:shadow-lg transition-all"
+          class="w-8/12 h-12 flex items-center justify-center gap-3 bg-gradient-to-r from-secondary to-primary disabled:brightness-75 disabled:opacity-60 disabled:cursor-not-allowed rounded-lg hover:shadow-lg transition-all"
         >
-          ورود
+          <span class="text-white">ورود</span>
+          <base-icon
+            v-if="loading"
+            name="spinner-solid"
+            class="w-4 h-4 fill-white animate-spin"
+          ></base-icon>
         </button>
         <!-- sign-up link -->
         <nuxt-link
@@ -68,9 +73,10 @@ export default {
 </script>
 
 <script setup>
-import { ref } from "@nuxtjs/composition-api";
+import { computed, ref, useStore } from "@nuxtjs/composition-api";
 
 // variables
+const store = useStore();
 const userInfo = ref({
   phone: "",
   password: "",
@@ -79,11 +85,17 @@ const userInfo = ref({
 // emits
 const emit = defineEmits(["submitted"]);
 
+// computed
+const loading = computed(() => {
+  return store.getters["app/loading"];
+});
+
 // methods
 const updateUserInfo = (key, value) => {
   userInfo.value[key] = value;
 };
 const submitForm = () => {
+  store.dispatch("app/setLoading", true);
   emit("submitted", userInfo.value);
 };
 </script>
