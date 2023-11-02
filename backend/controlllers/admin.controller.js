@@ -5,7 +5,7 @@ const Product = require("../models/product.model");
 const Comment = require("../models/comment.model");
 const ObjectId = require("mongodb").ObjectId;
 
-// prpoducts
+// products
 const allProducts = async (req, res) => {
   try {
     // get token from request header
@@ -565,17 +565,74 @@ const deleteComment = async (req, res) => {
       });
     }
 
-    // get user's id
+    // comment's id
     const id = req.header("id");
 
     // delete comment from database
-    await Comment.findByIdAndDelete(id)
-      .then(() => {
-        return res.status(200).send({
-          message: "دیدگاه با موفقیت حذف شد",
-          status: 200,
-          success: true,
-        });
+    await Comment.findById(id)
+      .then(async (result) => {
+        // define required variables to use later
+        const commentID = id; // selected comment's id
+        const productID = result.product.id; // product that the selected comment has submitted on
+
+        // find the product that the selected comment has submitted on
+        await Product.findById(productID)
+          .then(async (prodResult) => {
+            // list of existed comments
+            const productComments = prodResult.comments;
+
+            // identify the selected comment from comments list
+            const identifiedComment = productComments.findIndex(
+              (comment) => comment._id.toString() === commentID
+            );
+
+            // check if the comment identification was correct
+            if (identifiedComment > -1) {
+              // remove the idenified comment from comments list by index
+              productComments.splice(identifiedComment, 1);
+
+              // update the product with new comments list
+              await Product.updateOne(
+                { _id: new ObjectId(productID) },
+                { $set: { comments: productComments } }
+              );
+
+              // finally, delete the comment from comments collection
+              await Comment.findByIdAndDelete(id)
+                .then(() => {
+                  console.log("Comment removed");
+                  return res.status(200).send({
+                    message: "دیدگاه با موفقیت حذف شد",
+                    status: 200,
+                    success: true,
+                  });
+                })
+                .catch((error) => {
+                  console.log(error);
+                  return res.status(400).send({
+                    message: "خطا در حذف دیدگاه",
+                    status: 400,
+                    success: false,
+                  });
+                });
+            } else {
+              // sending error if the comment identification went wrong
+              console.log("خطا در تشخیص دیدگاه مورد نظر در پایگاه داده");
+              return res.status(400).send({
+                message: "خطا در تشخیص دیدگاه مورد نظر در پایگاه داده",
+                status: 400,
+                success: false,
+              });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            return res.status(400).send({
+              message: "خطا در حذف دیدگاه",
+              status: 400,
+              success: false,
+            });
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -588,7 +645,7 @@ const deleteComment = async (req, res) => {
   } catch (error) {
     console.log(error);
     return res.status(400).send({
-      message: "خطا در حذف کاربر",
+      message: "خطا در حذف دیدگاه",
       status: 400,
       success: false,
     });

@@ -98,7 +98,8 @@ const addComment = async (req, res) => {
 
           // now, update product's comments
           let comments = result.comments;
-          comments.push(commentResult);
+          const newCommentId = commentResult._id.toString();
+          comments.push({ id: newCommentId, ...commentResult });
 
           Product.updateOne(
             { _id: new ObjectId(id) },
