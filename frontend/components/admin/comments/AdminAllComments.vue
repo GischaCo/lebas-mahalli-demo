@@ -1,73 +1,5 @@
 <template>
   <section class="w-full">
-    <!-- comments data table -->
-    <!-- <table
-      v-if="comments !== null && comments.length"
-      class="w-full bg-slate-50 rounded-xl overflow-hidden shadow-md"
-    >
-      <thead class="w-full">
-        <tr class="w-full">
-          <td><p class="text-sm md:text-base">ردیف</p></td>
-          <td><p class="text-sm md:text-base">کاربر</p></td>
-          <td><p class="text-sm md:text-base">موبایل</p></td>
-          <td><p class="text-sm md:text-base">محصول</p></td>
-          <td><p class="text-sm md:text-base">متن</p></td>
-          <td><p class="text-sm md:text-base">تاریخ</p></td>
-          <td><p class="text-sm md:text-base">حذف</p></td>
-        </tr>
-      </thead>
-      <tbody class="w-full">
-        <tr
-          class="w-full even:bg-slate-50 odd:bg-slate-200"
-          v-for="(comment, i) in comments"
-          :key="comment._id"
-        >
-          <td>
-            <span>{{ i + 1 }}</span>
-          </td>
-          <td>
-            <p class="text-overflow text-xs md:text-base font-bold">
-              {{ comment.user.fullname }}
-            </p>
-          </td>
-          <td>
-            <p class="text-overflow text-xs md:text-base">
-              {{ comment.user.phone }}
-            </p>
-          </td>
-          <td>
-            <p class="text-overflow text-sm md:text-base">
-              {{ comment.product.title }}
-            </p>
-          </td>
-          <td>
-            <nuxt-link :to="`/products/${comment.product.id}`">
-              <p class="text-overflow text-sm md:text-base text-primary">
-                {{ comment.text }}
-              </p>
-            </nuxt-link>
-          </td>
-          <td>
-            <p class="text-xs md:text-base">
-              {{ $moment(comment.createdAt).format("jYYYY/jM/jDD") }}
-            </p>
-          </td>
-          <td>
-            <button
-              title="حذف"
-              @click="deleteComment(comment.product.id)"
-              class="p-1.5 md:p-2 rounded bg-slate-700 shadow-md hover:shadow-lg transition-all"
-            >
-              <base-icon
-                class="w-3 h-3 md:w-3.5 md:h-3.5 fill-white"
-                name="trash-can-regular"
-              ></base-icon>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
-
     <div
       v-if="comments !== null && comments.length"
       class="w-full flex flex-col items-center justify-start gap-2"
@@ -113,19 +45,27 @@
           <span class="w-full h-[1px] rounded-[50%] bg-slate-100"></span>
 
           <!-- delete -->
-          <button
-            title="حذف محصول"
-            @click.prevent="deleteComment(comment._id)"
-            class="px-2.5 py-1 mt-1 bg-none hover:bg-red-400 flex items-center justify-center gap-2 rounded border-2 border-red-400 transition-all group"
-          >
-            <span class="text-sm text-red-400 group-hover:text-slate-50"
-              >حذف</span
+          <div class="w-full flex items-center justify-start gap-2">
+            <button
+              title="حذف محصول"
+              @click.prevent="deleteComment(comment._id)"
+              class="px-2.5 py-1 mt-1 bg-none hover:bg-red-400 flex items-center justify-center gap-2 rounded border-2 border-red-400 transition-all group"
             >
-            <base-icon
-              class="w-3.5 h-3.5 fill-red-400 group-hover:fill-slate-50"
-              name="trash-can-regular"
-            ></base-icon>
-          </button>
+              <span class="text-sm text-red-400 group-hover:text-slate-50"
+                >حذف</span
+              >
+              <base-icon
+                v-if="loading && selectedCommentId === comment._id"
+                name="spinner-solid"
+                class="w-3.5 h-3.5 fill-red-400 animate-spin"
+              ></base-icon>
+              <base-icon
+                v-else
+                class="w-3.5 h-3.5 fill-red-400 group-hover:fill-slate-50"
+                name="trash-can-regular"
+              ></base-icon>
+            </button>
+          </div>
         </nuxt-link>
       </div>
     </div>
@@ -152,12 +92,16 @@ export default {
 </script>
 
 <script setup>
-import { useStore, computed, onMounted } from "@nuxtjs/composition-api";
+import { ref, useStore, computed, onMounted } from "@nuxtjs/composition-api";
 
 // variables
 const store = useStore();
+const selectedCommentId = ref();
 
 // computed
+const loading = computed(() => {
+  return store.getters["app/loading"];
+});
 const comments = computed(() => {
   return store.getters["admin/allComments"];
 });
@@ -167,6 +111,8 @@ const getComments = () => {
   store.dispatch("admin/getComments");
 };
 const deleteComment = (id) => {
+  store.dispatch("app/setLoading", true);
+  selectedCommentId.value = id;
   store.dispatch("admin/deleteComment", id);
 };
 
