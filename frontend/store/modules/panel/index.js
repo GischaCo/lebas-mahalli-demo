@@ -14,7 +14,10 @@ const mutations = {
 const actions = {
   updateUser({ commit, dispatch }, data) {
     // send data to database
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       return "";
@@ -55,7 +58,10 @@ const actions = {
   },
   addToCart({ dispatch }, data) {
     // send data to database
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       return "";

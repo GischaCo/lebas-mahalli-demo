@@ -28,7 +28,7 @@ const actions = {
 
         // store token in localStorage
         const TOKEN = res.data.token;
-        localStorage.setItem("userAuthTOKEN", TOKEN);
+        if (process.client) localStorage.setItem("userAuthTOKEN", TOKEN);
 
         // get user profile details using token
         dispatch("userProfile");
@@ -66,7 +66,7 @@ const actions = {
 
         // store token in localStorage
         const TOKEN = res.data.token;
-        localStorage.setItem("userAuthTOKEN", TOKEN);
+        if (process.client) localStorage.setItem("userAuthTOKEN", TOKEN);
 
         // get user profile details using token
         dispatch("userProfile");
@@ -94,7 +94,10 @@ const actions = {
       });
   },
   userProfile({ dispatch, commit }) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       return "";
@@ -145,7 +148,7 @@ const actions = {
   },
   userLogout({ commit, dispatch }) {
     // remove token from localStorage
-    localStorage.removeItem("userAuthTOKEN");
+    if (process.client) localStorage.removeItem("userAuthTOKEN");
 
     // reset state
     commit("resetAuth");

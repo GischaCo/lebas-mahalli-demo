@@ -33,7 +33,10 @@ const actions = {
   // products
   addProduct({ dispatch }, data) {
     // send data to server
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading
@@ -75,7 +78,10 @@ const actions = {
       });
   },
   getProducts({ commit, dispatch }) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       return "";
@@ -104,7 +110,10 @@ const actions = {
       });
   },
   getProduct({ commit, dispatch }, id) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       return "";
@@ -134,7 +143,10 @@ const actions = {
   },
   updateProduct({ commit, dispatch }, { id, data }) {
     // send data to server
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading
@@ -183,7 +195,10 @@ const actions = {
       });
   },
   deleteProduct({ dispatch }, id) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading
@@ -221,7 +236,10 @@ const actions = {
   },
   // users
   getUsers({ commit, dispatch }) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading
@@ -252,7 +270,10 @@ const actions = {
       });
   },
   deleteUser({ dispatch }, id) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading
@@ -290,7 +311,10 @@ const actions = {
   },
   // comments
   getComments({ commit, dispatch }) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading
@@ -322,7 +346,10 @@ const actions = {
   },
   replyComment({ dispatch }, data) {
     // send data to server
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading
@@ -368,7 +395,10 @@ const actions = {
       });
   },
   deleteComment({ dispatch }, id) {
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading

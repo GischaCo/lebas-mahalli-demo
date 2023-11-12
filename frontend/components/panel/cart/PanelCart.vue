@@ -1,6 +1,8 @@
 <template>
   <panel-child-container title="سبد خرید">
-    <div class="w-full flex flex-col items-center justify-start gap-4">
+    <div
+      class="w-full flex flex-col items-center justify-start gap-4 overflow-x-auto"
+    >
       <!-- header -->
       <div class="w-full flex items-center justify-between gap-1">
         <!-- payment button -->
@@ -43,7 +45,9 @@
             <td class="px-0.5 py-3 text-xs text-neutral-600">
               <p>{{ i + 1 }}</p>
             </td>
-            <td class="px-0.5 py-3 text-xs text-neutral-600 font-bold">
+            <td
+              class="product-title px-0.5 py-3 text-xs text-neutral-600 font-bold"
+            >
               <p>{{ item.product.title }}</p>
             </td>
             <td class="px-0.5 py-3 text-xs text-neutral-600">
@@ -56,13 +60,20 @@
               </p>
             </td>
             <td class="px-0.5 py-3 text-xs text-neutral-600">
-              <p class="product-title">{{ item.qty }}</p>
+              <p>{{ item.qty }}</p>
             </td>
             <td class="px-0.5 py-3 text-xs text-neutral-600 font-bold">
               <p>{{ item.totalPrice }}</p>
             </td>
             <td class="px-0.5 py-3 text-xs text-red-500 font-bold">
-              <p>حذف</p>
+              <button
+                class="px-2 py-1 md:px-4 md:py-1.5 rounded bg-red-400 group hover:bg-inherit transition-all"
+              >
+                <span
+                  class="text-sx md:text-sm text-white group-hover:text-red-400 transition-all"
+                  >حذف</span
+                >
+              </button>
             </td>
           </tr>
         </tbody>
@@ -100,8 +111,11 @@ const totalPrice = computed(() => {
 .product-title {
   overflow: hidden;
   display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  line-clamp: 2 !important;
+  -webkit-line-clamp: 1 !important;
+  line-clamp: 1 !important;
   -webkit-box-orient: vertical !important;
+}
+* {
+  border: 1px solid red;
 }
 </style>

@@ -49,7 +49,10 @@ const actions = {
     const { id, data } = payload;
 
     // send data to server
-    const TOKEN = localStorage.getItem("userAuthTOKEN");
+    let TOKEN = null;
+    if (process.client) {
+      TOKEN = localStorage.getItem("userAuthTOKEN");
+    }
 
     if (TOKEN === null) {
       // set loading

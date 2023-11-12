@@ -1,5 +1,5 @@
 export default {
-  ssr: false,
+  ssr: true,
   /*
    ** Headers of the page
    */
@@ -50,7 +50,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ["~/plugins/vee-validate.js"],
+  plugins: [{ src: "~/plugins/vee-validate.js", ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */
