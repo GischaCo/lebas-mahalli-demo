@@ -7,9 +7,10 @@
     </panel-container>
   </div>
 
-  <p v-else class="w-full text-center text-primary font-bold text-xl">
-    لطفا صبر کنید
-  </p>
+  <!-- loading -->
+  <div v-else class="w-full my-12 flex items-center justify-center">
+    <app-loading></app-loading>
+  </div>
 </template>
 
 <script>
