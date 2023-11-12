@@ -166,7 +166,9 @@
                 <p class="text-xs text-neutral-400">پاسخ</p>
               </div>
             </div>
-            <p class="text-neutral-600">{{ comment.text }}</p>
+            <p class="-mt-6 text-neutral-600 whitespace-pre-line">
+              {{ comment.text }}
+            </p>
             <p class="text-sm text-neutral-400">
               {{ $moment(comment.date).format("jDD jMMMM jYYYY") }}
             </p>
@@ -181,7 +183,9 @@
             <h5 class="text-lg text-primary font-bold">
               {{ reply.fullname }}
             </h5>
-            <p class="text-neutral-600">{{ reply.text }}</p>
+            <p class="-mt-6 text-neutral-600 whitespace-pre-line">
+              {{ reply.text }}
+            </p>
             <p class="text-sm text-neutral-400">
               {{ $moment(reply.date).format("jDD jMMMM jYYYY") }}
             </p>

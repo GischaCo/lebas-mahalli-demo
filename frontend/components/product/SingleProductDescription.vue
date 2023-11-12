@@ -1,5 +1,7 @@
 <template>
-  <p class="text-sm md:text-base text-neutral-500">{{ description }}</p>
+  <p class="text-sm md:text-base text-neutral-500 whitespace-pre-line">
+    {{ description }}
+  </p>
 </template>
 
 <script>
