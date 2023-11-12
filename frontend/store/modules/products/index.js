@@ -45,7 +45,7 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  addComment({ dispatch }, payload) {
+  addComment({ commit, dispatch }, payload) {
     const { id, data } = payload;
 
     // send data to server
@@ -85,7 +85,7 @@ const actions = {
       .$post(`/add-comment/${id}`, reqBody, reqConfig)
       .then((res) => {
         // refresh product data
-        dispatch("getProduct", id);
+        commit("setProduct", res.product);
 
         // set loading
         dispatch("app/setLoading", false, { root: true });

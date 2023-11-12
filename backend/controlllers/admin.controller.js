@@ -187,8 +187,10 @@ const addProduct = async (req, res) => {
 
     await product
       .save()
-      .then(() => {
+      .then(async () => {
+        const products = await Product.find().sort({ createdAt: -1 });
         res.status(200).send({
+          products,
           message: "محصول با موفقیت افزوده شد",
           status: 200,
           success: true,
@@ -241,8 +243,10 @@ const updateProduct = async (req, res) => {
 
     // update product
     Product.updateOne({ _id: new ObjectId(id) }, { $set: data })
-      .then(() => {
+      .then(async () => {
+        const products = await Product.find();
         res.status(200).send({
+          products,
           message: "محصول با موفقیت ویرایش شد",
           status: 200,
           success: true,
@@ -294,7 +298,9 @@ const deleteProduct = async (req, res) => {
     await Product.findByIdAndDelete(id);
 
     // send response
+    const products = await Product.find().sort({ createdAt: -1 });
     return res.status(200).send({
+      products,
       message: "محصول با موفقیت حذف شد",
       status: 200,
       success: true,
@@ -387,8 +393,10 @@ const deleteUser = async (req, res) => {
           });
         } else {
           await User.findByIdAndDelete(id)
-            .then(() => {
+            .then(async () => {
+              const users = await User.find().sort({ createdAt: -1 });
               return res.status(200).send({
+                users,
                 message: "کاربر با موفقیت حذف شد",
                 status: 200,
                 success: true,
@@ -599,9 +607,11 @@ const deleteComment = async (req, res) => {
 
               // finally, delete the comment from comments collection
               await Comment.findByIdAndDelete(id)
-                .then(() => {
-                  console.log("Comment removed");
+                .then(async () => {
+                  // all comments
+                  const comments = await Comment.find().sort({ createdAt: -1 });
                   return res.status(200).send({
+                    comments,
                     message: "دیدگاه با موفقیت حذف شد",
                     status: 200,
                     success: true,

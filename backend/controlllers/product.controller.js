@@ -104,8 +104,10 @@ const addComment = async (req, res) => {
           Product.updateOne(
             { _id: new ObjectId(id) },
             { $set: { comments } }
-          ).then(() => {
+          ).then(async () => {
+            const product = await Product.findById(id);
             res.status(200).send({
+              product,
               message: "دیدگاه با موفقیت ثبت شد",
               status: 200,
               success: true,

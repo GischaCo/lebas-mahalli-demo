@@ -64,6 +64,9 @@ const actions = {
         // set loading
         dispatch("app/setLoading", false, { root: true });
 
+        // refresh products list
+        commit("setProducts", res.products);
+
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
       })
@@ -178,8 +181,8 @@ const actions = {
         // move to products page
         this.$router.push("/admin/products/all");
 
-        // refresh product's list
-        dispatch("getProducts");
+        // refresh products list
+        commit("setProducts", res.products);
 
         // show snackbar
         dispatch("app/showSnackbar", res, { root: true });
@@ -194,7 +197,7 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  deleteProduct({ dispatch }, id) {
+  deleteProduct({ commit, dispatch }, id) {
     let TOKEN = null;
     if (process.client) {
       TOKEN = localStorage.getItem("userAuthTOKEN");
@@ -215,8 +218,8 @@ const actions = {
     this.$axios
       .$delete(`/admin/delete-product/${id}`, reqConfig)
       .then((res) => {
-        // reset products list
-        dispatch("getProducts");
+        // refresh products list
+        commit("setProducts", res.products);
 
         // set loading
         dispatch("app/setLoading", false, { root: true });
@@ -269,7 +272,7 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  deleteUser({ dispatch }, id) {
+  deleteUser({ commit, dispatch }, id) {
     let TOKEN = null;
     if (process.client) {
       TOKEN = localStorage.getItem("userAuthTOKEN");
@@ -290,8 +293,8 @@ const actions = {
     this.$axios
       .$delete(`/admin/delete-user/${id}`, reqConfig)
       .then((res) => {
-        // reset products list
-        dispatch("getUsers");
+        // refresh products list
+        commit("setUsers", res.users);
 
         // set loading
         dispatch("app/setLoading", false, { root: true });
@@ -394,7 +397,7 @@ const actions = {
         dispatch("app/showSnackbar", err.response.data, { root: true });
       });
   },
-  deleteComment({ dispatch }, id) {
+  deleteComment({ commit, dispatch }, id) {
     let TOKEN = null;
     if (process.client) {
       TOKEN = localStorage.getItem("userAuthTOKEN");
@@ -416,8 +419,8 @@ const actions = {
     this.$axios
       .$delete(`/admin/delete-comment`, reqConfig)
       .then((res) => {
-        // reset products list
-        dispatch("getComments");
+        // refresh products list
+        commit("setComments", res.comments);
 
         // set loading
         dispatch("app/setLoading", false, { root: true });
