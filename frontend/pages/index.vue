@@ -1,5 +1,11 @@
 <template>
-  <h1>Index</h1>
+  <article class="w-full">
+    <img
+      src="../static/img/public/yalda-offer-banner-01.png"
+      class="w-full rounded-xl"
+      alt=""
+    />
+  </article>
 </template>
 
 <script>
