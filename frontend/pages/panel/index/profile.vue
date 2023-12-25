@@ -1,9 +1,0 @@
-<template>
-  <panel-profile></panel-profile>
-</template>
-
-<script>
-export default {
-  name: "PanelProfilePage",
-};
-</script>
